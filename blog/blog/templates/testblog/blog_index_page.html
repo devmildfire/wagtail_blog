@@ -9,10 +9,22 @@
 
     <div class="intro">{{ page.intro|richtext }}</div>
 
-    {% for post in page.get_children %}
-        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
-        {{ post.specific.intro }}
-        {{ post.specific.body|richtext }}
+    {% for post in blogpages %}
+        {% with post=post.specific %}
+            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+            <p> {{ post.intro }}</p>
+            {{ post.body|richtext }}
+
+            {% for tag in post.tags.all %}
+            
+                <a href='/blog/?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+            
+            {% endfor %}
+
+
+
+
+        {% endwith %}
     {% endfor %}
 
 {% endblock %}
