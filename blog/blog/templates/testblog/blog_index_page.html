@@ -21,10 +21,31 @@
             
             {% endfor %}
 
-
-
-
         {% endwith %}
     {% endfor %}
+
+    Site settings:
+
+    {% if settings.site_settings.SocialMediaSettings.facebook %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.facebook }}'>
+            facebook
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+    {% endif %}
+
+    {% if settings.site_settings.SocialMediaSettings.twitter %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.twitter }}'>
+            twitter
+            <i class="fa-brands fa-twitter"></i>
+        </a>
+    {% endif %}
+
+    {% if settings.site_settings.SocialMediaSettings.youtube %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.youtube }}'>
+            youtube
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    {% endif %}
+
 
 {% endblock %}
