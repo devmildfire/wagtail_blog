@@ -25,6 +25,15 @@
     {% endfor %}
 
     <br />
+    Tags:
+
+    {% for tag in tags %}
+    
+        <a href='{% pageurl page %}?tag={{tag}}'> <span> <b>{{ tag }}</b> </span> </a>
+    
+    {% endfor %}
+
+    <br />
     Site settings:
 
     {% if settings.site_settings.SocialMediaSettings.facebook %}

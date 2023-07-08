@@ -31,11 +31,30 @@ class BlogIndexPage(Page):
         context = super().get_context(request, *args, **kwargs)
         # blogpages = self.get_children().live().order_by('-first_published_at')
         blogpages = BlogPage.objects.live().order_by('-first_published_at')
+        Post_pages = BlogPage.objects.child_of(self)
+
+        def listify(value):
+            return [tag.name for tag in value.all()]
+
+        tags = []
+
+        for post_page in Post_pages:
+            # tags = post_page.tags.all
+            tags_list = listify(post_page.tags)
+            tags = tags + tags_list
+
+        tags = list(set(tags))
+
+        # print(type(tags))
+        # print(tags)
+        # print(type(tags_list))
+        # print(tags_list)
 
         if request.GET.get('tag', None):
-            tags = request.GET.get('tag')
-            blogpages = blogpages.filter(tags__slug__in=[tags])
+            tag = request.GET.get('tag')
+            blogpages = blogpages.filter(tags__slug__in=[tag])
         context['blogpages'] = blogpages
+        context['tags'] = tags
         return context
 
 
