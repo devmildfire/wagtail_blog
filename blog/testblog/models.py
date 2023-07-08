@@ -26,10 +26,15 @@ class BlogIndexPage(Page):
         FieldPanel('intro')
     ]
 
-    def get_context(self, request):
+    def get_context(self, request, *args, **kwargs):
         # Update context to include only published posts, ordered by reverse-chron
-        context = super().get_context(request)
-        blogpages = self.get_children().live().order_by('-first_published_at')
+        context = super().get_context(request, *args, **kwargs)
+        # blogpages = self.get_children().live().order_by('-first_published_at')
+        blogpages = BlogPage.objects.live().order_by('-first_published_at')
+
+        if request.GET.get('tag', None):
+            tags = request.GET.get('tag')
+            blogpages = blogpages.filter(tags__slug__in=[tags])
         context['blogpages'] = blogpages
         return context
 
