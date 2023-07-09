@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import render
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -10,6 +11,8 @@ from wagtail.admin.panels import FieldPanel
 
 from wagtail.search import index
 
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -19,7 +22,7 @@ class BlogPageTag(TaggedItemBase):
     )
 
 
-class BlogIndexPage(Page):
+class BlogIndexPage(RoutablePageMixin, Page):
     intro = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
@@ -27,9 +30,7 @@ class BlogIndexPage(Page):
     ]
 
     def get_context(self, request, *args, **kwargs):
-        # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request, *args, **kwargs)
-        # blogpages = self.get_children().live().order_by('-first_published_at')
         blogpages = BlogPage.objects.live().order_by('-first_published_at')
         Post_pages = BlogPage.objects.child_of(self)
 
@@ -39,16 +40,10 @@ class BlogIndexPage(Page):
         tags = []
 
         for post_page in Post_pages:
-            # tags = post_page.tags.all
             tags_list = listify(post_page.tags)
             tags = tags + tags_list
 
         tags = list(set(tags))
-
-        # print(type(tags))
-        # print(tags)
-        # print(type(tags_list))
-        # print(tags_list)
 
         if request.GET.get('tag', None):
             tag = request.GET.get('tag')
@@ -56,6 +51,17 @@ class BlogIndexPage(Page):
         context['blogpages'] = blogpages
         context['tags'] = tags
         return context
+
+    class Meta:
+
+        verbose_name = 'Blog Page'
+        verbose_name_plural = 'Blog Pages'
+
+    @route(r'^search/$')
+    def the_search_page(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        context['a_special_test'] = 'Test of Routable Page for search'
+        return render(request, "testblog/search.html", context)
 
 
 class BlogPage(Page):
