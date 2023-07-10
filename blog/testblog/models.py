@@ -48,20 +48,41 @@ class BlogIndexPage(RoutablePageMixin, Page):
         if request.GET.get('tag', None):
             tag = request.GET.get('tag')
             blogpages = blogpages.filter(tags__slug__in=[tag])
+
+        print('the blogpages are reset')
         context['blogpages'] = blogpages
         context['tags'] = tags
         return context
+
+    @route(r'^search/$')
+    def post_search(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        context['a_special_test'] = 'Test of Routable Page for search'
+
+        search_query = request.GET.get('q', None)
+
+        self.posts = BlogPage.objects.child_of(self)
+
+        if search_query:
+            self.posts = self.posts.search(search_query)
+
+        # context['blogpages'] = []
+        context['blogpages'] = self.posts
+        context['search_query'] = search_query
+
+        print('post_search method worked')
+        print(self.posts)
+
+        print('blogpages are equal to...')
+        print(context['blogpages'])
+
+        return render(request, "testblog/search.html", context)
+        # return self.render(request, context)
 
     class Meta:
 
         verbose_name = 'Blog Page'
         verbose_name_plural = 'Blog Pages'
-
-    @route(r'^search/$')
-    def the_search_page(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        context['a_special_test'] = 'Test of Routable Page for search'
-        return render(request, "testblog/search.html", context)
 
 
 class BlogPage(Page):
@@ -81,4 +102,9 @@ class BlogPage(Page):
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("body"),
+        index.SearchField("intro"),
     ]

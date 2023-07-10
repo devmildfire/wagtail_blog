@@ -8,6 +8,28 @@
     <h1>{{ a_special_test }}</h1>
 
 
+    {% if page.posts %}
+    
+    search results for: "{{ search_query }}""
+
+
+    {% for post in page.posts %}
+
+        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+        <p> {{ post.intro }}</p>
+        {{ post.body|richtext }}
+
+        {% for tag in post.tags.all %}
+        
+            <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+        
+        {% endfor %}
+
+    {% endfor %} 
+
+{% endif %}
+
+
     <br />
     Tags:
 
