@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar %}
+{% load static wagtailcore_tags wagtailuserbar base_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,5 +43,7 @@
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
+
+        {% footer_tag %}
     </body>
 </html>
