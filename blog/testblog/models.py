@@ -3,9 +3,11 @@ from django.shortcuts import render
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.models import ClusterableModel
 from taggit.models import TaggedItemBase
 
 from wagtail.models import Page
+from wagtail.models import Orderable
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel
 
@@ -16,8 +18,19 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
 
 
+class FooterLinks(Orderable):
+    footer = ParentalKey("Footer", related_name="footer_links")
+    footer_link = models.URLField(null=True, blank=True)
+    footer_link_name = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('footer_link'),
+        FieldPanel('footer_link_name'),
+    ]
+
+
 @register_snippet
-class Footer(models.Model):
+class Footer(ClusterableModel):
     url = models.URLField(null=True, blank=True)
     text = models.CharField(max_length=255)
 

@@ -24,27 +24,30 @@
         {% endif %}
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+        {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}"> {% endcomment %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/blogstyles.css' %}">
 
-        {% block extra_css %}
+        {% comment %} {% block extra_css %} {% endcomment %}
         {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
+        {% comment %} {% endblock %} {% endcomment %}
         <script src="https://kit.fontawesome.com/3b12cb35a0.js" crossorigin="anonymous"></script>
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+        <div class = 'allwrapper'> 
         {% wagtailuserbar %}
         {% header_tag %}
 
         {% block content %}{% endblock %}
 
         {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+        {% comment %} <script type="text/javascript" src="{% static 'js/blog.js' %}"></script> {% endcomment %}
 
-        {% block extra_js %}
+        {% comment %} {% block extra_js %}
         {# Override this in templates to add extra javascript #}
-        {% endblock %}
+        {% endblock %} {% endcomment %}
 
         {% footer_tag %}
+        </div>
     </body>
 </html>
