@@ -30,6 +30,20 @@ class Footer(models.Model):
         return self.text
 
 
+@register_snippet
+class Header(models.Model):
+    url = models.URLField(null=True, blank=True)
+    text = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('url'),
+        FieldPanel('text'),
+    ]
+
+    def __str__(self):
+        return self.text
+
+
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
         'BlogPage',
