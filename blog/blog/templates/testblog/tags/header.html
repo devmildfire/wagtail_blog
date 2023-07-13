@@ -1,8 +1,15 @@
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 
-<header>
-    
+<header class="header">
+    <img src="{% static 'images/logo.png' alt="A-ADS Logo" %}">
+    <div class="header_sections_container">
+
+    </div>
+    <div class="header_search_container">
+        
+    </div>
+    <button >
+
+    </button >
     {{ header.text }}
-    
-    <hr />
 </header>

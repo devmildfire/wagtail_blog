@@ -9,7 +9,7 @@ from taggit.models import TaggedItemBase
 from wagtail.models import Page
 from wagtail.models import Orderable
 from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 
 from wagtail.search import index
 
@@ -18,14 +18,18 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
 
 
-class FooterLinks(Orderable):
-    footer = ParentalKey("Footer", related_name="footer_links")
-    footer_link = models.URLField(null=True, blank=True)
-    footer_link_name = models.CharField(max_length=255)
+class NavLinks(Orderable):
+    footer = ParentalKey(
+        "Footer", related_name="footer_links", null=True, blank=True)
+    header = ParentalKey(
+        "Header", related_name="header_links", null=True, blank=True)
+    # footer_link = models.URLField(null=True, blank=True)
+    link_name = models.CharField(max_length=255)
+    link_text = models.CharField(max_length=255)
 
     panels = [
-        FieldPanel('footer_link'),
-        FieldPanel('footer_link_name'),
+        FieldPanel('link_name'),
+        FieldPanel('link_text'),
     ]
 
 
@@ -37,6 +41,7 @@ class Footer(ClusterableModel):
     panels = [
         FieldPanel('url'),
         FieldPanel('text'),
+        InlinePanel('footer_links'),
     ]
 
     def __str__(self):
@@ -44,13 +49,14 @@ class Footer(ClusterableModel):
 
 
 @register_snippet
-class Header(models.Model):
+class Header(ClusterableModel):
     url = models.URLField(null=True, blank=True)
     text = models.CharField(max_length=255)
 
     panels = [
         FieldPanel('url'),
         FieldPanel('text'),
+        InlinePanel('header_links'),
     ]
 
     def __str__(self):
@@ -124,8 +130,8 @@ class BlogIndexPage(RoutablePageMixin, Page):
 
     class Meta:
 
-        verbose_name = 'Blog Page'
-        verbose_name_plural = 'Blog Pages'
+        verbose_name = 'Blog Index Page'
+        verbose_name_plural = 'Blog Index Pages'
 
 
 class BlogPage(Page):
@@ -151,3 +157,8 @@ class BlogPage(Page):
         index.SearchField("body"),
         index.SearchField("intro"),
     ]
+
+    class Meta:
+
+        verbose_name = 'Blog Page'
+        verbose_name_plural = 'Blog Pages'

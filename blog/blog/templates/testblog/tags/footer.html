@@ -1,17 +1,19 @@
 {% load static wagtailcore_tags %}
 
-{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/blogstyles.css' %}"> {% endcomment %}
 
 <footer class = 'footer'>
     <div class = 'upper_footer'>
         <img src="{% static 'images/LogoCatalog.png' alt="A-ADS Logo" %}">
         <div class="sections_container">
-            <a href="https://a-ads.com" target="_blank">
-                Crypto
-            </a>
-            <a href="https://a-ads.com" target="_blank">
-                AI tools
-            </a>    
+
+
+            {% for link in footer.footer_links.all %}
+                <a href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
+                    {{link.link_name}}
+                </a>
+            {% endfor %}
+
+
         </div>
         <a href="https://a-ads.com" target="_blank">
             A-ADS.COM
