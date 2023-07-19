@@ -18,5 +18,16 @@
         {% AddMe_tag %}
         {% GoTo_tag %}
     </div>
-    {% comment %} {{ header.text }} {% endcomment %}
+    <div class="header_mobile_menu_container">
+        <img src="{% static 'icons/hamburger.svg' alt="menu" %}">
+
+        {% comment %} {% for link in header.header_links.all %}
+            <a class="header_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
+                {{link.link_name}}
+            </a>
+        {% endfor %}
+        {% AddMe_tag %}
+        {% GoTo_tag %} {% endcomment %}
+    </div>
+
 </header>

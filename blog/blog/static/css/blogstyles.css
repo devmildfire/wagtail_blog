@@ -56,6 +56,22 @@ header {
   gap: 16px;
 }
 
+.header_mobile_menu_container {
+  display: none;
+  position: relative;
+}
+
+@media screen and (max-width: 1100px) {
+  .header_links_container,
+  .header_sections_container {
+    display: none;
+  }
+  .header_mobile_menu_container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 footer {
   color: #263238a6;
 
