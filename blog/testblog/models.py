@@ -36,11 +36,13 @@ class NavLinks(Orderable):
 @register_snippet
 class Footer(ClusterableModel):
     url = models.URLField(null=True, blank=True)
-    text = models.CharField(max_length=255)
+    text = models.CharField(max_length=400)
+    undertext = models.CharField(max_length=255, null=True, blank=True)
 
     panels = [
         FieldPanel('url'),
         FieldPanel('text'),
+        FieldPanel('undertext'),
         InlinePanel('footer_links'),
     ]
 

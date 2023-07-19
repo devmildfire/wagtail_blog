@@ -2,6 +2,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
 /* //some comment */
+:root {
+  --HPaddings: 8.5vw;
+  --VPaddings: 1.04vw;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -15,7 +20,7 @@
 }
 
 header {
-  padding: 2.8vw 11.45vw;
+  padding: var(--VPaddings) var(--HPaddings);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,7 +37,7 @@ footer {
   font-family: "Inter", sans-serif;
   margin-top: auto;
 
-  padding: 2.8vw 11.45vw;
+  padding: var(--VPaddings) var(--HPaddings);
   background-color: #f2f4f6;
 
   display: flex;
@@ -59,9 +64,14 @@ footer {
 
 .lower_footer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 1.5vw;
+
+  gap: 8px;
+
+  border-top: 1px solid rgba(219, 215, 235, 1);
 }
 
 footer a {
