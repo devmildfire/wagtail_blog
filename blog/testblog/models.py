@@ -65,6 +65,34 @@ class Header(ClusterableModel):
         return self.text
 
 
+@register_snippet
+class AddMeButton(ClusterableModel):
+    link = models.CharField(max_length=255, null=True, blank=True)
+    text = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('link'),
+        FieldPanel('text'),
+    ]
+
+    def __str__(self):
+        return self.text
+
+
+@register_snippet
+class GoToButton(ClusterableModel):
+    link = models.CharField(max_length=255, null=True, blank=True)
+    text = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('link'),
+        FieldPanel('text'),
+    ]
+
+    def __str__(self):
+        return self.text
+
+
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
         'BlogPage',

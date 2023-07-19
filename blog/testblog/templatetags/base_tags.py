@@ -1,4 +1,4 @@
-from testblog.models import Footer, Header
+from testblog.models import Footer, Header, AddMeButton, GoToButton
 from django import template
 
 register = template.Library()
@@ -19,4 +19,22 @@ def header_tag(context):
     return {
         'request': context['request'],
         'header': Header.objects.first(),
+    }
+
+
+@register.inclusion_tag("testblog/tags/AddMe.html", takes_context=True)
+def AddMe_tag(context):
+
+    return {
+        'request': context['request'],
+        'AddMe': AddMeButton.objects.first(),
+    }
+
+
+@register.inclusion_tag("testblog/tags/GoTo.html", takes_context=True)
+def GoTo_tag(context):
+
+    return {
+        'request': context['request'],
+        'GoTo': GoToButton.objects.first(),
     }

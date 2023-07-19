@@ -1,15 +1,22 @@
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags base_tags %}
 
 <header class="header">
     <img src="{% static 'images/TopCatalog.png' alt="A-ADS Logo" %}">
     <div class="header_sections_container">
-
+        
+            {% for link in header.header_links.all %}
+                <a class="header_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
+                    {{link.link_name}}
+                </a>
+            {% endfor %}
+        
     </div>
     <div class="header_search_container">
         
     </div>
-    <button >
-
-    </button >
-    {{ header.text }}
+    <div class="header_buttons_container">
+        {% AddMe_tag %}
+        {% GoTo_tag %}
+    </div>
+    {% comment %} {{ header.text }} {% endcomment %}
 </header>
