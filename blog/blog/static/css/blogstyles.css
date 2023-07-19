@@ -48,6 +48,14 @@ header {
   padding: 0 2vw;
 }
 
+.header_links_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+}
+
 footer {
   color: #263238a6;
 
