@@ -1,5 +1,8 @@
 {% load static wagtailcore_tags base_tags %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+<script defer src="{% static 'js/header_menu.js' %}"></script>
+
 <header class="header">
     <img src="{% static 'images/TopCatalog.png' alt="A-ADS Logo" %}">
     <div class="header_sections_container">
@@ -19,15 +22,35 @@
         {% GoTo_tag %}
     </div>
     <div class="header_mobile_menu_container">
-        <img src="{% static 'icons/hamburger.svg' alt="menu" %}">
 
-        {% comment %} {% for link in header.header_links.all %}
+        <button class="standard_button" onClick="hamburgerClick(); this.blur();">
+             <svg class="svg_hamburger">
+                <use 
+                  href="{% static "icons/hamburger.svg" %}#idsvg_hamburger"
+                >
+                </use>
+            </svg>
+            <svg class="svg_cross hidden">
+                <use 
+                  href="{% static "icons/cross.svg" %}#idsvg_cross"
+                >
+                </use>
+            </svg>
+        </button>
+
+    </div>
+
+</header>
+
+<div class="dropdown">
+    <div class="dropdown-links">
+        {% for link in header.header_links.all %}
             <a class="header_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
                 {{link.link_name}}
             </a>
         {% endfor %}
         {% AddMe_tag %}
-        {% GoTo_tag %} {% endcomment %}
+        {% GoTo_tag %}
     </div>
+</div>
 
-</header>

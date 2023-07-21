@@ -1,0 +1,136 @@
+:root {
+  --var_for_test_of_css: 100px;
+}
+
+header {
+  padding: var(--VPaddings) var(--HPaddings);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #ffffff;
+  box-shadow: 0px 8px 40px -17px #0000001a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+
+  top: 0px;
+  position: sticky;
+  /* position: relative; */
+  position: -webkit-sticky;
+  z-index: 2000;
+}
+
+.header_link {
+  color: #263238;
+  text-decoration: none;
+}
+
+.header_sections_container {
+  display: flex;
+  justify-content: left;
+  flex-grow: 1;
+  padding: 0 2.08vw;
+}
+
+.header_sections_container > a {
+  padding: 0 2vw;
+}
+
+.header_links_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+}
+
+.header_mobile_menu_container {
+  display: none;
+  position: relative;
+}
+
+.standard_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+  color: #03a9f4;
+  text-decoration: none;
+  border: 1px solid #03a9f4;
+  background: inherit;
+
+  border-radius: 4px;
+  padding: 12px;
+  /* border: 1px solid #03a9f4; */
+  border: 1px solid #eceaf5;
+}
+
+.svg_hamburger,
+.svg_cross {
+  height: 24px;
+  width: 24px;
+}
+
+/* .svg_cross {
+  display: none;
+} */
+
+.dropdown {
+  background: #ffffff;
+  /* outline: 1px solid green; */
+
+  /* background: white; */
+  box-shadow: 0px 0px 10px 10px #0000001a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+
+  z-index: 0;
+
+  position: absolute;
+  top: 48px;
+  right: 0;
+  translate: 0 -120%;
+  transition-property: translate;
+  transition-duration: 0.3s;
+}
+
+.dropdown-links {
+  padding: var(--VPaddings) var(--HPaddings);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.active {
+  display: block;
+  translate: 0 14px;
+}
+
+@media screen and (max-width: 1100px) {
+  .header_links_container,
+  .header_sections_container {
+    display: none;
+  }
+
+  .header_mobile_menu_container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .dropdown,
+  .addme_link,
+  .goto_link {
+    width: 100%;
+  }
+}
