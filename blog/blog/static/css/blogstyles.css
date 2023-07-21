@@ -13,6 +13,9 @@
 }
 
 .allwrapper {
+  /* настройка, чтобы скрывать всплявающее меню в мобильной версии */
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -26,52 +29,4 @@
 .standard_button:focus {
   background: #0398dc;
   color: #ffffff;
-}
-
-footer {
-  color: #263238a6;
-
-  font-family: "Inter", sans-serif;
-  margin-top: auto;
-
-  padding: var(--VPaddings) var(--HPaddings);
-  background-color: #f2f4f6;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.upper_footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1.5vw;
-}
-
-.sections_container {
-  display: flex;
-  justify-content: left;
-  flex-grow: 1;
-  padding: 0 8vw;
-}
-
-.sections_container > a {
-  padding: 0 2vw;
-}
-
-.lower_footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 1.5vw;
-
-  gap: 8px;
-
-  border-top: 1px solid rgba(219, 215, 235, 1);
-}
-
-footer a {
-  color: inherit;
-  text-decoration: none;
 }

@@ -35,11 +35,15 @@ class NavLinks(Orderable):
 
 @register_snippet
 class Footer(ClusterableModel):
+    ToS_link = models.CharField(max_length=255, null=True, blank=True)
+    PP_link = models.CharField(max_length=255, null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     text = models.CharField(max_length=400)
     undertext = models.CharField(max_length=255, null=True, blank=True)
 
     panels = [
+        FieldPanel('ToS_link'),
+        FieldPanel('PP_link'),
         FieldPanel('url'),
         FieldPanel('text'),
         FieldPanel('undertext'),

@@ -1,5 +1,6 @@
 {% load static wagtailcore_tags %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
 <footer class = 'footer'>
     <div class = 'upper_footer'>
@@ -19,9 +20,12 @@
             A-ADS.COM
         </a>
     </div>
-    {% comment %} <hr /> {% endcomment %}
+    
     <div class = 'lower_footer'>
-        <p>{{ footer.text }} </p>
-        <p>{{ footer.undertext }} </p>        
+        <p>{{ footer.undertext }} </p>
+        <div class = 'footer_legaleeze'>
+            <a href="{{ request.site.root_url }} {{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
+            <a href="{{ request.site.root_url }} {{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
+        </div>      
     </div>
 </footer>
