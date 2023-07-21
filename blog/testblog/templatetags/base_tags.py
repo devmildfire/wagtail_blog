@@ -1,6 +1,8 @@
 from testblog.models import Footer, Header, AddMeButton, GoToButton
 from django import template
 
+from datetime import datetime
+
 register = template.Library()
 
 

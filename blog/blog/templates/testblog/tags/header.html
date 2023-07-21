@@ -38,7 +38,7 @@
             </svg>
         </button>
 
-        
+
         <div class="dropdown">
             <div class="dropdown-links">
                 {% for link in header.header_links.all %}
@@ -55,16 +55,3 @@
     </div>
 
 </header>
-
-{% comment %} <div class="dropdown">
-    <div class="dropdown-links">
-        {% for link in header.header_links.all %}
-            <a class="header_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
-                {{link.link_name}}
-            </a>
-        {% endfor %}
-        {% AddMe_tag %}
-        {% GoTo_tag %}
-    </div>
-</div> {% endcomment %}
-

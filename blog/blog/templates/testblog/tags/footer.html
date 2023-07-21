@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags  base_tags%}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
@@ -22,7 +22,7 @@
     </div>
     
     <div class = 'lower_footer'>
-        <p>{{ footer.undertext }} </p>
+        <p> @ {% now "Y" %} A-ADS </p>
         <div class = 'footer_legaleeze'>
             <a href="{{ request.site.root_url }} {{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
             <a href="{{ request.site.root_url }} {{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
