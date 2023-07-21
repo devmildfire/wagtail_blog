@@ -1,11 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
-html {
-  overflow: hidden;
-}
-
-/* //some comment */
 :root {
   --HPaddings: 8.5vw;
   --VPaddings: 1.04vw;

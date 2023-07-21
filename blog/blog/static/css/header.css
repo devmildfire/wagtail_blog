@@ -16,9 +16,7 @@ header {
 
   top: 0px;
   position: sticky;
-  /* position: relative; */
-  position: -webkit-sticky;
-  z-index: 2000;
+  z-index: 2;
 }
 
 .header_link {
@@ -73,16 +71,12 @@ header {
   width: 24px;
 }
 
-/* .svg_cross {
-  display: none;
-} */
-
 .dropdown {
   background: #ffffff;
   /* outline: 1px solid green; */
 
   /* background: white; */
-  box-shadow: 0px 0px 10px 10px #0000001a;
+  box-shadow: 0px 5px 5px 5px #0000001a;
 
   font-family: "Poppins", sans-serif;
   font-size: 16px;
@@ -90,9 +84,9 @@ header {
   z-index: 0;
 
   position: absolute;
-  top: 48px;
+  top: calc(50px + var(--VPaddings));
   right: 0;
-  translate: 0 -120%;
+  translate: 120% 0;
   transition-property: translate;
   transition-duration: 0.3s;
 }
@@ -112,7 +106,7 @@ header {
 
 .active {
   display: block;
-  translate: 0 14px;
+  translate: var(--HPaddings) 0;
 }
 
 @media screen and (max-width: 1100px) {
@@ -125,12 +119,21 @@ header {
     display: flex;
     flex-direction: column;
   }
+
+  .goto_link,
+  .addme_link {
+    width: max-content;
+  }
 }
 
 @media screen and (max-width: 550px) {
-  .dropdown,
-  .addme_link,
-  .goto_link {
+  .dropdown {
+    width: 100vw;
+    /* right: calc(-1 * var(--HPaddings)); */
+    right: calc(0 * var(--HPaddings));
+  }
+  .goto_link,
+  .addme_link {
     width: 100%;
   }
 }
