@@ -12,6 +12,11 @@
   margin: 0;
 }
 
+body {
+  background: url(../images/background_left.png) repeat-y;
+  background-position: top 500px left 0px;
+}
+
 .allwrapper {
   /* настройка, чтобы скрывать всплявающее меню в мобильной версии */
   overflow-x: hidden;
