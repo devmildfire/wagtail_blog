@@ -2,6 +2,57 @@
   --var_for_test_of_css: 100px;
 }
 
+.goto_link {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  text-decoration: none;
+  background: #03a9f4;
+
+  border-radius: 4px;
+  padding: 12px 24px 12px 24px;
+  border: 0px solid #03a9f4;
+}
+
+.goto_link:hover {
+  background: #59cafd;
+  color: #ffffff;
+}
+
+.goto_link:focus {
+  background: #0398dc;
+  color: #ffffff;
+}
+
+.addme_link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+  color: #03a9f4;
+  text-decoration: none;
+  border: 1px solid #03a9f4;
+  background: inherit;
+
+  border-radius: 4px;
+  padding: 11px 24px 11px 24px;
+  border: 1px solid #03a9f4;
+}
+
+.addme_link:hover {
+  background: #03a9f4;
+  color: #ffffff;
+}
+
+.addme_link:focus {
+  background: #0398dc;
+  color: #ffffff;
+}
+
 header {
   padding: var(--VPaddings) var(--HPaddings);
   display: flex;

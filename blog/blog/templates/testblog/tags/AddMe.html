@@ -1,36 +1,5 @@
 {% load static wagtailcore_tags %}
 
-<style>
-    .addme_link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        gap: 12px;
-        color: #03A9F4;
-        text-decoration: none;
-        border: 1px solid #03A9F4;
-        background: inherit;
-
-        border-radius: 4px;
-        padding: 11px 24px 11px 24px;
-        border: 1px solid #03A9F4;
-
-        {% comment %} width: max-content; {% endcomment %}
-    }
-
-    .addme_link:hover {
-        background: #03A9F4;
-        color: #FFFFFF;
-    }
-
-    .addme_link:focus {
-        background: #0398DC;
-        color: #FFFFFF;
-    }
-
-</style>
-
 <a class="addme_link" href="{{ request.site.root_url }} {{ AddMe.link }}" target="_blank"> 
     {{ AddMe.text }}
 </a>
