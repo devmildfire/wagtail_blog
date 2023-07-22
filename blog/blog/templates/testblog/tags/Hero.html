@@ -5,20 +5,53 @@
 
 <section class="hero_section">
 
-    <div class="blueblackDiv">
+    <div class="blueblackSubDiv">
+        <div class="blueblackDiv">
 
-        <p class="blackText">
-            {{ Hero.blackText }}
-        </p>
-        <p class="blueText">
-            {{ Hero.blueText }}
-        </p>
+            <p class="blackText">
+                {{ Hero.blackText }}
+            </p>
+            <p class="blueText">
+                {{ Hero.blueText }}
+            </p>
 
+        </div>
+
+        <p class="subText">
+            {{ Hero.subText }}
+        </p>
     </div>
 
-    <p class="subText">
-        {{ Hero.subText }}
-    </p>
+    <div class="hero_section_links_container">
+        
+        {% for link in Hero.hero_links.all %}
+            
+                
+            <a class="hero_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
+                <div class="hero_link_div">
+
+                    <svg class="svg_bitcoin">
+                        <use 
+                          href="{% static "icons/bitcoin.svg" %}#idsvg_bitcoin"
+                        >
+                        </use>
+                    </svg>
+
+                    <p class="hero_link_text">{{link.link_name}}</p>
+                    
+                    <svg class="svg_arrow">
+                        <use 
+                          href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
+                        >
+                        </use>
+                    </svg>
+                    
+                </div>
+            </a>
+            
+        {% endfor %}
+    
+    </div>
 
 </section>
 

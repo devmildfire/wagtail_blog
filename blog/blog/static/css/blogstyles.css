@@ -14,7 +14,7 @@
 
 body {
   background: url(../images/background_left_long.png) repeat-y,
-    url(../images/background_right_long.png) repeat-y;
+    url(../images/background_right_long.png) repeat-y, #f2f4f6;
   background-position: top 500px left 0px, top 1400px right 0px;
 }
 
