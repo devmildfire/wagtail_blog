@@ -13,8 +13,9 @@
 }
 
 body {
-  background: url(../images/background_left.png) repeat-y;
-  background-position: top 500px left 0px;
+  background: url(../images/background_left_long.png) repeat-y,
+    url(../images/background_right_long.png) repeat-y;
+  background-position: top 500px left 0px, top 1400px right 0px;
 }
 
 .allwrapper {
@@ -34,4 +35,12 @@ body {
 .standard_button:focus {
   background: #0398dc;
   color: #ffffff;
+}
+
+@media screen and (max-width: 550px) {
+  body {
+    background: url(../images/background_mobile_left.png) repeat-y,
+      url(../images/background_mobile_right.png) repeat-y;
+    background-position: top 700px left 0px, top 0px right 0px;
+  }
 }
