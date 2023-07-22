@@ -1,4 +1,4 @@
-from testblog.models import Footer, Header, AddMeButton, GoToButton
+from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection
 from django import template
 
 from datetime import datetime
@@ -39,4 +39,13 @@ def GoTo_tag(context):
     return {
         'request': context['request'],
         'GoTo': GoToButton.objects.first(),
+    }
+
+
+@register.inclusion_tag("testblog/tags/Hero.html", takes_context=True)
+def Hero_tag(context):
+
+    return {
+        'request': context['request'],
+        'Hero': HeroSection.objects.first(),
     }

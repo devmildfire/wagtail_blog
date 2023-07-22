@@ -1,0 +1,56 @@
+.hero_section {
+  padding: 4.1vw var(--HPaddings);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.blackText {
+  color: #263238;
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.blueText {
+  color: #03a9f4;
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.subText {
+  color: #263238;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+
+  width: 22vw;
+}
+
+@media screen and (max-width: 1790px) {
+  .subText {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .subText {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .subText {
+    width: 100%;
+  }
+
+  .blackText,
+  .blueText {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}

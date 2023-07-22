@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags %}
-{% load wagtailroutablepage_tags %}
+{% load wagtailroutablepage_tags base_tags%}
 
 
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
+
+{% Hero_tag %}
+
 
     {% if page.posts %}
     

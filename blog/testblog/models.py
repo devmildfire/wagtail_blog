@@ -23,6 +23,8 @@ class NavLinks(Orderable):
         "Footer", related_name="footer_links", null=True, blank=True)
     header = ParentalKey(
         "Header", related_name="header_links", null=True, blank=True)
+    hero_section = ParentalKey(
+        "HeroSection", related_name="hero_links", null=True, blank=True)
     # footer_link = models.URLField(null=True, blank=True)
     link_name = models.CharField(max_length=255)
     link_text = models.CharField(max_length=255)
@@ -95,6 +97,23 @@ class GoToButton(ClusterableModel):
 
     def __str__(self):
         return self.text
+
+
+@register_snippet
+class HeroSection(ClusterableModel):
+    blackText = models.CharField(max_length=1024)
+    blueText = models.CharField(max_length=1024)
+    subText = models.CharField(max_length=1024)
+
+    panels = [
+        FieldPanel('blackText'),
+        FieldPanel('blueText'),
+        FieldPanel('subText'),
+        InlinePanel('hero_links'),
+    ]
+
+    def __str__(self):
+        return self.blackText
 
 
 class BlogPageTag(TaggedItemBase):
