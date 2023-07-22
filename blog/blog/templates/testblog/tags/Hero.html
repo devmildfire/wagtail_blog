@@ -30,14 +30,9 @@
             <a class="hero_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
                 <div class="hero_link_div">
 
-                    <svg class="svg_bitcoin">
-                        <use 
-                          href="{% static "icons/bitcoin.svg" %}#idsvg_bitcoin"
-                        >
-                        </use>
-                    </svg>
+                    <img src="{{ link.link_image.url }}" />
 
-                    <p class="hero_link_text">{{link.link_name}}</p>
+                    <p class="hero_link_text">{{link.link_name}} </p>
                     
                     <svg class="svg_arrow">
                         <use 

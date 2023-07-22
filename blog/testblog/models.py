@@ -28,10 +28,12 @@ class NavLinks(Orderable):
     # footer_link = models.URLField(null=True, blank=True)
     link_name = models.CharField(max_length=255)
     link_text = models.CharField(max_length=255)
+    link_image = models.ImageField(null=True, blank=True)
 
     panels = [
         FieldPanel('link_name'),
         FieldPanel('link_text'),
+        FieldPanel('link_image'),
     ]
 
 
