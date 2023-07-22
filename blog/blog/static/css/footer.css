@@ -1,11 +1,11 @@
 footer {
-  color: #263238a6;
+  color: var(--FooterDarkTextColor);
 
   font-family: "Inter", sans-serif;
   margin-top: auto;
 
-  padding: var(--VPaddings) var(--HPaddings);
-  background-color: #f2f4f6;
+  padding: 40px var(--HPaddings) 24px;
+  background-color: var(--backgroundColor);
 
   display: flex;
   flex-direction: column;

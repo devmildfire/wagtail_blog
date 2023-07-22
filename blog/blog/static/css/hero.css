@@ -44,7 +44,7 @@
   max-width: 388px;
 }
 
-.hero_link :hover {
+.hero_link_div:hover {
   outline: 1px solid #03a9f4;
 }
 

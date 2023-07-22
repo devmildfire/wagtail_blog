@@ -4,6 +4,16 @@
 :root {
   --HPaddings: 8.5vw;
   --VPaddings: 1.04vw;
+
+  --backgroundColor: #f2f4f6;
+  --blueHoverColor: #03a9f4;
+  --blueGoToHoverColor: #59cafd;
+  --blueFocusColor: #0398dc;
+  --whiteColor: #ffffff;
+  --FooterDarkTextColor: #263238a6;
+  --HeaderDarkTextColor: #263238;
+  --StandardButonBorder: #eceaf5;
+  --ShadowColor: #0000001a;
 }
 
 * {
@@ -14,7 +24,7 @@
 
 body {
   background: url(../images/background_left_long.png) repeat-y,
-    url(../images/background_right_long.png) repeat-y, #f2f4f6;
+    url(../images/background_right_long.png) repeat-y, var(--backgroundColor);
   background-position: top 500px left 0px, top 1400px right 0px;
 }
 
@@ -27,14 +37,31 @@ body {
   height: 100vh;
 }
 
+.standard_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: var(--blueHoverColor);
+  text-decoration: none;
+
+  background: inherit;
+
+  padding: 12px;
+
+  border-radius: 4px;
+  border: 1px solid var(--StandardButonBorder);
+}
+
 .standard_button:hover {
-  background: #03a9f4;
-  color: #ffffff;
+  background: var(--blueHoverColor);
+  color: var(--whiteColor);
 }
 
 .standard_button:focus {
-  background: #0398dc;
-  color: #ffffff;
+  background: var(--blueFocusColor);
+  color: var(--whiteColor);
 }
 
 @media screen and (max-width: 550px) {
