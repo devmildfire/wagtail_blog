@@ -1,0 +1,43 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/crypto.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+{% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
+
+
+<section class="trending_Crypto_section">
+
+    <div class="Crypto_Title">
+        Trending Crypto Services
+    </div>
+
+    <div class="Crypto_Cards_Div">
+                
+        {% for post in blogpages %}
+            {% with post=post.specific %}
+            
+                {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
+            
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+</section>
+
+
+{% comment %} <img class="card_image" src="{{cardImage}}" /> 
+    
+<p class="card_name"> {{ cardName}} </p>
+
+<p class="card_info"> {{cardInfo}} </p>
+
+<div class="card_tag_div"> 
+    
+    {% for tag in cardTags %}
+        
+        <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+
+    {% endfor %}
+
+
+</div> {% endcomment %}

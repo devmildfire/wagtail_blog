@@ -1,6 +1,6 @@
 {% load static wagtailcore_tags base_tags %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
 {% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
 
 
@@ -16,7 +16,7 @@
         
         {% for tag in cardTags %}
             
-            <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+            <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a>
     
         {% endfor %}
     
