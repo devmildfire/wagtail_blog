@@ -183,6 +183,21 @@ class BlogIndexPage(RoutablePageMixin, Page):
         return render(request, "testblog/search.html", context)
         # return self.render(request, context)
 
+    @route(r'^add-me/$')
+    def add_me(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        return render(request, "testblog/add-me.html", context)
+
+    @route(r'^crypto/$')
+    def crypto(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        return render(request, "testblog/crypto.html", context)
+
+    @route(r'^ai-tools/$')
+    def ai_tools(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        return render(request, "testblog/ai-tools.html", context)
+
     class Meta:
 
         verbose_name = 'Blog Index Page'
