@@ -3,8 +3,9 @@
 {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
 {% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
 
+{% comment %} onclick="window.location='{{ request.site.root_url }} {{ link.link_text}}';" {% endcomment %}
 
-<div class="card_div" style="cursor: pointer;" onclick="window.location='{{ request.site.root_url }} {{ link.link_text}}';">
+<div class="card_div" style="cursor: pointer;">
 
     <img class="card_image" src="{{cardImage}}" /> 
     
@@ -14,59 +15,16 @@
 
     <div class="card_tag_div"> 
         
-        {% for tag in cardTags %}
+        {% for tag in cardTags|slice:"4" %}
             
             <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a>
     
         {% endfor %}
-    
+
+        {% if cardTags.count > 4 %}
+            <a class="tag" href='#'> + {{ cardTags.count|add:"-4" }} more </a>         
+        {% endif %}
     
     </div>
 
-
-
 </div>
-
-
-{% comment %} <div class="blueblackSubDiv">
-    <div class="blueblackDiv">
-
-        <p class="blackText">
-            {{ Hero.blackText }}
-        </p>
-        <p class="blueText">
-            {{ Hero.blueText }}
-        </p>
-
-    </div>
-
-    <p class="subText">
-        {{ Hero.subText }}
-    </p>
-</div>
-
-<div class="hero_section_links_container">
-    
-    {% for link in Hero.hero_links.all %}
-        
-            
-        <a class="hero_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
-            <div class="hero_link_div">
-
-                <img src="{{ link.link_image.url }}" />
-
-                <p class="hero_link_text">{{link.link_name}} </p>
-                
-                <svg class="svg_arrow">
-                    <use 
-                      href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
-                    >
-                    </use>
-                </svg>
-                
-            </div>
-        </a>
-        
-    {% endfor %}
-
-</div> {% endcomment %}

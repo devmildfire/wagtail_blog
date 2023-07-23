@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0px;
+  gap: 8px;
 
   padding: 12px 12px 22px 12px;
 
@@ -30,6 +30,11 @@
   width: 100%;
 }
 
+.card_image {
+  border-radius: 4px;
+  aspect-ratio: 326/208;
+}
+
 .card_info {
   color: var(--textNeutralColor);
 
@@ -37,6 +42,15 @@
   font-size: 14px;
 
   line-height: 20px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* line-height: 21px; */
+  max-height: 48px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .card_name {
@@ -45,11 +59,11 @@
 }
 
 .card_tag_div {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 4px;
 
-  /* width: 100%; */
+  width: 100%;
   /* width: max-content; */
 }
 

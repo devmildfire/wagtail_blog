@@ -13,7 +13,7 @@
 
     <div class="Crypto_Cards_Div">
                 
-        {% for post in blogpages %}
+        {% for post in blogpages|slice:"6" %}
             {% with post=post.specific %}
             
                 {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
@@ -21,6 +21,10 @@
             {% endwith %}
         {% endfor %}
     </div>
+
+    <button class="standard_button" onclick="this.blur(); ">
+        View All
+    </button>
 
 </section>
 
