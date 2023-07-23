@@ -49,3 +49,11 @@ def Hero_tag(context):
         'request': context['request'],
         'Hero': HeroSection.objects.first(),
     }
+
+
+@register.inclusion_tag("testblog/tags/Card.html", takes_context=True)
+def Card_tag(context):
+
+    return {
+        'request': context['request'],
+    }

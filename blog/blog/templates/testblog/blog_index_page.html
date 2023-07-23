@@ -10,6 +10,7 @@
 
 {% Hero_tag %}
 
+    {% comment %} {% include "./tags/Card.html" with cardName="This card name" %} {% endcomment %}
 
     {% if page.posts %}
     
@@ -42,7 +43,10 @@
 
     {% for post in blogpages %}
         {% with post=post.specific %}
-            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+
+        {% include "./tags/Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
+
+            {% comment %} <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
             <p> {{ post.intro }}</p>
             {{ post.body|richtext }}
 
@@ -50,12 +54,12 @@
             
                 <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
             
-            {% endfor %}
+            {% endfor %} {% endcomment %}
 
         {% endwith %}
     {% endfor %}
 
-    <br />
+    {% comment %} <br />
     Tags:
 
     {% for tag in tags %}
@@ -64,8 +68,11 @@
     
     {% endfor %}
 
-    <br />
-    Site settings:
+    <br /> {% endcomment %}
+
+
+
+    {% comment %} Site settings:
 
     {% if settings.site_settings.SocialMediaSettings.facebook %}
         <a href='{{ settings.site_settings.SocialMediaSettings.facebook }}'>
@@ -86,7 +93,7 @@
             youtube
             <i class="fa-brands fa-youtube"></i>
         </a>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
 
 {% endblock %}

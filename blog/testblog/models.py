@@ -194,6 +194,8 @@ class BlogPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    preview_image = models.ImageField(blank=True, null=True)
+
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     search_fields = Page.search_fields + [
@@ -206,6 +208,7 @@ class BlogPage(Page):
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
+        FieldPanel('preview_image'),
     ]
 
     search_fields = Page.search_fields + [

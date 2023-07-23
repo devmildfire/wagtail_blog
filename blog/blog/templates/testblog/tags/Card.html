@@ -1,0 +1,72 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+{% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
+
+
+<div class="card_div" style="cursor: pointer;" onclick="window.location='{{ request.site.root_url }} {{ link.link_text}}';">
+
+    <img class="card_image" src="{{cardImage}}" /> 
+    
+    <p class="card_name"> {{ cardName}} </p>
+    
+    <p class="card_info"> {{cardInfo}} </p>
+
+    <div class="card_tag_div"> 
+        
+        {% for tag in cardTags %}
+            
+            <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+    
+        {% endfor %}
+    
+    
+    </div>
+
+
+
+</div>
+
+
+{% comment %} <div class="blueblackSubDiv">
+    <div class="blueblackDiv">
+
+        <p class="blackText">
+            {{ Hero.blackText }}
+        </p>
+        <p class="blueText">
+            {{ Hero.blueText }}
+        </p>
+
+    </div>
+
+    <p class="subText">
+        {{ Hero.subText }}
+    </p>
+</div>
+
+<div class="hero_section_links_container">
+    
+    {% for link in Hero.hero_links.all %}
+        
+            
+        <a class="hero_link" href="{{ request.site.root_url }} {{ link.link_text}}" target="_blank">
+            <div class="hero_link_div">
+
+                <img src="{{ link.link_image.url }}" />
+
+                <p class="hero_link_text">{{link.link_name}} </p>
+                
+                <svg class="svg_arrow">
+                    <use 
+                      href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
+                    >
+                    </use>
+                </svg>
+                
+            </div>
+        </a>
+        
+    {% endfor %}
+
+</div> {% endcomment %}
