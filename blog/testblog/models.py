@@ -220,3 +220,36 @@ class BlogPage(Page):
 
         verbose_name = 'Blog Page'
         verbose_name_plural = 'Blog Pages'
+
+
+class AIToolPage(Page):
+    date = models.DateField("Post date")
+    intro = models.CharField(max_length=250)
+    body = RichTextField(blank=True)
+
+    preview_image = models.ImageField(blank=True, null=True)
+
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+
+    search_fields = Page.search_fields + [
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    ]
+
+    content_panels = Page.content_panels + [
+        FieldPanel('tags'),
+        FieldPanel('date'),
+        FieldPanel('intro'),
+        FieldPanel('body'),
+        FieldPanel('preview_image'),
+    ]
+
+    search_fields = Page.search_fields + [
+        index.SearchField("body"),
+        index.SearchField("intro"),
+    ]
+
+    class Meta:
+
+        verbose_name = 'AI Tool Page'
+        verbose_name_plural = 'AI Tools Pages'

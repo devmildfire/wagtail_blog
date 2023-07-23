@@ -1,4 +1,4 @@
-from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection
+from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, BlogIndexPage
 from django import template
 
 from datetime import datetime
@@ -12,6 +12,7 @@ def footer_tag(context):
     return {
         'request': context['request'],
         'footer': Footer.objects.first(),
+        'blog_page': BlogIndexPage.objects.first(),
     }
 
 
@@ -21,6 +22,7 @@ def header_tag(context):
     return {
         'request': context['request'],
         'header': Header.objects.first(),
+        'blog_page': BlogIndexPage.objects.first(),
     }
 
 
@@ -30,6 +32,7 @@ def AddMe_tag(context):
     return {
         'request': context['request'],
         'AddMe': AddMeButton.objects.first(),
+        'blog_page': BlogIndexPage.objects.first(),
     }
 
 

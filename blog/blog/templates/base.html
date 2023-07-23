@@ -35,7 +35,7 @@
 
     <body class="{% block body_class %}{% endblock %}">
         <div class = 'allwrapper'> 
-        {% wagtailuserbar %}
+        {% comment %} {% wagtailuserbar %} {% endcomment %}
         {% header_tag %}
 
         {% block content %}{% endblock %}
