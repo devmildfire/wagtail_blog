@@ -118,100 +118,100 @@ class HeroSection(ClusterableModel):
         return self.blackText
 
 
-class BlogPageTag(TaggedItemBase):
+class CryptoPageTag(TaggedItemBase):
     content_object = ParentalKey(
-        'BlogPage',
+        'CryptoPage',
         related_name='tagged_items',
         on_delete=models.CASCADE,
     )
 
 
-class BlogIndexPage(RoutablePageMixin, Page):
-    intro = RichTextField(blank=True)
+# class CatalogIndexPage(RoutablePageMixin, Page):
+#     intro = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('intro')
-    ]
+#     content_panels = Page.content_panels + [
+#         FieldPanel('intro')
+#     ]
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        blogpages = BlogPage.objects.live().order_by('-first_published_at')
-        Post_pages = BlogPage.objects.child_of(self)
+#     def get_context(self, request, *args, **kwargs):
+#         context = super().get_context(request, *args, **kwargs)
+#         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+#         Post_pages = CryptoPage.objects.child_of(self)
 
-        def listify(value):
-            return [tag.name for tag in value.all()]
+#         def listify(value):
+#             return [tag.name for tag in value.all()]
 
-        tags = []
+#         tags = []
 
-        for post_page in Post_pages:
-            tags_list = listify(post_page.tags)
-            tags = tags + tags_list
+#         for post_page in Post_pages:
+#             tags_list = listify(post_page.tags)
+#             tags = tags + tags_list
 
-        tags = list(set(tags))
+#         tags = list(set(tags))
 
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            blogpages = blogpages.filter(tags__slug__in=[tag])
+#         if request.GET.get('tag', None):
+#             tag = request.GET.get('tag')
+#             blogpages = blogpages.filter(tags__slug__in=[tag])
 
-        print('the blogpages are reset')
-        context['blogpages'] = blogpages
-        context['tags'] = tags
-        return context
+#         print('the blogpages are reset')
+#         context['blogpages'] = blogpages
+#         context['tags'] = tags
+#         return context
 
-    @route(r'^search/$')
-    def post_search(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        context['a_special_test'] = 'Test of Routable Page for search'
+#     @route(r'^search/$')
+#     def post_search(self, request, *args, **kwargs):
+#         context = self.get_context(request, *args, **kwargs)
+#         context['a_special_test'] = 'Test of Routable Page for search'
 
-        search_query = request.GET.get('q', None)
+#         search_query = request.GET.get('q', None)
 
-        self.posts = BlogPage.objects.child_of(self)
+#         self.posts = CryptoPage.objects.child_of(self)
 
-        if search_query:
-            self.posts = self.posts.search(search_query)
+#         if search_query:
+#             self.posts = self.posts.search(search_query)
 
-        # context['blogpages'] = []
-        context['blogpages'] = self.posts
-        context['search_query'] = search_query
+#         # context['blogpages'] = []
+#         context['blogpages'] = self.posts
+#         context['search_query'] = search_query
 
-        print('post_search method worked')
-        print(self.posts)
+#         print('post_search method worked')
+#         print(self.posts)
 
-        print('blogpages are equal to...')
-        print(context['blogpages'])
+#         print('blogpages are equal to...')
+#         print(context['blogpages'])
 
-        return render(request, "testblog/search.html", context)
-        # return self.render(request, context)
+#         return render(request, "testblog/search.html", context)
+#         # return self.render(request, context)
 
-    @route(r'^add-me/$')
-    def add_me(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        return render(request, "testblog/add-me.html", context)
+#     @route(r'^add-me/$')
+#     def add_me(self, request, *args, **kwargs):
+#         context = self.get_context(request, *args, **kwargs)
+#         return render(request, "testblog/add-me.html", context)
 
-    @route(r'^crypto/$')
-    def crypto(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        return render(request, "testblog/crypto.html", context)
+#     @route(r'^crypto/$')
+#     def crypto(self, request, *args, **kwargs):
+#         context = self.get_context(request, *args, **kwargs)
+#         return render(request, "testblog/crypto.html", context)
 
-    @route(r'^ai-tools/$')
-    def ai_tools(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        return render(request, "testblog/ai-tools.html", context)
+#     @route(r'^ai-tools/$')
+#     def ai_tools(self, request, *args, **kwargs):
+#         context = self.get_context(request, *args, **kwargs)
+#         return render(request, "testblog/ai-tools.html", context)
 
-    class Meta:
+#     class Meta:
 
-        verbose_name = 'Blog Index Page'
-        verbose_name_plural = 'Blog Index Pages'
+#         verbose_name = 'Catalog Index Page'
+#         verbose_name_plural = 'Catalog Index Pages'
 
 
-class BlogPage(Page):
+class CryptoPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
     preview_image = models.ImageField(blank=True, null=True)
 
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    tags = ClusterTaggableManager(through=CryptoPageTag, blank=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -233,8 +233,8 @@ class BlogPage(Page):
 
     class Meta:
 
-        verbose_name = 'Blog Page'
-        verbose_name_plural = 'Blog Pages'
+        verbose_name = 'Crypto Product Page'
+        verbose_name_plural = 'Crypto Product Pages'
 
 
 class AIToolPage(Page):
@@ -244,7 +244,7 @@ class AIToolPage(Page):
 
     preview_image = models.ImageField(blank=True, null=True)
 
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    tags = ClusterTaggableManager(through=CryptoPageTag, blank=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),

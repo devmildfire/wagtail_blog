@@ -1,11 +1,5 @@
 {% load static wagtailcore_tags base_tags %}
 
-{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
-{% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
-
-{% comment %} onclick="window.location='{{ request.site.root_url }} {{ link.link_text}}';" {% endcomment %}
-
-{% comment %} href="{% pageurl post %}" {% endcomment %}
 
 <div class="card_div" style="cursor: pointer;" onclick="window.location='{% pageurl post %}';">
 

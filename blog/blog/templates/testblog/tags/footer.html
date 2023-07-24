@@ -9,7 +9,7 @@
 
 
             {% for link in footer.footer_links.all %}
-                <a href="{% pageurl blog_page %}{{ link.link_text}}" target="_blank">
+                <a href="{% pageurl home_page %}{{ link.link_text}}" target="_blank">
                     {{link.link_name}}
                 </a>
             {% endfor %}
@@ -24,8 +24,10 @@
     <div class = 'lower_footer'>
         <p> @ {% now "Y" %} A-ADS </p>
         <div class = 'footer_legaleeze'>
-            <a href="{% pageurl blog_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
-            <a href="{% pageurl blog_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
+            {% comment %} <a href="{% pageurl blog_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
+            <a href="{% pageurl blog_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>   {% endcomment %}
+            <a href="{% pageurl home_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
+            <a href="{% pageurl home_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
         </div>      
     </div>
 </footer>

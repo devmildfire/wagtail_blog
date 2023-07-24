@@ -1,8 +1,102 @@
 {% extends "base.html" %}
+
 {% load static wagtailcore_tags %}
+{% load wagtailcore_tags %}
+{% load wagtailroutablepage_tags base_tags%}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block content %}
     {{ page.body|richtext }}
-{% endblock content %}
+
+
+    {% Hero_tag %}
+
+    {% comment %} {% include "./tags/Card.html" with cardName="This card name" %} {% endcomment %}
+
+    {% if page.posts %}
+    
+        there are some results in posts
+
+        {{ page.posts }}
+
+        {% for post in page.posts %}
+
+        {% comment %} {% with post=post.specific %} {% endcomment %}
+
+            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+            <p> {{ post.intro }}</p>
+            {{ post.body|richtext }}
+
+            {% for tag in post.tags.all %}
+            
+                <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
+            
+            {% endfor %}
+{% comment %} 
+        {% endwith %} {% endcomment %}
+        {% endfor %} 
+
+    {% endif %}
+
+    {% comment %} <h1>{{ page.title }}</h1>
+
+    <div class="intro">{{ page.intro|richtext }}</div> {% endcomment %}
+
+    {% comment %} {% for post in blogpages %}
+        {% with post=post.specific %}
+
+        {% include "./tags/Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
+
+
+        {% endwith %}
+    {% endfor %} {% endcomment %}
+
+
+
+    {% comment %} {% include "./tags/TrendingCrypto.html" %} {% endcomment %}
+
+    {% include "../tags/TrendingCrypto.html" %}
+
+
+
+    {% comment %} <br />
+    Tags:
+
+    {% for tag in tags %}
+    
+        <a href='{% pageurl page %}?tag={{tag}}'> <span> <b>{{ tag }}</b> </span> </a>
+    
+    {% endfor %}
+
+    <br /> {% endcomment %}
+
+
+
+    {% comment %} Site settings:
+
+    {% if settings.site_settings.SocialMediaSettings.facebook %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.facebook }}'>
+            facebook
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+    {% endif %}
+
+    {% if settings.site_settings.SocialMediaSettings.twitter %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.twitter }}'>
+            twitter
+            <i class="fa-brands fa-twitter"></i>
+        </a>
+    {% endif %}
+
+    {% if settings.site_settings.SocialMediaSettings.youtube %}
+        <a href='{{ settings.site_settings.SocialMediaSettings.youtube }}'>
+            youtube
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    {% endif %} {% endcomment %}
+
+
+{% endblock %}
+
+

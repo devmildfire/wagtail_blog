@@ -9,7 +9,7 @@
         
             {% for link in header.header_links.all %}
                 
-                <a class="header_link" href="{% pageurl blog_page %}{{ link.link_text }}" target="_blank">
+                <a class="header_link" href="{% pageurl home_page %}{{ link.link_text }}" target="_blank">
                     {{link.link_name}}
                 </a>
 
