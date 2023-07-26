@@ -8,12 +8,14 @@
 <section class="trending_Crypto_section">
 
     <div class="Crypto_Title">
-        Trending Crypto Services
+        {{ Title }}
     </div>
 
     <div class="Crypto_Cards_Div">
                 
-        {% for post in blogpages|slice:"6" %}
+        {% comment %} {% for post in blogpages|slice:"6" %} {% endcomment %}
+
+        {% for post in itemslist|slice:"6" %}
             {% with post=post.specific %}
             
                 {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}

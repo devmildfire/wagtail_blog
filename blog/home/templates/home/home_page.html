@@ -4,15 +4,13 @@
 {% load wagtailcore_tags %}
 {% load wagtailroutablepage_tags base_tags%}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}template-homepage{% endblock %} 
 
 {% block content %}
-    {{ page.body|richtext }}
 
+{% comment %} {{ page.body|richtext }} {% endcomment %}
 
     {% Hero_tag %}
-
-    {% comment %} {% include "./tags/Card.html" with cardName="This card name" %} {% endcomment %}
 
     {% if page.posts %}
     
@@ -53,10 +51,9 @@
     {% endfor %} {% endcomment %}
 
 
+    {% include "../tags/TrendingCrypto.html" with Title="Trending Crypto Services" itemslist=blogpages %}
 
-    {% comment %} {% include "./tags/TrendingCrypto.html" %} {% endcomment %}
-
-    {% include "../tags/TrendingCrypto.html" %}
+    {% include "../tags/TrendingCrypto.html" with Title="Trending AI Tools" itemslist=blogpages %}
 
 
 
