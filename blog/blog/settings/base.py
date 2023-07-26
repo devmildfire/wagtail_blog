@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 
 # Application definition
+CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
+
 
 INSTALLED_APPS = [
     "wagtail.contrib.routable_page",

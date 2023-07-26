@@ -125,6 +125,13 @@ class CryptoPageTag(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
+class AIToolPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        'AIToolPage',
+        related_name='tagged_items',
+        on_delete=models.CASCADE,
+    )
+
 
 # class CatalogIndexPage(RoutablePageMixin, Page):
 #     intro = RichTextField(blank=True)
@@ -244,7 +251,7 @@ class AIToolPage(Page):
 
     preview_image = models.ImageField(blank=True, null=True)
 
-    tags = ClusterTaggableManager(through=CryptoPageTag, blank=True)
+    tags = ClusterTaggableManager(through=AIToolPageTag, blank=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),

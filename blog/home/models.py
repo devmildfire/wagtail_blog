@@ -33,6 +33,9 @@ class HomePage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+        aitoolspages = AIToolPage.objects.child_of(self)
+        # aitoolspages = AIToolPage.objects
+        # aitoolspages = AIToolPage.objects.live().order_by('-first_published_at')
         Post_pages = CryptoPage.objects.child_of(self)
 
         def listify(value):
@@ -52,6 +55,7 @@ class HomePage(RoutablePageMixin, Page):
 
         print('the blogpages are reset')
         context['blogpages'] = blogpages
+        context['aitoolspages'] = aitoolspages
         context['tags'] = tags
         return context
 
