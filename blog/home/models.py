@@ -10,15 +10,7 @@ from wagtail.fields import RichTextField
 from wagtail.models import Orderable, Page
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
-# from testblog.models import CryptoPage
 from testblog.models import *
-
-# class HomePage(Page):
-#     body = RichTextField(blank=True)
-
-#     content_panels = Page.content_panels + [
-#         FieldPanel('body'),
-#     ]
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -62,6 +54,7 @@ class HomePage(RoutablePageMixin, Page):
     @route(r'^search/$')
     def post_search(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
+        self.title = "Search"
         context['a_special_test'] = 'Test of Routable Page for search'
 
         search_query = request.GET.get('q', None)
@@ -87,16 +80,19 @@ class HomePage(RoutablePageMixin, Page):
     @route(r'^add-me/$')
     def add_me(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
+        self.title = "Add project to catalog"
         return render(request, "testblog/add-me.html", context)
 
     @route(r'^crypto/$')
     def crypto(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
+        self.title = "Crypto Services"
         return render(request, "testblog/crypto.html", context)
 
     @route(r'^ai-tools/$')
     def ai_tools(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
+        self.title = "AI Tools"
         return render(request, "testblog/ai-tools.html", context)
 
     class Meta:
