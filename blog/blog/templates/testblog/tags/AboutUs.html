@@ -1,0 +1,52 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/aboutUs.css' %}">
+
+<section class="aboutUs_section">
+
+    <div> {{ about_us.title }} </div>
+
+    <div class="blueblackSubDiv">
+        <div class="blueblackDiv">
+
+            <p class="blackText">
+                {{ about_us.bigText }}
+            </p>
+
+
+        </div>
+
+        <p class="subText">
+            {{ about_us.subText }}
+        </p>
+    </div>
+
+    <div class="about_us_section_features_container">
+        
+        {% for card in about_us.feature_cards.all %}
+            
+                
+            {% comment %} <a class="feature_card" href="{{ request.site.root_url }} {{ card.card_link}}" target="_blank"> {% endcomment %}
+                <div class="feature_card_div">
+
+                    <img src="{{ card.card_image.url }}" />
+
+                    <p class="card_name">{{card.card_name}} </p>
+
+                    <p class="card_text">{{card.card_text}} </p>
+                    
+                    {% comment %} <svg class="svg_arrow">
+                        <use 
+                          href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
+                        >
+                        </use>
+                    </svg> {% endcomment %}
+                    
+                </div>
+            {% comment %} </a> {% endcomment %}
+            
+        {% endfor %}
+    
+    </div>
+
+</section>
