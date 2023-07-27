@@ -37,6 +37,24 @@ class NavLinks(Orderable):
     ]
 
 
+class FeatureCards(Orderable):
+    AboutUs = ParentalKey(
+        "AboutUs", related_name="feature_cards", null=True, blank=True)
+
+    # footer_link = models.URLField(null=True, blank=True)
+    card_name = models.CharField(max_length=255)
+    card_text = models.CharField(max_length=255)
+    card_link = models.CharField(max_length=255, null=True, blank=True)
+    card_image = models.ImageField(null=True, blank=True)
+
+    panels = [
+        FieldPanel('card_name'),
+        FieldPanel('card_text'),
+        FieldPanel('card_link'),
+        FieldPanel('card_image'),
+    ]
+
+
 @register_snippet
 class Footer(ClusterableModel):
     ToS_link = models.CharField(max_length=255, null=True, blank=True)
@@ -56,6 +74,28 @@ class Footer(ClusterableModel):
 
     def __str__(self):
         return self.text
+
+
+@register_snippet
+class AboutUs(ClusterableModel):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    bigText = models.CharField(max_length=255, null=True, blank=True)
+    subText = models.CharField(max_length=255, null=True, blank=True)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('bigText'),
+        FieldPanel('subText'),
+        InlinePanel('feature_cards'),
+    ]
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+
+        verbose_name = 'About Us section'
+        verbose_name_plural = 'About Us sections'
 
 
 @register_snippet
@@ -125,90 +165,13 @@ class CryptoPageTag(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
+
 class AIToolPageTag(TaggedItemBase):
     content_object = ParentalKey(
         'AIToolPage',
         related_name='tagged_items',
         on_delete=models.CASCADE,
     )
-
-
-# class CatalogIndexPage(RoutablePageMixin, Page):
-#     intro = RichTextField(blank=True)
-
-#     content_panels = Page.content_panels + [
-#         FieldPanel('intro')
-#     ]
-
-#     def get_context(self, request, *args, **kwargs):
-#         context = super().get_context(request, *args, **kwargs)
-#         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
-#         Post_pages = CryptoPage.objects.child_of(self)
-
-#         def listify(value):
-#             return [tag.name for tag in value.all()]
-
-#         tags = []
-
-#         for post_page in Post_pages:
-#             tags_list = listify(post_page.tags)
-#             tags = tags + tags_list
-
-#         tags = list(set(tags))
-
-#         if request.GET.get('tag', None):
-#             tag = request.GET.get('tag')
-#             blogpages = blogpages.filter(tags__slug__in=[tag])
-
-#         print('the blogpages are reset')
-#         context['blogpages'] = blogpages
-#         context['tags'] = tags
-#         return context
-
-#     @route(r'^search/$')
-#     def post_search(self, request, *args, **kwargs):
-#         context = self.get_context(request, *args, **kwargs)
-#         context['a_special_test'] = 'Test of Routable Page for search'
-
-#         search_query = request.GET.get('q', None)
-
-#         self.posts = CryptoPage.objects.child_of(self)
-
-#         if search_query:
-#             self.posts = self.posts.search(search_query)
-
-#         # context['blogpages'] = []
-#         context['blogpages'] = self.posts
-#         context['search_query'] = search_query
-
-#         print('post_search method worked')
-#         print(self.posts)
-
-#         print('blogpages are equal to...')
-#         print(context['blogpages'])
-
-#         return render(request, "testblog/search.html", context)
-#         # return self.render(request, context)
-
-#     @route(r'^add-me/$')
-#     def add_me(self, request, *args, **kwargs):
-#         context = self.get_context(request, *args, **kwargs)
-#         return render(request, "testblog/add-me.html", context)
-
-#     @route(r'^crypto/$')
-#     def crypto(self, request, *args, **kwargs):
-#         context = self.get_context(request, *args, **kwargs)
-#         return render(request, "testblog/crypto.html", context)
-
-#     @route(r'^ai-tools/$')
-#     def ai_tools(self, request, *args, **kwargs):
-#         context = self.get_context(request, *args, **kwargs)
-#         return render(request, "testblog/ai-tools.html", context)
-
-#     class Meta:
-
-#         verbose_name = 'Catalog Index Page'
-#         verbose_name_plural = 'Catalog Index Pages'
 
 
 class CryptoPage(Page):
