@@ -4,19 +4,19 @@
 
 <section class="aboutUs_section">
 
-    <div> {{ about_us.title }} </div>
+    
+    <div class="WhySubDiv">
+        <div class="smallTitle"> {{ about_us.title }} </div>
+        
+        <div class="WhyBlackDiv">
 
-    <div class="blueblackSubDiv">
-        <div class="blueblackDiv">
-
-            <p class="blackText">
+            <p class="WhyBlackTextTitle">
                 {{ about_us.bigText }}
             </p>
 
-
         </div>
 
-        <p class="subText">
+        <p class="WhySubText">
             {{ about_us.subText }}
         </p>
     </div>
@@ -29,11 +29,11 @@
             {% comment %} <a class="feature_card" href="{{ request.site.root_url }} {{ card.card_link}}" target="_blank"> {% endcomment %}
                 <div class="feature_card_div">
 
-                    <img src="{{ card.card_image.url }}" />
+                    <img class="aboutImage" src="{{ card.card_image.url }}" />
 
-                    <p class="card_name">{{card.card_name}} </p>
+                    <p class="about_card_name">{{card.card_name}} </p>
 
-                    <p class="card_text">{{card.card_text}} </p>
+                    <p class="about_card_text">{{card.card_text}} </p>
                     
                     {% comment %} <svg class="svg_arrow">
                         <use 

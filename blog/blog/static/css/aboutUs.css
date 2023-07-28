@@ -1,0 +1,123 @@
+.aboutUs_section {
+  padding: 4.1vw var(--HPaddings);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.WhySubDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.smallTitle {
+  color: var(--Neutral300Color);
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.WhyBlackTextTitle {
+  color: var(--HeaderDarkTextColor);
+  font-size: 48px;
+  line-height: 50px;
+}
+
+.WhySubText {
+  color: var(--textNeutralColor);
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.hero_link {
+  width: 35vw;
+  min-width: calc(min(319px, 100%));
+  max-width: 388px;
+}
+
+.hero_link_div:hover {
+  outline: 1px solid var(--blueHoverColor);
+}
+
+.feature_card_div {
+  background: var(--whiteColor);
+
+  max-width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px;
+
+  padding: 20px 30px;
+
+  box-shadow: 0px 9px 40px 0px var(--seconsShadowColor);
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+}
+
+.about_us_section_features_container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  row-gap: 2vw;
+  column-gap: 2vw;
+}
+
+.aboutImage {
+  padding-bottom: 20px;
+}
+
+.about_card_name {
+  color: var(--HeaderDarkTextColor);
+  text-align: center;
+
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.about_card_text {
+  padding-top: 8px;
+
+  width: 250px;
+  height: 45%;
+
+  color: var(--textNeutralColor);
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+@media screen and (max-width: 1790px) {
+}
+
+@media screen and (max-width: 1024px) {
+}
+
+@media screen and (max-width: 550px) {
+}
