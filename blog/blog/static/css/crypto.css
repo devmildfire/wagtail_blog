@@ -18,19 +18,49 @@
 }
 
 .Crypto_Cards_Div {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
   column-gap: 30px;
-  row-gap: 20px;
+  row-gap: 20px; */
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  row-gap: 30px;
+  column-gap: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .Crypto_Cards_Div {
+    /* grid-template-columns: 1fr 1fr; */
+
+    column-gap: 8px;
+    row-gap: 10px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .Crypto_Cards_Div {
-    grid-template-columns: 1fr 1fr;
+  .Crypto_Title {
+    font-size: 40px;
+    line-height: 50px;
+  }
 
-    column-gap: 2vw;
-    row-gap: 1.3vw;
+  .Crypto_Cards_Div {
+    /* grid-template-columns: 1fr 1fr; */
+
+    column-gap: 8px;
+    row-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .Crypto_Title {
+    font-size: 32px;
+    line-height: 40px;
   }
 }

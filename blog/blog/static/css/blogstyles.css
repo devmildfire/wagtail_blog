@@ -70,10 +70,26 @@ body {
   color: var(--whiteColor);
 }
 
+@media screen and (max-width: 1325px) {
+  :root {
+    --HPaddings: 3.9vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --HPaddings: 3.9vw;
+  }
+}
+
 @media screen and (max-width: 550px) {
   body {
     background: url(../images/background_mobile_left.png) repeat-y,
       url(../images/background_mobile_right.png) repeat-y;
     background-position: top 700px left 0px, top 0px right 0px;
+  }
+
+  :root {
+    --HPaddings: 5.5vw;
   }
 }
