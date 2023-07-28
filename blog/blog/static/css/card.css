@@ -80,3 +80,9 @@
 
   text-decoration: none;
 }
+
+@media screen and (max-width: 550px) {
+  .card_div {
+    max-width: 320px;
+  }
+}

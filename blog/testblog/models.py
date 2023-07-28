@@ -56,6 +56,24 @@ class FeatureCards(Orderable):
 
 
 @register_snippet
+class YourAddHere(ClusterableModel):
+    title = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, null=True, blank=True)
+    link_text = models.CharField(max_length=255, null=True, blank=True)
+    text = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('link'),
+        FieldPanel('link_text'),
+        FieldPanel('text'),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
 class Footer(ClusterableModel):
     ToS_link = models.CharField(max_length=255, null=True, blank=True)
     PP_link = models.CharField(max_length=255, null=True, blank=True)
