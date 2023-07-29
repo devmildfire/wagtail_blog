@@ -79,7 +79,16 @@
 }
 
 .openForAdsNewLink {
-  line-height: 24px;
+  /* line-height: 24px; */
+
+  position: relative;
+  /* line-height: 24px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  height: 24px;
 }
 
 .svg_openForAdsMask {
@@ -108,7 +117,8 @@
 }
 
 .tooltip_div {
-  --arrow-height: 15px;
+  --arrow-height: 8px;
+  --arrow-width: 28px;
   position: absolute;
   left: 50%;
   top: 0;
@@ -140,7 +150,11 @@
 
   transform: translateX(-50%);
 
-  border: var(--arrow-height) solid;
+  border-top: var(--arrow-height) solid;
+  border-left: var(--arrow-width) solid #0000;
+  border-right: var(--arrow-width) solid #0000;
+
+  /* border: var(--arrow-height) solid; */
   border-color: var(--whiteColor, #fff) #0000 #0000 #0000;
   /* border-color: var(--blueFocusColor) #0000 #0000 #0000; */
 }
@@ -159,7 +173,56 @@
   /* top: -230%; */
   visibility: visible;
   opacity: 1;
+
   transform: translateX(-50%) translateY(calc(-100% - var(--arrow-height)));
+}
+
+.openForAdsNewLink:hover .tooltip_div {
+  /* top: -230%; */
+  color: var(--white-white, #fff);
+  /* font-feature-settings: "clig" off, "liga" off; */
+
+  /* Caption 1 */
+  /* font-family: Noto Sans; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+
+  visibility: visible;
+  opacity: 1;
+
+  white-space: nowrap;
+
+  display: flex;
+  padding: 16px 24px;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  align-self: stretch;
+
+  border-radius: 4px;
+  background: var(--neutral-500, #263238);
+  border-color: var(--neutral-500, #263238) #0000 #0000 #0000;
+
+  transform: translateX(-50%) translateY(calc(-100% - var(--arrow-height)));
+}
+
+.openForAdsNewLink:hover .tooltip_div::before {
+  border-color: var(--neutral-500, #263238) #0000 #0000 #0000;
+  border-top: var(--arrow-height) solid #263238;
+  border-left: var(--arrow-width) solid #0000;
+  border-right: var(--arrow-width) solid #0000;
+}
+
+.advertise {
+  color: var(--blue-500, #03a9f4);
+  /* font-feature-settings: "clig" off, "liga" off; */
+  /* font-family: Noto Sans; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
 }
 
 @media screen and (max-width: 550px) {

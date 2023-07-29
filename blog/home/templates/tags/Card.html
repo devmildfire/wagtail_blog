@@ -37,13 +37,19 @@
         </div>
 
         {% if openForAds %}
-            <a class="openForAdsNewLink" href='#'>
+            <a class="openForAdsNewLink" href='https://a-ads.com'>
                 <svg class="svg_openForAdsMask">
                     <use 
                     href="{% static "icons/mask.svg" %}#idsvg_mask"
                     >
                     </use>
                 </svg>
+                <div class="tooltip_div">
+
+                    <p> Advertise on this website with A-ADS </p>
+                    <p class="advertise"> advertise  </p>
+
+                </div>  
             </a>         
         {% endif %}
 
