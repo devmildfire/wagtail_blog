@@ -18,7 +18,7 @@
         {% for post in itemslist|slice:"6" %}
             {% with post=post.specific %}
             
-                {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
+                {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all openForAds=post.open_for_ads %}
             
             {% endwith %}
         {% endfor %}

@@ -1,6 +1,14 @@
 {% load static wagtailcore_tags %}
 
 <a class="goto_link" href=" {{ GoTo.link}}"> 
-    <img src="{% static 'icons/mask.svg' alt="A-ADS Mask Logo" %}">
+    {% comment %} <img src="{% static 'icons/mask.svg' alt="A-ADS Mask Logo" %}"> {% endcomment %}
+
+    <svg class="svg_GoToAdsMask">
+        <use 
+        href="{% static "icons/mask.svg" %}#idsvg_mask"
+        >
+        </use>
+    </svg>
+
     {{ GoTo.text }}
 </a>

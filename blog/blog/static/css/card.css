@@ -67,6 +67,27 @@
   /* width: max-content; */
 }
 
+.card_tags_and_mask_div {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  width: 100%;
+}
+
+.openForAdsNewLink {
+  line-height: 24px;
+}
+
+.svg_openForAdsMask {
+  width: 24px;
+  height: 24px;
+  color: var(--blueHoverColor);
+}
+
 .tag {
   background: var(--tagColor);
   color: var(--HeaderDarkTextColor);
@@ -79,6 +100,66 @@
   line-height: 20px;
 
   text-decoration: none;
+}
+
+.tag:hover {
+  color: var(--blueHoverColor);
+  outline: 1px solid var(--blueHoverColor, #03a9f4);
+}
+
+.tooltip_div {
+  --arrow-height: 15px;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  /* background-color: #000; */
+  /* color: var(--whiteColor); */
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--whiteColor, #fff);
+  /* background: var(--blueFocusColor); */
+
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+.tooltip_div::before {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  top: 100%;
+
+  transform: translateX(-50%);
+
+  border: var(--arrow-height) solid;
+  border-color: var(--whiteColor, #fff) #0000 #0000 #0000;
+  /* border-color: var(--blueFocusColor) #0000 #0000 #0000; */
+}
+
+.tag_with_tooltip_div {
+  position: relative;
+  /* line-height: 24px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 28px;
+}
+
+.tag_with_tooltip_div:hover .tooltip_div {
+  /* top: -230%; */
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(calc(-100% - var(--arrow-height)));
 }
 
 @media screen and (max-width: 550px) {

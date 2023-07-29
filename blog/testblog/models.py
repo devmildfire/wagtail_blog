@@ -199,6 +199,8 @@ class CryptoPage(Page):
 
     preview_image = models.ImageField(blank=True, null=True)
 
+    open_for_ads = models.BooleanField(blank=True, null=True)
+
     tags = ClusterTaggableManager(through=CryptoPageTag, blank=True)
 
     search_fields = Page.search_fields + [
@@ -208,6 +210,7 @@ class CryptoPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('tags'),
+        FieldPanel('open_for_ads'),
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
@@ -232,6 +235,8 @@ class AIToolPage(Page):
 
     preview_image = models.ImageField(blank=True, null=True)
 
+    open_for_ads = models.BooleanField(blank=True, null=True, default=False)
+
     tags = ClusterTaggableManager(through=AIToolPageTag, blank=True)
 
     search_fields = Page.search_fields + [
@@ -241,6 +246,7 @@ class AIToolPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('tags'),
+        FieldPanel('open_for_ads'),
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),

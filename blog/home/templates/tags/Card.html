@@ -9,18 +9,44 @@
     
     <p class="card_info"> {{cardInfo}} </p>
 
-    <div class="card_tag_div"> 
-        
-        {% for tag in cardTags|slice:"4" %}
-            
-            <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a>
-    
-        {% endfor %}
+    <div class="card_tags_and_mask_div"> 
 
-        {% if cardTags.count > 4 %}
-            <a class="tag" href='#'> + {{ cardTags.count|add:"-4" }}</a>         
+        <div class="card_tag_div"> 
+            
+            {% for tag in cardTags|slice:"4" %}
+                
+                <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a>
+        
+            {% endfor %}
+
+            {% if cardTags.count > 4 %}
+                <div class="tag_with_tooltip_div">
+                    <a class="tag" href='#'> + {{ cardTags.count|add:"-4" }}</a>
+                    <div class="tooltip_div">
+
+                        {% for extraTag in cardTags|slice:"4:" %}
+                
+                            <a class="tag" href='{% pageurl page %}?tag={{extraTag.slug}}'> {{ extraTag }} </a>
+                
+                        {% endfor %}
+
+                    </div>         
+                </div>
+            {% endif %}
+
+        </div>
+
+        {% if openForAds %}
+            <a class="openForAdsNewLink" href='#'>
+                <svg class="svg_openForAdsMask">
+                    <use 
+                    href="{% static "icons/mask.svg" %}#idsvg_mask"
+                    >
+                    </use>
+                </svg>
+            </a>         
         {% endif %}
-    
+
     </div>
 
 </div>

@@ -1,3 +1,8 @@
+.svg_GoToAdsMask {
+  height: 24px;
+  width: 24px;
+}
+
 .goto_link {
   display: inline-flex;
   gap: 12px;
