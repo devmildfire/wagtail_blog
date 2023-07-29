@@ -1,0 +1,67 @@
+.YourAdHere_section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 11px 0;
+  margin: 5.5vw 16.3vw;
+
+  border-radius: 4px;
+  background: var(--blueHoverColor);
+
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.YourAdHereTitle {
+  color: var(--Yellow500Color);
+  text-align: center;
+  font-family: "Arimo", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.YourAdHereText {
+  color: var(--whiteColor, #fff);
+  text-align: center;
+  font-family: "Arimo", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.YourAdHereLink {
+  color: var(--Blue300Color, #b1e4fc);
+  text-align: center;
+  font-family: "Arimo", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 200% */
+  text-decoration-line: underline;
+}
+
+/* .hero_link_div:hover {
+  outline: 1px solid var(--blueHoverColor);
+} */
+
+@media screen and (max-width: 1790px) {
+}
+
+@media screen and (max-width: 768px) {
+  .YourAdHere_section {
+    padding: 11px 8px;
+    margin: 7.8vw 3.9vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .YourAdHere_section {
+    padding: 16px 8px 12px;
+    margin: 16vw 5.5vw;
+  }
+}

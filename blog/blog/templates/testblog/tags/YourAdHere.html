@@ -1,0 +1,19 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/YourAdHere.css' %}">
+
+<section class="YourAdHere_section">
+
+    <p class="YourAdHereTitle">
+        {{ your_ad_here.title }}
+    </p>
+
+    <p class="YourAdHereText">
+        {{ your_ad_here.text }}
+    </p>
+
+    <a class="YourAdHereLink" href="{{ your_add_here.link }}" >
+        {{ your_ad_here.link_text }}
+    </a>
+
+</section>

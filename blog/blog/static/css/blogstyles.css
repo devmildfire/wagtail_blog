@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap");
 
 :root {
   --HPaddings: 8.5vw;
@@ -18,6 +19,9 @@
   --textNeutralColor: #75818c;
   --tagColor: #edf2f8;
   --Neutral300Color: #abb5c5;
+
+  --Yellow500Color: #ffcd29;
+  --Blue300Color: #b1e4fc;
 }
 
 * {

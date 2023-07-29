@@ -56,7 +56,7 @@ class FeatureCards(Orderable):
 
 
 @register_snippet
-class YourAddHere(ClusterableModel):
+class YourAdHere(ClusterableModel):
     title = models.CharField(max_length=255)
     link = models.CharField(max_length=255, null=True, blank=True)
     link_text = models.CharField(max_length=255, null=True, blank=True)

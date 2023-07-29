@@ -1,4 +1,4 @@
-from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, AboutUs, YourAddHere
+from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, AboutUs, YourAdHere
 from home.models import HomePage
 from django import template
 
@@ -6,12 +6,12 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag("testblog/tags/YourAddHere.html", takes_context=True)
+@register.inclusion_tag("testblog/tags/YourAdHere.html", takes_context=True)
 def your_add_here_tag(context):
 
     return {
         'request': context['request'],
-        'your_add_here': YourAddHere.objects.first(),
+        'your_ad_here': YourAdHere.objects.first(),
     }
 
 
