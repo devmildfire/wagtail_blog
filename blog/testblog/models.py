@@ -56,6 +56,28 @@ class FeatureCards(Orderable):
 
 
 @register_snippet
+class OpenForAdWork(ClusterableModel):
+    title = models.CharField(max_length=255)
+    text = models.CharField(max_length=255, null=True, blank=True)
+    button_text = models.CharField(max_length=255, null=True, blank=True)
+    button_link = models.CharField(max_length=255)
+    image = models.ImageField(null=True, blank=True)
+    texture_image = models.ImageField(null=True, blank=True)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('text'),
+        FieldPanel('button_text'),
+        FieldPanel('button_link'),
+        FieldPanel('image'),
+        FieldPanel('texture_image'),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
 class YourAdHere(ClusterableModel):
     title = models.CharField(max_length=255)
     link = models.CharField(max_length=255, null=True, blank=True)

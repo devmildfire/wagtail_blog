@@ -19,6 +19,7 @@
   --textNeutralColor: #75818c;
   --tagColor: #edf2f8;
   --Neutral300Color: #abb5c5;
+  --Neutral100Color: #edf2f8;
 
   --Yellow500Color: #ffcd29;
   --Blue300Color: #b1e4fc;
@@ -84,6 +85,37 @@ body {
   :root {
     --HPaddings: 3.9vw;
   }
+}
+
+.standard_main_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: var(--whiteColor, #fff);
+  text-decoration: none;
+
+  background: var(--blueHoverColor, #03a9f4);
+
+  padding: 12px 24px;
+
+  border-radius: 4px;
+  border: 1px solid var(--blueHoverColor);
+
+  max-width: max-content;
+}
+
+.standard_main_button:hover {
+  background: var(--blueGoToHoverColor, #59cafd);
+  border: 1px solid var(--blueGoToHoverColor);
+  color: var(--whiteColor);
+}
+
+.standard_main_button:focus {
+  background: var(--blueFocusColor);
+  border: 1px solid var(--blueFocusColor);
+  color: var(--whiteColor);
 }
 
 @media screen and (max-width: 550px) {

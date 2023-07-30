@@ -1,0 +1,41 @@
+{% load static wagtailcore_tags base_tags %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/OpenForAdWork.css' %}">
+<style>
+    .OpenForAdWork_section {
+        background: url({{ open_for_ad_work.texture_image.url }}) repeat, linear-gradient(111deg, #03A9F4 0.52%, #343240 100%) ;
+    }
+</style>
+
+
+<section class="OpenForAdWork_section">
+
+    <div class="OpenForWorkInfo_Div">
+    
+        <div class="OpenForWorkInfo_Texts_Div"> 
+
+            <p class="OpenForAdWorkTitle">
+                {{ open_for_ad_work.title }}
+            </p>
+        
+            <p class="OpenForAdWorkText">
+                {{ open_for_ad_work.text }}
+            </p>
+
+        </div>
+    
+        <a class="standard_main_button" href="{{ open_for_ad_work.button_link }}" onClick="this.blur()">
+            {{ open_for_ad_work.button_text }}
+        </a>
+    
+    </div>
+
+    <svg class="svg_openForAdWorkMask">
+        <use 
+        href="{% static "icons/mask.svg" %}#idsvg_mask"
+        >
+        </use>
+    </svg>
+
+</section>

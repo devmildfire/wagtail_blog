@@ -1,9 +1,19 @@
-from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, AboutUs, YourAdHere
+# from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, AboutUs, YourAdHere
+from testblog.models import *
 from home.models import HomePage
 from django import template
 
 
 register = template.Library()
+
+
+@register.inclusion_tag("testblog/tags/OpenForAdWork.html", takes_context=True)
+def open_for_ad_work_tag(context):
+
+    return {
+        'request': context['request'],
+        'open_for_ad_work': OpenForAdWork.objects.first(),
+    }
 
 
 @register.inclusion_tag("testblog/tags/YourAdHere.html", takes_context=True)
