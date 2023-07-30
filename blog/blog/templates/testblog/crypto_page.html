@@ -15,7 +15,8 @@
 
     {% for tag in page.tags.all  %}
     
-        <a href='/blog/?tag={{tag.slug}}'> {{ tag }} </a><br />
+        {% comment %} <a href='/blog/?tag={{tag.slug}}'> {{ tag }} </a><br /> {% endcomment %}
+        <a href='{{ page.get_parent.url }}?tag={{tag.slug}}'> {{ tag }} </a><br />
 
     {% endfor %}
 
