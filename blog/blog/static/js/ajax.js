@@ -6,7 +6,7 @@ async function makeRequest(url, method, body) {
     "Content-Type": "application/json",
   };
 
-  if ((method = "post")) {
+  if (method == "post") {
     const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
     headers["X-CSRFToken"] = csrf;
   }
@@ -27,6 +27,9 @@ async function getNumber() {
 
   let ul_left = document.getElementById("left");
   let li = document.createElement("span");
+
+  li.addEventListener("click", getFloatNumber);
+
   li.innerText = await data["number"];
   ul_left.appendChild(li);
 
@@ -44,10 +47,86 @@ async function getFloatNumber(e) {
     JSON.stringify({ number: number })
   );
 
-  //   let ul_left = document.getElementById("left");
-  //   let li = document.createElement("span");
-  //   li.innerText = await data["number"];
-  //   ul_left.appendChild(li);
+  let ul_right = document.getElementById("right");
+  let li2 = document.createElement("span");
+  li2.innerText = await data["float"];
+  ul_right.appendChild(li2);
 
-  //   console.log(await data);
+  console.log(await data);
 }
+
+// async function postCrypto() {
+//   console.log("POST request to crypto");
+
+//   let dataString = "popularity";
+
+//   const data = await makeRequest(
+//     "/crypto/",
+//     "post",
+//     JSON.stringify({ sortby: dataString })
+//   );
+
+//   let ul_right = document.getElementById("right");
+//   let li2 = document.createElement("span");
+//   li2.innerText = await data["sorted"];
+//   ul_right.appendChild(li2);
+
+//   console.log(await data);
+// }
+
+function postCrypto() {
+  console.log("POST request to crypto");
+
+  let dataString = "popularity";
+
+  let headers = {
+    "X-Requested-WIth": "XMLHttpRequest",
+    "Content-Type": "application/json",
+  };
+
+  const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  headers["X-CSRFToken"] = csrf;
+
+  fetch("/crypto/", {
+    method: "post",
+    headers: headers,
+    body: JSON.stringify({ sortby: dataString }),
+  });
+}
+
+function getCrypto() {
+  console.log("gets Crypto");
+
+  makeRequest("/", "get");
+
+  // const data = await makeRequest("/", "get");
+
+  // let ul_left = document.getElementById("left");
+  // let li = document.createElement("span");
+
+  // li.addEventListener("click", getFloatNumber);
+
+  // li.innerText = await data["number"];
+  // ul_left.appendChild(li);
+
+  // console.log(await data);
+}
+
+// async function postCryptoPage() {
+//   console.log("POST request to crypto");
+
+//   let dataString = "popularity";
+
+//   const data = await makeRequest(
+//     "/crypto/",
+//     "post",
+//     JSON.stringify({ sortby: dataString })
+//   );
+
+//   let ul_right = document.getElementById("right");
+//   let li2 = document.createElement("span");
+//   li2.innerText = await data["sorted"];
+//   ul_right.appendChild(li2);
+
+//   console.log(await data);
+// }

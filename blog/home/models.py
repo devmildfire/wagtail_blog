@@ -30,18 +30,17 @@ class HomePage(RoutablePageMixin, Page):
     def serve(self, request, view=None, args=None, kwargs=None):
         if request.method == 'POST':
             data = json.loads(request.body)
-            float_number = float(data['number'])
+            if 'number' in data:
 
-            return JsonResponse({'float': f'You got: {float_number}'})
+                float_number = float(data['number'])
 
-        if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
+                return JsonResponse({'float': f'You got: {float_number}'})
 
-            number = randint(1, 10)
+        # if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
 
-            # data = json.loads(request.body)
-            # float_number = float(data['number'])
+        #     number = randint(1, 10)
 
-            return JsonResponse({'number': number})
+        #     return JsonResponse({'number': number})
 
         return super().serve(request, view, args, kwargs)
 
@@ -110,6 +109,45 @@ class HomePage(RoutablePageMixin, Page):
     def crypto(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
         self.title = "Crypto Services"
+        # context['isPost'] = True
+
+        # def serve(self, request, view=None, args=None, kwargs=None):
+        if request.method == 'POST':
+            context = self.get_context(request, *args, **kwargs)
+            context['blogpages'] = CryptoPage.objects.live().order_by('title')
+            context['isPost'] = True
+
+            data = json.loads(request.body)
+            print(data)
+            sorted = 'the sorted answer string'
+
+            print('returning POST page')
+            print(context['blogpages'])
+            print(context)
+            return render(request, "testblog/crypto.html", context)
+
+            # return JsonResponse({'sorted': f'You got: {sorted}'})
+
+            # data = json.loads(request.body)
+            # float_number = float(data['number'])
+
+            # return render(request, "testblog/crypto.html", context, blogpages, isPost)
+
+            # return JsonResponse({'float': f'You got: {float_number}'})
+        if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
+            context['pages'] = CryptoPage.objects.live().order_by('title')
+            context['isGet'] = True
+
+            print('returning GET page')
+            return render(request, "testblog/crypto.html", context)
+
+        context['blogpages'] = CryptoPage.objects.live().order_by(
+            '-first_published_at')
+        context['isGet'] = False
+
+        # return super().serve(request, view, args, kwargs)
+        isPost = False
+        print('returning regular page')
         return render(request, "testblog/crypto.html", context)
 
     @route(r'^ai-tools/$')

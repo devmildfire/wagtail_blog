@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 
 
 {% block content %}
 
+{% csrf_token %} 
+
+<script defer src="{% static 'js/ajax.js' %}"></script>
+
+<Button class="standard_main_button" onclick="this.blur(); postCrypto()">AJAX test</Button>
+<div id="left"> 
+
+</div>
+<div id="right"> 
+
+</div>
+
     <h1>CRYPTO PAGE</h1>
+
+    <h2>
+        post {{ isPost }}
+        {% comment %} get {{ isGet }} {% endcomment %}
+    </h2>
+
+    <h3>
+        {{ blogpages }}
+    </h3>
 
 {% endblock content %}
