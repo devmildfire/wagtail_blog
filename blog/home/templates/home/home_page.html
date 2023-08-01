@@ -8,8 +8,19 @@
 
 {% block content %}
 
+<script defer src="{% static 'js/ajax.js' %}"></script>
+
 {% comment %} {{ page.body|richtext }} {% endcomment %}
 
+    {% csrf_token %} 
+
+    <Button class="standard_main_button" onclick="this.blur(); getNumber()">AJAX test</Button>
+    <div id="left"> 
+
+    </div>
+    <div id="right"> 
+
+    </div>
     {% Hero_tag %}
 
     {% if page.posts %}

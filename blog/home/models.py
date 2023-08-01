@@ -11,6 +11,9 @@ from wagtail.models import Orderable, Page
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 from testblog.models import *
+import json
+from django.http import JsonResponse
+from random import randint
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -21,6 +24,26 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('intro'),
         FieldPanel('body'),
     ]
+
+    # for AJAX post requests handling
+
+    def serve(self, request, view=None, args=None, kwargs=None):
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            float_number = float(data['number'])
+
+            return JsonResponse({'float': f'You got: {float_number}'})
+
+        if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
+
+            number = randint(1, 10)
+
+            # data = json.loads(request.body)
+            # float_number = float(data['number'])
+
+            return JsonResponse({'number': number})
+
+        return super().serve(request, view, args, kwargs)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
