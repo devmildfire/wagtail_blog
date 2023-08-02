@@ -1,6 +1,6 @@
 console.log("AJAX is working");
 
-async function makeRequest(url, method, body) {
+async function makeRequest(url, method, body, returnType) {
   let headers = {
     "X-Requested-WIth": "XMLHttpRequest",
     "Content-Type": "application/json",
@@ -17,15 +17,20 @@ async function makeRequest(url, method, body) {
     body: body,
   });
 
-  // return await response.json();
-  return await response.text(); //returning HTML response instead of JSON
+  if (returnType == "html") {
+    return await response.text(); //returning HTML response instead of JSON
+  }
+
+  if (returnType == "json") {
+    return await response.json();
+  }
 }
 
 //  make a post request to crypto page to change it's sorting from default to chosen via select on page
 async function postCrypto(selectObject) {
   console.log("POST request to crypto");
 
-  var value = selectObject.value;  
+  var value = selectObject.value;
   console.log(value);
 
   let dataString = value;
@@ -33,14 +38,32 @@ async function postCrypto(selectObject) {
   const data = await makeRequest(
     "/crypto/",
     "post",
-    JSON.stringify({ sortby: dataString })
+    JSON.stringify({ sortby: dataString }),
+    "html"
   );
 
-  const html = document.querySelectorAll('html')[0];
+  const html = document.querySelectorAll("html")[0];
 
   // console.log('replacing HTML')
 
   html.innerHTML = data;
+}
+
+//  make a post request to crypto page to add a tag to taglist
+async function postAddTag(tag) {
+  console.log("POST request to root for tag addition");
+
+  console.log("adding tag...", tag);
+
+  const data = await makeRequest(
+    "/crypto/",
+    "post",
+    JSON.stringify({ addTag: "testTag" }),
+    "json"
+  );
+
+  await data["addedTag"];
+  console.log(await data);
 }
 
 async function getNumber() {
@@ -78,9 +101,6 @@ async function getFloatNumber(e) {
   console.log(await data);
 }
 
-
-
-
 function getCrypto() {
   console.log("gets Crypto");
 
@@ -98,5 +118,3 @@ function getCrypto() {
 
   // console.log(await data);
 }
-
-

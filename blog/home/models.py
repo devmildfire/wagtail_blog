@@ -19,6 +19,7 @@ from random import randint
 class HomePage(RoutablePageMixin, Page):
     intro = RichTextField(null=True, blank=True)
     body = RichTextField(null=True, blank=True)
+    # selectedTags = ArrayField
 
     content_panels = Page.content_panels + [
         FieldPanel('intro'),
@@ -27,22 +28,24 @@ class HomePage(RoutablePageMixin, Page):
 
     # for AJAX post requests handling
 
-    def serve(self, request, view=None, args=None, kwargs=None):
-        if request.method == 'POST':
-            data = json.loads(request.body)
-            if 'number' in data:
+    # def serve(self, request, view=None, args=None, kwargs=None):
+    #     if request.method == 'POST':
+    #         data = json.loads(request.body)
+    #         if 'number' in data:
 
-                float_number = float(data['number'])
+    #             float_number = float(data['number'])
 
-                return JsonResponse({'float': f'You got: {float_number}'})
+    #             return JsonResponse({'float': f'You got: {float_number}'})
 
-        # if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
+    #         if 'addTag' in data:
 
-        #     number = randint(1, 10)
+    #             tagToAdd = data['addTag']
 
-        #     return JsonResponse({'number': number})
+    #             # if tagToAdd not in selectedTags
 
-        return super().serve(request, view, args, kwargs)
+    #             return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+
+    #     return super().serve(request, view, args, kwargs)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
@@ -51,6 +54,9 @@ class HomePage(RoutablePageMixin, Page):
         # aitoolspages = AIToolPage.objects
         # aitoolspages = AIToolPage.objects.live().order_by('-first_published_at')
         Post_pages = CryptoPage.objects.child_of(self)
+
+        # selectedTags = []
+        # context['selectedTags'] = selectedTags
 
         def listify(value):
             return [tag.name for tag in value.all()]
@@ -73,6 +79,36 @@ class HomePage(RoutablePageMixin, Page):
         context['aitoolspages'] = aitoolspages
         context['tags'] = tags
         return context
+
+    def serve(self, request, view=None, args=None, kwargs=None):
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            if 'number' in data:
+
+                float_number = float(data['number'])
+
+                return JsonResponse({'float': f'You got: {float_number}'})
+
+            # if 'addTag' in data:
+            #     # context = self.get_context(request, *args, **kwargs)
+
+            #     tagToAdd = data['addTag']
+
+            #     selectedTags = context['selectedTags']
+            #     print('cselectedTags...', selectedTags)
+            #     if tagToAdd not in selectedTags:
+            #         selectedTags.append(tagToAdd)
+            #         context['added_tag'] = tagToAdd
+            #         context['selectedTags'] = selectedTags
+            #         print('context after adding a tag...', context)
+
+            #         print('cselectedTags after adding...', selectedTags)
+
+            #         return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+
+            #     return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
+
+        return super().serve(request, view, args, kwargs)
 
     @route(r'^search/$')
     def post_search(self, request, *args, **kwargs):
@@ -110,11 +146,29 @@ class HomePage(RoutablePageMixin, Page):
     def crypto(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
         self.title = "Crypto Services"
+        context['thispagesuffix'] = "crypto/"
+
+        blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+
+        if request.GET.get('tag', None):
+            tag = request.GET.get('tag')
+            print("there is a tag present... ", tag)
+            print("request full path is... ", request.get_full_path())
+            context['presenttag'] = tag
+
+        else:
+            tag = None
+            print("there is NO tag present... ", tag)
+            print("request full path is... ", request.get_full_path())
+            context['presenttag'] = 'trading'
+
+        print("the old context is... ", context)
         # context['isPost'] = True
 
         # def serve(self, request, view=None, args=None, kwargs=None):
         if request.method == 'POST':
-            context = self.get_context(request, *args, **kwargs)
+            # context = self.get_context(request, *args, **kwargs)
+            print("the new context is... ", context)
 
             data = json.loads(request.body)
 
@@ -122,11 +176,45 @@ class HomePage(RoutablePageMixin, Page):
 
                 sortby = (data['sortby'])
 
-            context['blogpages'] = CryptoPage.objects.live().order_by(sortby)
-            context['isPost'] = sortby
+                # blogpages = CryptoPage.objects.live().order_by(sortby)
+                blogpages = blogpages.order_by(sortby)
 
-            return render(request, "testblog/crypto.html", context)
-            
+                print("the new request for POST is... ", request)
+                print("the tag for POST is... ", tag)
+
+                # if request.GET.get('tag', None):
+                #     tag = request.GET.get('tag')
+                tag = context['presenttag']
+
+                if tag is not None:
+                    print("the cards will be filtered by tag... ", tag)
+                    blogpages = blogpages.filter(
+                        tags__slug__in=[tag])
+
+                context['blogpages'] = blogpages
+                context['isPost'] = sortby
+
+                return render(request, "testblog/crypto.html", context)
+
+            if 'addTag' in data:
+                # context = self.get_context(request, *args, **kwargs)
+
+                tagToAdd = data['addTag']
+
+                selectedTags = context['selectedTags']
+                print('cselectedTags...', selectedTags)
+                if tagToAdd not in selectedTags:
+                    selectedTags.append(tagToAdd)
+                    context['added_tag'] = tagToAdd
+                    context['selectedTags'] = selectedTags
+                    print('context after adding a tag...', context)
+
+                    print('cselectedTags after adding...', selectedTags)
+
+                    return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+
+                return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
+
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
         if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
@@ -136,11 +224,17 @@ class HomePage(RoutablePageMixin, Page):
             print('returning GET page')
             return render(request, "testblog/crypto.html", context)
 
-        context['blogpages'] = CryptoPage.objects.live().order_by(
-            '-first_published_at')
+        # blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+        context['blogpages'] = blogpages
         context['isGet'] = False
 
-        isPost = False
+        if request.GET.get('tag', None):
+            tag = request.GET.get('tag')
+            blogpages = blogpages.filter(
+                tags__slug__in=[tag])
+            print("tag filtered pages are...", blogpages)
+            context['blogpages'] = blogpages
+
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)
 

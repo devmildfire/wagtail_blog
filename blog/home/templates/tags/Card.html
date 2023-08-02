@@ -14,8 +14,14 @@
         <div class="card_tag_div"> 
             
             {% for tag in cardTags|slice:"4" %}
+
+            
                 
-                <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a>
+            
+                {% comment %} <a class="tag" href='{{ self.get_full_url }}?tag={{tag.slug}}'> {{ tag }} </a> {% endcomment %}
+                {% comment %} <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a> {% endcomment %}
+                <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{tag.slug}}' onclick="postAddTag("testTag")"> {{ tag }} </a>
+                {% comment %} <a class="tag" href='#' onclick="postAddTag("testTag")"> {{ tag }} </a> {% endcomment %}
         
             {% endfor %}
 
@@ -26,7 +32,7 @@
 
                         {% for extraTag in cardTags|slice:"4:" %}
                 
-                            <a class="tag" href='{% pageurl page %}?tag={{extraTag.slug}}'> {{ extraTag }} </a>
+                            <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{extraTag.slug}}'> {{ extraTag }} </a>
                 
                         {% endfor %}
 
