@@ -13,9 +13,7 @@
 
     <div class="Crypto_Cards_Div">
                 
-        {% comment %} {% for post in blogpages|slice:"6" %} {% endcomment %}
-
-        {% for post in itemslist|slice:"6" %}
+        {% for post in itemslist|slice:itemsmax  %}
             {% with post=post.specific %}
             
                 {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all openForAds=post.open_for_ads %}

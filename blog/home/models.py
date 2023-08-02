@@ -66,6 +66,7 @@ class HomePage(RoutablePageMixin, Page):
         if request.GET.get('tag', None):
             tag = request.GET.get('tag')
             blogpages = blogpages.filter(tags__slug__in=[tag])
+            aitoolspages = aitoolspages.filter(tags__slug__in=[tag])
 
         print('the blogpages are reset')
         context['blogpages'] = blogpages
@@ -121,15 +122,9 @@ class HomePage(RoutablePageMixin, Page):
 
                 sortby = (data['sortby'])
 
-            print(data)
-            sorted = 'the sorted answer string'
-            
             context['blogpages'] = CryptoPage.objects.live().order_by(sortby)
             context['isPost'] = sortby
 
-            print('returning POST page')
-            print(context['blogpages'])
-            print(context)
             return render(request, "testblog/crypto.html", context)
             
             # return JsonResponse({'sorted': f'You got: {sorted}'})
@@ -145,7 +140,6 @@ class HomePage(RoutablePageMixin, Page):
             '-first_published_at')
         context['isGet'] = False
 
-        # return super().serve(request, view, args, kwargs)
         isPost = False
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)

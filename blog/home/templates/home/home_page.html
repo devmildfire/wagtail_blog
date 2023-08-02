@@ -56,10 +56,10 @@
     {% endfor %} {% endcomment %}
 
 
-    {% include "../tags/TrendingCrypto.html" with Title="Trending Crypto Services" itemslist=blogpages %}
+    {% include "../tags/TrendingCrypto.html" with Title="Trending Crypto Services" itemslist=blogpages itemsmax="6" %}
 
     
-    {% include "../tags/TrendingCrypto.html" with Title="Trending AI Tools" itemslist=aitoolspages %}
+    {% include "../tags/TrendingCrypto.html" with Title="Trending AI Tools" itemslist=aitoolspages itemsmax=6 %}
 
     {% about_us_tag %}
 
