@@ -125,6 +125,7 @@ class HomePage(RoutablePageMixin, Page):
             print(context['blogpages'])
             print(context)
             return render(request, "testblog/crypto.html", context)
+            
 
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 

@@ -17,7 +17,27 @@ async function makeRequest(url, method, body) {
     body: body,
   });
 
-  return await response.json();
+  // return await response.json();
+  return await response.text(); //returning HTML response instead of JSON
+}
+
+//  make a post request to crypto page to change it's sorting from default to chosen via select on page
+async function postCrypto() {
+  console.log("POST request to crypto");
+
+  let dataString = "popularity";
+
+  const data = await makeRequest(
+    "/crypto/",
+    "post",
+    JSON.stringify({ sortby: dataString })
+  );
+
+  const html = document.querySelectorAll('html')[0];
+
+  // console.log('replacing HTML')
+
+  html.innerHTML = data;
 }
 
 async function getNumber() {
@@ -55,44 +75,8 @@ async function getFloatNumber(e) {
   console.log(await data);
 }
 
-// async function postCrypto() {
-//   console.log("POST request to crypto");
 
-//   let dataString = "popularity";
 
-//   const data = await makeRequest(
-//     "/crypto/",
-//     "post",
-//     JSON.stringify({ sortby: dataString })
-//   );
-
-//   let ul_right = document.getElementById("right");
-//   let li2 = document.createElement("span");
-//   li2.innerText = await data["sorted"];
-//   ul_right.appendChild(li2);
-
-//   console.log(await data);
-// }
-
-function postCrypto() {
-  console.log("POST request to crypto");
-
-  let dataString = "popularity";
-
-  let headers = {
-    "X-Requested-WIth": "XMLHttpRequest",
-    "Content-Type": "application/json",
-  };
-
-  const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
-  headers["X-CSRFToken"] = csrf;
-
-  fetch("/crypto/", {
-    method: "post",
-    headers: headers,
-    body: JSON.stringify({ sortby: dataString }),
-  });
-}
 
 function getCrypto() {
   console.log("gets Crypto");
@@ -112,21 +96,4 @@ function getCrypto() {
   // console.log(await data);
 }
 
-// async function postCryptoPage() {
-//   console.log("POST request to crypto");
 
-//   let dataString = "popularity";
-
-//   const data = await makeRequest(
-//     "/crypto/",
-//     "post",
-//     JSON.stringify({ sortby: dataString })
-//   );
-
-//   let ul_right = document.getElementById("right");
-//   let li2 = document.createElement("span");
-//   li2.innerText = await data["sorted"];
-//   ul_right.appendChild(li2);
-
-//   console.log(await data);
-// }
