@@ -10,10 +10,13 @@
 <script defer src="{% static 'js/ajax.js' %}"></script>
 
 <Button class="standard_main_button" onclick="this.blur(); postCrypto()">AJAX test</Button>
-<div id="left"> 
 
-</div>
-<div id="right"> 
+<select onchange="postCrypto(this)">
+    <option value="">--Please choose an option--</option>
+    <option value='-first_published_at'>by default</option>
+    <option value="title">by title</option>
+    <option value="date">by date</option>
+</select>
 
 </div>
 
@@ -21,7 +24,7 @@
 
     <h2>
         post {{ isPost }}
-        {% comment %} get {{ isGet }} {% endcomment %}
+
     </h2>
 
     <h3>

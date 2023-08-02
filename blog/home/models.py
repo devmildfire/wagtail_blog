@@ -114,27 +114,26 @@ class HomePage(RoutablePageMixin, Page):
         # def serve(self, request, view=None, args=None, kwargs=None):
         if request.method == 'POST':
             context = self.get_context(request, *args, **kwargs)
-            context['blogpages'] = CryptoPage.objects.live().order_by('title')
-            context['isPost'] = True
 
             data = json.loads(request.body)
+
+            if 'sortby' in data:
+
+                sortby = (data['sortby'])
+
             print(data)
             sorted = 'the sorted answer string'
+            
+            context['blogpages'] = CryptoPage.objects.live().order_by(sortby)
+            context['isPost'] = sortby
 
             print('returning POST page')
             print(context['blogpages'])
             print(context)
             return render(request, "testblog/crypto.html", context)
             
-
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
-            # data = json.loads(request.body)
-            # float_number = float(data['number'])
-
-            # return render(request, "testblog/crypto.html", context, blogpages, isPost)
-
-            # return JsonResponse({'float': f'You got: {float_number}'})
         if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
             context['pages'] = CryptoPage.objects.live().order_by('title')
             context['isGet'] = True

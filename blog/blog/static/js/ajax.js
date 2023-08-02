@@ -22,10 +22,13 @@ async function makeRequest(url, method, body) {
 }
 
 //  make a post request to crypto page to change it's sorting from default to chosen via select on page
-async function postCrypto() {
+async function postCrypto(selectObject) {
   console.log("POST request to crypto");
 
-  let dataString = "popularity";
+  var value = selectObject.value;  
+  console.log(value);
+
+  let dataString = value;
 
   const data = await makeRequest(
     "/crypto/",
