@@ -170,8 +170,16 @@ class HomePage(RoutablePageMixin, Page):
             # context = self.get_context(request, *args, **kwargs)
             print("the new context is... ", context)
 
+            context['blogpages'] = CryptoPage.objects.live().order_by('title')
+            context['isPost'] = True
+
+            if request.GET.get('tag', None):
+                tag = request.GET.get('tag')
+                blogpages = blogpages.filter(tags__slug__in=[tag])
+
             data = json.loads(request.body)
 
+<<<<<<< HEAD
             if 'sortby' in data:
 
                 sortby = (data['sortby'])
@@ -215,6 +223,14 @@ class HomePage(RoutablePageMixin, Page):
 
                 return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
 
+=======
+            print('returning POST page')
+            print(context['blogpages'])
+            print(context)
+
+            return render(request, "testblog/crypto.html", context)
+
+>>>>>>> 66b3f7d143be69009834db6d499f1bb7a917b5de
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
         if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
