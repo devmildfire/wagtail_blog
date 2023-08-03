@@ -166,34 +166,14 @@ class HomePage(RoutablePageMixin, Page):
 
     @route(r'^crypto/$')
     def crypto(self, request, *args, **kwargs):
-
-        
+       
         context = self.get_context(request, *args, **kwargs)
-
-
-
-
+        
         self.title = "Crypto Services"
         context['thispagesuffix'] = "crypto/"
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
 
-        # if request.GET.get('tag', None):
-        #     tag = request.GET.get('tag')
-        #     print("there is a tag present... ", tag)
-        #     print("request full path is... ", request.get_full_path())
-        #     context['presenttag'] = tag
-
-        # else:
-        #     tag = None
-        #     print("there is NO tag present... ", tag)
-        #     print("request full path is... ", request.get_full_path())
-        #     context['presenttag'] = 'trading'
-
-        # print("the old context is... ", context)
-        # context['isPost'] = True
-
-        # def serve(self, request, view=None, args=None, kwargs=None):
         if request.method == 'POST':
 
             # request.session['example'] = request.session['example'] + ['newItem']
@@ -218,20 +198,19 @@ class HomePage(RoutablePageMixin, Page):
 
                 print("the new request for POST is... ", request)
 
+                if len(request.session['selected_tags']) > 0:
+                    print("there are tags to filter by... ", request.session['selected_tags'])
+
+                    filterTags = [x.lower() for x in request.session['selected_tags']]
+                    
+                    print("the cards will be filtered by tag(s)... ", filterTags)
+
+                    for filterTag in filterTags:
+                        blogpages = blogpages.filter(tags__slug__in=[filterTag])    
 
 
-                # print("the tag for POST is... ", tag)
+                    print("the new filtered Cards lust is is... ", blogpages)
 
-                # if request.GET.get('tag', None):
-                #     tag = request.GET.get('tag')
-                
-                
-                # tag = context['presenttag']
-
-                # if tag is not None:
-                #     print("the cards will be filtered by tag... ", tag)
-                #     blogpages = blogpages.filter(
-                #         tags__slug__in=[tag])
 
                 context['blogpages'] = blogpages
                 context['isPost'] = sortby

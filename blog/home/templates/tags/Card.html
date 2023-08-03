@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags base_tags %}
 
-
-<div class="card_div" style="cursor: pointer;" onclick="window.location='{% pageurl post %}';">
+<!-- <div class="card_div" style="cursor: pointer;" onclick="window.location='{% pageurl post %}';"></div> -->
+<div class="card_div">
 
     <img class="card_image" src="{{cardImage}}" /> 
     
@@ -20,8 +20,11 @@
             
                 {% comment %} <a class="tag" href='{{ self.get_full_url }}?tag={{tag.slug}}'> {{ tag }} </a> {% endcomment %}
                 {% comment %} <a class="tag" href='{% pageurl page %}?tag={{tag.slug}}'> {{ tag }} </a> {% endcomment %}
-                <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{tag.slug}}' onclick="postAddTag("testTag")"> {{ tag }} </a>
-                {% comment %} <a class="tag" href='#' onclick="postAddTag("testTag")"> {{ tag }} </a> {% endcomment %}
+                {% comment %}<a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{tag.slug}}' onclick="postAddTag("testTag")"> {{ tag }} </a>{% endcomment %}
+                 <!-- <a class="tag" href='#' onclick="postAddTag( '{{tag}}' );"> {{ tag }} </a> -->
+                 <!-- <button class="tag" onclick="postAddTag( '{{tag}}' ); window.location='{% pageurl post %}';" > {{ tag }} </button> -->
+                 <button class="tag" onclick="postAddTag( '{{tag}}' ); " > {{ tag }} </button>
+                 
         
             {% endfor %}
 

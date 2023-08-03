@@ -18,13 +18,6 @@
     <option value="date">by date</option>
 </select>
 
-    <h2>
-        post {{ isPost }}
-    </h2>
-
-    <h3>
-        {{ blogpages }}
-    </h3>
 
     {% include "../tags/TrendingCrypto.html" with Title="Crypto Page" itemslist=blogpages itemsmax="10" %}
 
