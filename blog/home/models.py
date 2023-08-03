@@ -61,26 +61,11 @@ class HomePage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
-        # def set_example(request, *args, **kwargs):
-        if 'example_variable' in request.session:
-            print('the session variable is ALLREADY present...', request.session['example_variable'])
+        if 'selected_tags' in request.session:
+            print('the session variable "selected_tags" is ALLREADY present...', request.session['selected_tags'])
         else:
-            request.session['example_variable'] = 1
-            print('the session variable is set to...', request.session['example_variable'])
-
-        # set_example(request, *args, **kwargs)
-
-        # if 'context['example']' not in locals():
-        if 'example' in context:
-            print('example is ALREADY present...', context['example'])
-        else:
-            context['example'] = [0, 1, 2]
-            print('example is set to...', context['example'])
-            
-
-        context['example'] = context['example'] + [3]
-        print('example +3 is set to...', context['example'])
-
+            request.session['selected_tags'] = []
+            print('the session variable "selected_tags" is set to...', request.session['selected_tags'])
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
         aitoolspages = AIToolPage.objects.child_of(self)
@@ -185,31 +170,27 @@ class HomePage(RoutablePageMixin, Page):
         
         context = self.get_context(request, *args, **kwargs)
 
-        request.session['example_variable'] = request.session['example_variable'] + 1
-        print('the session variable is set BY CRYPTO to...', request.session['example_variable'])
 
-        print("example before setting is... ", context['example'])
-        context['example'] = context['example'] + [3, 4, 5]
-        print("example after setting is... ", context['example'])
+
 
         self.title = "Crypto Services"
         context['thispagesuffix'] = "crypto/"
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
 
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            print("there is a tag present... ", tag)
-            print("request full path is... ", request.get_full_path())
-            context['presenttag'] = tag
+        # if request.GET.get('tag', None):
+        #     tag = request.GET.get('tag')
+        #     print("there is a tag present... ", tag)
+        #     print("request full path is... ", request.get_full_path())
+        #     context['presenttag'] = tag
 
-        else:
-            tag = None
-            print("there is NO tag present... ", tag)
-            print("request full path is... ", request.get_full_path())
-            context['presenttag'] = 'trading'
+        # else:
+        #     tag = None
+        #     print("there is NO tag present... ", tag)
+        #     print("request full path is... ", request.get_full_path())
+        #     context['presenttag'] = 'trading'
 
-        print("the old context is... ", context)
+        # print("the old context is... ", context)
         # context['isPost'] = True
 
         # def serve(self, request, view=None, args=None, kwargs=None):
@@ -218,11 +199,13 @@ class HomePage(RoutablePageMixin, Page):
             # request.session['example'] = request.session['example'] + ['newItem']
             # print("POSTed session variable example is... ", request.session['example'])
 
-            context = self.get_context(request, *args, **kwargs)
-            context['example'] = context['example'] + [6, 7, 8]
-            print("POSTed example is... ", context['example'])
+            # context = self.get_context(request, *args, **kwargs)
 
-            print("the new context is... ", context['example'])
+
+            # context['example'] = context['example'] + [6, 7, 8]
+            # print("POSTed example is... ", context['example'])
+
+            # print("the new context is... ", context['example'])
 
             data = json.loads(request.body)
 
@@ -234,16 +217,21 @@ class HomePage(RoutablePageMixin, Page):
                 blogpages = blogpages.order_by(sortby)
 
                 print("the new request for POST is... ", request)
-                print("the tag for POST is... ", tag)
+
+
+
+                # print("the tag for POST is... ", tag)
 
                 # if request.GET.get('tag', None):
                 #     tag = request.GET.get('tag')
-                tag = context['presenttag']
+                
+                
+                # tag = context['presenttag']
 
-                if tag is not None:
-                    print("the cards will be filtered by tag... ", tag)
-                    blogpages = blogpages.filter(
-                        tags__slug__in=[tag])
+                # if tag is not None:
+                #     print("the cards will be filtered by tag... ", tag)
+                #     blogpages = blogpages.filter(
+                #         tags__slug__in=[tag])
 
                 context['blogpages'] = blogpages
                 context['isPost'] = sortby
@@ -254,20 +242,28 @@ class HomePage(RoutablePageMixin, Page):
                 # context = self.get_context(request, *args, **kwargs)
 
                 tagToAdd = data['addTag']
+                
+                print('selected tags from session', request.session['selected_tags'])
+                print('tag to add...', tagToAdd)
+                selectedTags = request.session['selected_tags']
 
-                selectedTags = context['selectedTags']
-                print('cselectedTags...', selectedTags)
+                # request.session['selected_tags'] = request.session['selected_tags'] + [tagToAdd]
+                # print('the session variable is set BY CRYPTO to...', request.session['selected_tags'])
+
+                print('selectedTags...', selectedTags)
+
                 if tagToAdd not in selectedTags:
                     selectedTags.append(tagToAdd)
-                    context['added_tag'] = tagToAdd
-                    context['selectedTags'] = selectedTags
-                    print('context after adding a tag...', context)
-
-                    print('cselectedTags after adding...', selectedTags)
-
+                    request.session['selected_tags'] = selectedTags
+                    print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
                     return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+                else :
+                    taggToRemove = tagToAdd
+                    selectedTags.remove(taggToRemove)
+                    request.session['selected_tags'] = selectedTags
+                    print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
+                    return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'})                
 
-                return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
 
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
@@ -282,12 +278,12 @@ class HomePage(RoutablePageMixin, Page):
         context['blogpages'] = blogpages
         context['isGet'] = False
 
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            blogpages = blogpages.filter(
-                tags__slug__in=[tag])
-            print("tag filtered pages are...", blogpages)
-            context['blogpages'] = blogpages
+        # if request.GET.get('tag', None):
+        #     tag = request.GET.get('tag')
+        #     blogpages = blogpages.filter(
+        #         tags__slug__in=[tag])
+        #     print("tag filtered pages are...", blogpages)
+        #     context['blogpages'] = blogpages
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)

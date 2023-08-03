@@ -58,7 +58,7 @@ async function postAddTag(tag) {
   const data = await makeRequest(
     "/crypto/",
     "post",
-    JSON.stringify({ addTag: "testTag" }),
+    JSON.stringify({ addTag: tag }),
     "json"
   );
 
