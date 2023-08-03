@@ -26,6 +26,17 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('body'),
     ]
 
+    # if 'example' not in locals():
+    #     example = []
+
+    # def set_example(request, *args, **kwargs):
+    #     if 'example_variable' not in equest.session:
+    #         request.session['example_variable'] = 1
+    #         print('the session variable is set to...', request.session['example_variable'])
+    #     else:
+    #         print('the session variable is ALLREADY present...', request.session['example_variable'])
+        
+    
     # for AJAX post requests handling
 
     # def serve(self, request, view=None, args=None, kwargs=None):
@@ -49,6 +60,28 @@ class HomePage(RoutablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+
+        # def set_example(request, *args, **kwargs):
+        if 'example_variable' in request.session:
+            print('the session variable is ALLREADY present...', request.session['example_variable'])
+        else:
+            request.session['example_variable'] = 1
+            print('the session variable is set to...', request.session['example_variable'])
+
+        # set_example(request, *args, **kwargs)
+
+        # if 'context['example']' not in locals():
+        if 'example' in context:
+            print('example is ALREADY present...', context['example'])
+        else:
+            context['example'] = [0, 1, 2]
+            print('example is set to...', context['example'])
+            
+
+        context['example'] = context['example'] + [3]
+        print('example +3 is set to...', context['example'])
+
+
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
         aitoolspages = AIToolPage.objects.child_of(self)
         # aitoolspages = AIToolPage.objects
@@ -80,14 +113,18 @@ class HomePage(RoutablePageMixin, Page):
         context['tags'] = tags
         return context
 
-    def serve(self, request, view=None, args=None, kwargs=None):
-        if request.method == 'POST':
-            data = json.loads(request.body)
-            if 'number' in data:
+    # def serve(self, request, view=None, args=None, kwargs=None):
+        
+        # request.session['example'] = []
+        # print('session variable example set to ...', request.session['example'])
 
-                float_number = float(data['number'])
+        # if request.method == 'POST':
+        #     data = json.loads(request.body)
+        #     if 'number' in data:
 
-                return JsonResponse({'float': f'You got: {float_number}'})
+        #         float_number = float(data['number'])
+
+        #         return JsonResponse({'float': f'You got: {float_number}'})
 
             # if 'addTag' in data:
             #     # context = self.get_context(request, *args, **kwargs)
@@ -108,7 +145,7 @@ class HomePage(RoutablePageMixin, Page):
 
             #     return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
 
-        return super().serve(request, view, args, kwargs)
+        # return super().serve(request, view, args, kwargs)
 
     @route(r'^search/$')
     def post_search(self, request, *args, **kwargs):
@@ -144,7 +181,17 @@ class HomePage(RoutablePageMixin, Page):
 
     @route(r'^crypto/$')
     def crypto(self, request, *args, **kwargs):
+
+        
         context = self.get_context(request, *args, **kwargs)
+
+        request.session['example_variable'] = request.session['example_variable'] + 1
+        print('the session variable is set BY CRYPTO to...', request.session['example_variable'])
+
+        print("example before setting is... ", context['example'])
+        context['example'] = context['example'] + [3, 4, 5]
+        print("example after setting is... ", context['example'])
+
         self.title = "Crypto Services"
         context['thispagesuffix'] = "crypto/"
 
@@ -167,8 +214,15 @@ class HomePage(RoutablePageMixin, Page):
 
         # def serve(self, request, view=None, args=None, kwargs=None):
         if request.method == 'POST':
-            # context = self.get_context(request, *args, **kwargs)
-            print("the new context is... ", context)
+
+            # request.session['example'] = request.session['example'] + ['newItem']
+            # print("POSTed session variable example is... ", request.session['example'])
+
+            context = self.get_context(request, *args, **kwargs)
+            context['example'] = context['example'] + [6, 7, 8]
+            print("POSTed example is... ", context['example'])
+
+            print("the new context is... ", context['example'])
 
             data = json.loads(request.body)
 
