@@ -8,6 +8,11 @@
 
 {% block content %}
 
+<div>
+    {{ self.get_full_url }}
+    </div>
+    
+
 <script defer src="{% static 'js/ajax.js' %}"></script>
 
 {% comment %} {{ page.body|richtext }} {% endcomment %}

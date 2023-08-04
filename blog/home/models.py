@@ -101,9 +101,10 @@ class HomePage(RoutablePageMixin, Page):
         context['thispagesuffix'] = "crypto/"
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+        print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
         def FilterCardsByTags(cardslist):
-            context = self.get_context(request, *args, **kwargs)
+            # context = self.get_context(request, *args, **kwargs)
             """
                 фкнция фильтрует набор карточек по набору тэгов этих карточек
             """
@@ -122,7 +123,7 @@ class HomePage(RoutablePageMixin, Page):
                 cardslist = cardslist.filter(tags__slug__in=[filterTag])    
                 print("the filtered Cardslist for this tag is... .... ....  ", cardslist)
 
-            print("the new filtered Cards list is... changed data",  cardslist )
+            print("the new filtered Cards list is... ",  cardslist )
             
             return cardslist
 
@@ -178,11 +179,13 @@ class HomePage(RoutablePageMixin, Page):
         
         # context['blogpages'] = FilterCardsByTags(blogpages)
 
-        print('regular page context is...', context)
+        print('regular GET page context is...', context)
         print('session variable for Selected Tags...', request.session['selected_tags'])
 
         context['selected_tags'] = request.session['selected_tags']
         context['blogpages'] = FilterCardsByTags(blogpages)
+
+        print('regular GET page context AFTER FILTER is...', context)
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)

@@ -1,6 +1,33 @@
 console.log("AJAX is working");
 
-async function makeRequest(url, method, body, returnType) {
+function httpGet(theUrl) {
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("GET", theUrl, false); // false for synchronous request
+  xmlHttp.send(null);
+  return xmlHttp.responseText;
+}
+
+async function makeGetRequest(url, returnType = "json") {
+  let headers = {
+    "X-Requested-WIth": "XMLHttpRequest",
+    "Content-Type": "application/json",
+  };
+
+  let response = await fetch(url, {
+    method: "get",
+    headers: headers,
+  });
+
+  if (returnType == "html") {
+    return await response.text(); //returning HTML response instead of JSON
+  }
+
+  if (returnType == "json") {
+    return await response.json();
+  }
+}
+
+async function makeRequest(url, method, body = null, returnType = "json") {
   let headers = {
     "X-Requested-WIth": "XMLHttpRequest",
     "Content-Type": "application/json",
@@ -62,68 +89,25 @@ async function postAddTag(tag) {
     "html"
   );
 
-  // await data["addedTag"];
-  // console.log(await data);
-
   const html = document.querySelectorAll("html")[0];
 
-  // console.log('replacing HTML')
-
   html.innerHTML = data;
+
+  window.location.href = "/crypto/";
 }
-
-// async function getNumber() {
-//   console.log("gets number");
-
-//   const data = await makeRequest("/", "get");
-
-//   let ul_left = document.getElementById("left");
-//   let li = document.createElement("span");
-
-//   li.addEventListener("click", getFloatNumber);
-
-//   li.innerText = await data["number"];
-//   ul_left.appendChild(li);
-
-//   console.log(await data);
-// }
-
-// async function getFloatNumber(e) {
-//   console.log("gets FLOAT number");
-
-//   let number = e.target.innerText;
-
-//   const data = await makeRequest(
-//     "/",
-//     "post",
-//     JSON.stringify({ number: number })
-//   );
-
-//   let ul_right = document.getElementById("right");
-//   let li2 = document.createElement("span");
-//   li2.innerText = await data["float"];
-//   ul_right.appendChild(li2);
-
-//   console.log(await data);
-// }
 
 //  функция перенаправляет пользователя на страницу с url, если его текущая страница отличается от этого url
 function moveToPage(url) {
-  
-  
-  const path = window.location.pathname
-  
+  const path = window.location.pathname;
+
   console.log(`path ${path}`);
 
   console.log(`url ${url}`);
 
   if (path !== url) {
-    window.location=url;
+    window.location.pathname = url;
     console.log(`moving to ${url} Page`);
   } else {
     console.log(`allready at Page ${url}`);
   }
-
 }
-
-
