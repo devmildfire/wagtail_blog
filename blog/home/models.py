@@ -81,7 +81,7 @@ class HomePage(RoutablePageMixin, Page):
 
         tags = []
 
-        for post_page in Post_pages:
+        for post_page in blogpages:
             tags_list = listify(post_page.tags)
             tags = tags + tags_list
 
@@ -217,16 +217,12 @@ class HomePage(RoutablePageMixin, Page):
                 return render(request, "testblog/crypto.html", context)
 
             if 'addTag' in data:
-                # context = self.get_context(request, *args, **kwargs)
-
+                
                 tagToAdd = data['addTag']
                 
                 print('selected tags from session', request.session['selected_tags'])
                 print('tag to add...', tagToAdd)
                 selectedTags = request.session['selected_tags']
-
-                # request.session['selected_tags'] = request.session['selected_tags'] + [tagToAdd]
-                # print('the session variable is set BY CRYPTO to...', request.session['selected_tags'])
 
                 print('selectedTags...', selectedTags)
 
@@ -247,8 +243,6 @@ class HomePage(RoutablePageMixin, Page):
                 return render(request, "testblog/crypto.html", context)           
 
 
-            # return JsonResponse({'sorted': f'You got: {sorted}'})
-
         if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
             context['pages'] = CryptoPage.objects.live().order_by('title')
             context['isGet'] = True
@@ -259,13 +253,6 @@ class HomePage(RoutablePageMixin, Page):
         # blogpages = CryptoPage.objects.live().order_by('-first_published_at')
         context['blogpages'] = blogpages
         context['isGet'] = False
-
-        # if request.GET.get('tag', None):
-        #     tag = request.GET.get('tag')
-        #     blogpages = blogpages.filter(
-        #         tags__slug__in=[tag])
-        #     print("tag filtered pages are...", blogpages)
-        #     context['blogpages'] = blogpages
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)

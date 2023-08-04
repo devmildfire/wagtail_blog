@@ -35,6 +35,10 @@
   column-gap: 20px;
 }
 
+.select_sorting {
+  width: max-content;
+}
+
 @media screen and (max-width: 1200px) {
   .Crypto_Cards_Div {
     /* grid-template-columns: 1fr 1fr; */

@@ -1,0 +1,20 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/TagsList.css' %}">
+
+
+
+
+<section class="tag_selection_section">
+
+                 
+        {% for tag in tagsList  %}
+            
+                <!-- {% include "./Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all openForAds=post.open_for_ads %} -->
+                <div class = "tag" onclick="postAddTag( '{{tag}}' ); " > {{ tag }}  </div>
+                <!-- <button class="tag" onclick="moveToPage('/crypto/'); postAddTag( '{{tag}}' ); " > {{ tag }} </button> -->
+            
+        {% endfor %}
+    
+
+</section>

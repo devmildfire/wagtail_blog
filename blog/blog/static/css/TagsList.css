@@ -1,0 +1,13 @@
+.tag_selection_section {
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 4.1vw var(--HPaddings);
+  
+}
+

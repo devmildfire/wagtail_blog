@@ -2,16 +2,15 @@
 
 {% load static wagtailcore_tags %}
 
-
 {% block content %}
 
 {% csrf_token %} 
 
 <script defer src="{% static 'js/ajax.js' %}"></script>
 
-<Button class="standard_main_button" onclick="this.blur(); postAddTag('anotherTestTag');">AJAX test</Button>
+{% include "../tags/TagsList.html" with tagsList=tags %}
 
-<select onchange="postCrypto(this)">
+<select class="select_sorting" onchange="postCrypto(this)">
     <option value="">--Please choose an option--</option>
     <option value='-first_published_at'>by default</option>
     <option value="title">by title</option>
