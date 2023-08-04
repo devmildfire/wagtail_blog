@@ -174,45 +174,44 @@ class HomePage(RoutablePageMixin, Page):
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
 
+        
+        def FilterCardsByTags(cardslist):
+            """
+                фкнция фильтрует набор карточек по набору тэгов этих карточек
+            """
+            if len(request.session['selected_tags']) == 0:
+                print("there are NO TAGS to filter by... ", request.session['selected_tags'])
+                return cardslist
+
+            print("there are tags to filter by... ", request.session['selected_tags'])
+
+            filterTags = [x.lower() for x in request.session['selected_tags']]
+            
+            print("the cards will be filtered by tag(s)... ", filterTags)
+
+            for filterTag in filterTags:
+                print("filtering Tag is... ", filterTag)
+                cardslist = cardslist.filter(tags__slug__in=[filterTag])    
+                print("the filtered Cardslist for this tag is... ", cardslist)
+
+            print("the new filtered Cards list is is... ", cardslist)
+            
+            return cardslist
+
         if request.method == 'POST':
-
-            # request.session['example'] = request.session['example'] + ['newItem']
-            # print("POSTed session variable example is... ", request.session['example'])
-
-            # context = self.get_context(request, *args, **kwargs)
-
-
-            # context['example'] = context['example'] + [6, 7, 8]
-            # print("POSTed example is... ", context['example'])
-
-            # print("the new context is... ", context['example'])
 
             data = json.loads(request.body)
 
             if 'sortby' in data:
 
-                sortby = (data['sortby'])
+                sortby = data['sortby']
 
-                # blogpages = CryptoPage.objects.live().order_by(sortby)
                 blogpages = blogpages.order_by(sortby)
 
                 print("the new request for POST is... ", request)
 
-                if len(request.session['selected_tags']) > 0:
-                    print("there are tags to filter by... ", request.session['selected_tags'])
+                context['blogpages'] = FilterCardsByTags(blogpages)
 
-                    filterTags = [x.lower() for x in request.session['selected_tags']]
-                    
-                    print("the cards will be filtered by tag(s)... ", filterTags)
-
-                    for filterTag in filterTags:
-                        blogpages = blogpages.filter(tags__slug__in=[filterTag])    
-
-
-                    print("the new filtered Cards lust is is... ", blogpages)
-
-
-                context['blogpages'] = blogpages
                 context['isPost'] = sortby
 
                 return render(request, "testblog/crypto.html", context)
@@ -235,13 +234,17 @@ class HomePage(RoutablePageMixin, Page):
                     selectedTags.append(tagToAdd)
                     request.session['selected_tags'] = selectedTags
                     print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
-                    return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+                    # return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
                 else :
                     taggToRemove = tagToAdd
                     selectedTags.remove(taggToRemove)
                     request.session['selected_tags'] = selectedTags
                     print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
-                    return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'})                
+                    # return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'}) 
+
+                context['blogpages'] = FilterCardsByTags(blogpages)
+
+                return render(request, "testblog/crypto.html", context)           
 
 
             # return JsonResponse({'sorted': f'You got: {sorted}'})

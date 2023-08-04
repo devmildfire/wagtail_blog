@@ -23,7 +23,7 @@
                 {% comment %}<a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{tag.slug}}' onclick="postAddTag("testTag")"> {{ tag }} </a>{% endcomment %}
                  <!-- <a class="tag" href='#' onclick="postAddTag( '{{tag}}' );"> {{ tag }} </a> -->
                  <!-- <button class="tag" onclick="postAddTag( '{{tag}}' ); window.location='{% pageurl post %}';" > {{ tag }} </button> -->
-                 <button class="tag" onclick="postAddTag( '{{tag}}' ); " > {{ tag }} </button>
+                 <button class="tag" onclick="moveToPage('/crypto/'); postAddTag( '{{tag}}' ); " > {{ tag }} </button>
                  
         
             {% endfor %}
@@ -35,7 +35,8 @@
 
                         {% for extraTag in cardTags|slice:"4:" %}
                 
-                            <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{extraTag.slug}}'> {{ extraTag }} </a>
+                            <!-- <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{extraTag.slug}}'> {{ extraTag }} </a> -->
+                            <button class="tag" onclick="moveToPage('/crypto/'); postAddTag( '{{ extraTag }}' ); " > {{ extraTag }} </button>
                 
                         {% endfor %}
 
