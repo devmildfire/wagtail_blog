@@ -96,6 +96,23 @@ async function postAddTag(tag) {
   window.location.href = "/crypto/";
 }
 
+async function postRevealAllTags() {
+  console.log("POST request to root for showing all tags");
+
+  const data = await makeRequest(
+    "/crypto/",
+    "post",
+    JSON.stringify({ showAll: true }),
+    "html"
+  );
+
+  const html = document.querySelectorAll("html")[0];
+
+  html.innerHTML = data;
+
+  window.location.href = "/crypto/";
+}
+
 //  функция перенаправляет пользователя на страницу с url, если его текущая страница отличается от этого url
 function moveToPage(url) {
   const path = window.location.pathname;

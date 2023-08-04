@@ -36,11 +36,14 @@
                     <a class="tag" href='#'> + {{ cardTags.count|add:"-4" }}</a>
                     <div class="tooltip_div">
 
+                        
+
                         {% for extraTag in cardTags|slice:"4:" %}
                 
                             <!-- <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}?tag={{extraTag.slug}}'> {{ extraTag }} </a> -->
-                            <button class="tag" onclick="moveToPage('/crypto/'); postAddTag( '{{ extraTag }}' ); " > {{ extraTag }} </button>
-                
+                            {% comment %} <button class="tag" onclick="moveToPage('/crypto/'); postAddTag( '{{ extraTag }}' ); " > {{ extraTag }} </button> {% endcomment %}
+                            <div class="tag" onclick="postAddTag('{{extraTag}}' );"> {{ extraTag }} </div>
+
                         {% endfor %}
 
                     </div>         

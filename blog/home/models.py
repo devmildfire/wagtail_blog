@@ -174,7 +174,41 @@ class HomePage(RoutablePageMixin, Page):
                 context['blogpages'] = FilterCardsByTags(blogpages)
                 context['selected_tags'] = selectedTags
 
-                return render(request, "testblog/crypto.html", context)           
+                return render(request, "testblog/crypto.html", context)       
+
+            if 'showAll' in data:
+                
+                # tagToAdd = data['addTag']
+                print("It is a SHOW ALL tags request. ",) 
+
+        
+
+                selectedTags = request.session['selected_tags']
+                print('selected tags from session', request.session['selected_tags'])
+
+                print('selectedTags...', selectedTags)
+
+                selectedTags = []
+                print('selectedTags = ', selectedTags)
+                request.session['selected_tags'] = selectedTags
+                print('the session variable is set BY POST SHOW ALL TAGS to...', request.session['selected_tags'])
+
+                # if tagToAdd not in selectedTags:
+                #     selectedTags.append(tagToAdd)
+                #     print('selectedTags = ', selectedTags)
+                #     request.session['selected_tags'] = selectedTags
+                #     print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
+                # else :
+                #     taggToRemove = tagToAdd
+                #     selectedTags.remove(taggToRemove)
+                #     print('selectedTags = ', selectedTags)
+                #     request.session['selected_tags'] = selectedTags
+                #     print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
+
+                context['blogpages'] = FilterCardsByTags(blogpages)
+                context['selected_tags'] = selectedTags
+
+                return render(request, "testblog/crypto.html", context)    
 
         
         # context['blogpages'] = FilterCardsByTags(blogpages)
