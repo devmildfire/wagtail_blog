@@ -179,58 +179,12 @@ class HomePage(RoutablePageMixin, Page):
 
             data = json.loads(request.body)
 
-<<<<<<< HEAD
-            if 'sortby' in data:
-
-                sortby = (data['sortby'])
-
-                # blogpages = CryptoPage.objects.live().order_by(sortby)
-                blogpages = blogpages.order_by(sortby)
-
-                print("the new request for POST is... ", request)
-                print("the tag for POST is... ", tag)
-
-                # if request.GET.get('tag', None):
-                #     tag = request.GET.get('tag')
-                tag = context['presenttag']
-
-                if tag is not None:
-                    print("the cards will be filtered by tag... ", tag)
-                    blogpages = blogpages.filter(
-                        tags__slug__in=[tag])
-
-                context['blogpages'] = blogpages
-                context['isPost'] = sortby
-
-                return render(request, "testblog/crypto.html", context)
-
-            if 'addTag' in data:
-                # context = self.get_context(request, *args, **kwargs)
-
-                tagToAdd = data['addTag']
-
-                selectedTags = context['selectedTags']
-                print('cselectedTags...', selectedTags)
-                if tagToAdd not in selectedTags:
-                    selectedTags.append(tagToAdd)
-                    context['added_tag'] = tagToAdd
-                    context['selectedTags'] = selectedTags
-                    print('context after adding a tag...', context)
-
-                    print('cselectedTags after adding...', selectedTags)
-
-                    return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
-
-                return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
-
-=======
             print('returning POST page')
             print(context['blogpages'])
             print(context)
 
             return render(request, "testblog/crypto.html", context)
 
->>>>>>> 66b3f7d143be69009834db6d499f1bb7a917b5de
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
         if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
