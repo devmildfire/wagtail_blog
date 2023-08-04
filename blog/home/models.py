@@ -19,7 +19,6 @@ from random import randint
 class HomePage(RoutablePageMixin, Page):
     intro = RichTextField(null=True, blank=True)
     body = RichTextField(null=True, blank=True)
-    # selectedTags = ArrayField
 
     content_panels = Page.content_panels + [
         FieldPanel('intro'),
@@ -44,9 +43,6 @@ class HomePage(RoutablePageMixin, Page):
         # aitoolspages = AIToolPage.objects.live().order_by('-first_published_at')
         Post_pages = CryptoPage.objects.child_of(self)
 
-        # selectedTags = []
-        # context['selectedTags'] = selectedTags
-
         def listify(value):
             return [tag.name for tag in value.all()]
 
@@ -57,52 +53,13 @@ class HomePage(RoutablePageMixin, Page):
             tags = tags + tags_list
 
         tags = list(set(tags))
-
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            blogpages = blogpages.filter(tags__slug__in=[tag])
-            aitoolspages = aitoolspages.filter(tags__slug__in=[tag])
-
+ 
         print('the blogpages are reset')
         context['blogpages'] = blogpages
         context['aitoolspages'] = aitoolspages
         context['tags'] = tags
         context['selected_tags'] = selected_tags
         return context
-
-    # def serve(self, request, view=None, args=None, kwargs=None):
-        
-        # request.session['example'] = []
-        # print('session variable example set to ...', request.session['example'])
-
-        # if request.method == 'POST':
-        #     data = json.loads(request.body)
-        #     if 'number' in data:
-
-        #         float_number = float(data['number'])
-
-        #         return JsonResponse({'float': f'You got: {float_number}'})
-
-            # if 'addTag' in data:
-            #     # context = self.get_context(request, *args, **kwargs)
-
-            #     tagToAdd = data['addTag']
-
-            #     selectedTags = context['selectedTags']
-            #     print('cselectedTags...', selectedTags)
-            #     if tagToAdd not in selectedTags:
-            #         selectedTags.append(tagToAdd)
-            #         context['added_tag'] = tagToAdd
-            #         context['selectedTags'] = selectedTags
-            #         print('context after adding a tag...', context)
-
-            #         print('cselectedTags after adding...', selectedTags)
-
-            #         return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
-
-            #     return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
-
-        # return super().serve(request, view, args, kwargs)
 
     @route(r'^search/$')
     def post_search(self, request, *args, **kwargs):
@@ -128,7 +85,6 @@ class HomePage(RoutablePageMixin, Page):
         print(context['blogpages'])
 
         return render(request, "testblog/search.html", context)
-        # return self.render(request, context)
 
     @route(r'^add-me/$')
     def add_me(self, request, *args, **kwargs):
@@ -146,8 +102,8 @@ class HomePage(RoutablePageMixin, Page):
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
 
-        
         def FilterCardsByTags(cardslist):
+            context = self.get_context(request, *args, **kwargs)
             """
                 фкнция фильтрует набор карточек по набору тэгов этих карточек
             """
@@ -164,73 +120,69 @@ class HomePage(RoutablePageMixin, Page):
             for filterTag in filterTags:
                 print("filtering Tag is... ", filterTag)
                 cardslist = cardslist.filter(tags__slug__in=[filterTag])    
-                print("the filtered Cardslist for this tag is... ", cardslist)
+                print("the filtered Cardslist for this tag is... .... ....  ", cardslist)
 
-            print("the new filtered Cards list is is... ", cardslist)
+            print("the new filtered Cards list is... changed data",  cardslist )
             
             return cardslist
 
         if request.method == 'POST':
 
+            print("Detected POST method request")    
             data = json.loads(request.body)
+            print("POST method data is...", data)    
+            print("the new request for POST is... ", request)
 
             if 'sortby' in data:
 
                 sortby = data['sortby']
-
+                print("It is a sorting request. Sort by...", sortby) 
+            
                 blogpages = blogpages.order_by(sortby)
 
-                print("the new request for POST is... ", request)
+                blogpages = FilterCardsByTags(blogpages)
 
-                context['blogpages'] = FilterCardsByTags(blogpages)
-
-                context['isPost'] = sortby
+                context['blogpages'] = blogpages
 
                 return render(request, "testblog/crypto.html", context)
 
             if 'addTag' in data:
                 
                 tagToAdd = data['addTag']
-                
-                print('selected tags from session', request.session['selected_tags'])
+                print("It is a tag adding/removing request. ",) 
+
                 print('tag to add...', tagToAdd)
+
                 selectedTags = request.session['selected_tags']
+                print('selected tags from session', request.session['selected_tags'])
 
                 print('selectedTags...', selectedTags)
 
                 if tagToAdd not in selectedTags:
                     selectedTags.append(tagToAdd)
+                    print('selectedTags = ', selectedTags)
                     request.session['selected_tags'] = selectedTags
                     print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
-                    # return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
                 else :
                     taggToRemove = tagToAdd
                     selectedTags.remove(taggToRemove)
+                    print('selectedTags = ', selectedTags)
                     request.session['selected_tags'] = selectedTags
                     print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
-                    # return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'}) 
 
                 context['blogpages'] = FilterCardsByTags(blogpages)
                 context['selected_tags'] = selectedTags
 
                 return render(request, "testblog/crypto.html", context)           
 
-
-        if request.method == 'GET' and request.headers.get('X-Requested_With') == 'XMLHttpRequest':
-            context['pages'] = CryptoPage.objects.live().order_by('title')
-            context['isGet'] = True
-
-            print('returning GET page')
-            return render(request, "testblog/crypto.html", context)
-
-        # blogpages = CryptoPage.objects.live().order_by('-first_published_at')
-        # context['blogpages'] = blogpages
-        context['isGet'] = False
-        context['blogpages'] = FilterCardsByTags(blogpages)
+        
+        # context['blogpages'] = FilterCardsByTags(blogpages)
 
         print('regular page context is...', context)
         print('session variable for Selected Tags...', request.session['selected_tags'])
-                
+
+        context['selected_tags'] = request.session['selected_tags']
+        context['blogpages'] = FilterCardsByTags(blogpages)
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)
