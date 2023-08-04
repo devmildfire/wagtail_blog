@@ -214,7 +214,7 @@ class HomePage(RoutablePageMixin, Page):
 
                 context['isPost'] = sortby
 
-            return render(request, "testblog/crypto.html", context)
+                return render(request, "testblog/crypto.html", context)
 
             if 'addTag' in data:
                 # context = self.get_context(request, *args, **kwargs)
