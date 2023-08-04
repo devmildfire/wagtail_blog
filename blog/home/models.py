@@ -26,38 +26,6 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('body'),
     ]
 
-    # if 'example' not in locals():
-    #     example = []
-
-    # def set_example(request, *args, **kwargs):
-    #     if 'example_variable' not in equest.session:
-    #         request.session['example_variable'] = 1
-    #         print('the session variable is set to...', request.session['example_variable'])
-    #     else:
-    #         print('the session variable is ALLREADY present...', request.session['example_variable'])
-        
-    
-    # for AJAX post requests handling
-
-    # def serve(self, request, view=None, args=None, kwargs=None):
-    #     if request.method == 'POST':
-    #         data = json.loads(request.body)
-    #         if 'number' in data:
-
-    #             float_number = float(data['number'])
-
-    #             return JsonResponse({'float': f'You got: {float_number}'})
-
-    #         if 'addTag' in data:
-
-    #             tagToAdd = data['addTag']
-
-    #             # if tagToAdd not in selectedTags
-
-    #             return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
-
-    #     return super().serve(request, view, args, kwargs)
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
@@ -66,6 +34,9 @@ class HomePage(RoutablePageMixin, Page):
         else:
             request.session['selected_tags'] = []
             print('the session variable "selected_tags" is set to...', request.session['selected_tags'])
+
+        selected_tags = request.session['selected_tags']
+        print('selected tags for Crypto page TagsList set to...', selected_tags)
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
         aitoolspages = AIToolPage.objects.child_of(self)
@@ -96,6 +67,7 @@ class HomePage(RoutablePageMixin, Page):
         context['blogpages'] = blogpages
         context['aitoolspages'] = aitoolspages
         context['tags'] = tags
+        context['selected_tags'] = selected_tags
         return context
 
     # def serve(self, request, view=None, args=None, kwargs=None):
@@ -239,6 +211,7 @@ class HomePage(RoutablePageMixin, Page):
                     # return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'}) 
 
                 context['blogpages'] = FilterCardsByTags(blogpages)
+                context['selected_tags'] = selectedTags
 
                 return render(request, "testblog/crypto.html", context)           
 
@@ -251,8 +224,13 @@ class HomePage(RoutablePageMixin, Page):
             return render(request, "testblog/crypto.html", context)
 
         # blogpages = CryptoPage.objects.live().order_by('-first_published_at')
-        context['blogpages'] = blogpages
+        # context['blogpages'] = blogpages
         context['isGet'] = False
+        context['blogpages'] = FilterCardsByTags(blogpages)
+
+        print('regular page context is...', context)
+        print('session variable for Selected Tags...', request.session['selected_tags'])
+                
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)

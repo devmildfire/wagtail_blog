@@ -8,7 +8,7 @@
 
 <script defer src="{% static 'js/ajax.js' %}"></script>
 
-{% include "../tags/TagsList.html" with tagsList=tags %}
+{% include "../tags/TagsList.html" with tagsList=tags Tags_Selected=selected_tags %}
 
 <select class="select_sorting" onchange="postCrypto(this)">
     <option value="">--Please choose an option--</option>
