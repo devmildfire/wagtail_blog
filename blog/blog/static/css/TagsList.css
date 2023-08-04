@@ -5,16 +5,24 @@
   justify-content: flex-start;
   align-items: center;
 
-  gap: 5px;
+  gap: 16px;
 
   padding: 4.1vw var(--HPaddings);
-  
+}
+
+.tag_selection_section .standard_button {
+  padding: 6px 20px;
+
+  font-family: "Inter";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+
+  cursor: pointer;
 }
 
 .highlited {
-  
-  background: greenyellow !important; 
-  border-color: green;
-  border: 1px solid;
-} 
-
+  background: var(--blueHoverColor);
+  color: var(--whiteColor);
+}
