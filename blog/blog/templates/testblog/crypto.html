@@ -9,7 +9,7 @@
 
 <script defer src="{% static 'js/ajax.js' %}"></script>
 
-<Button class="standard_main_button" onclick="this.blur(); postAddTag('testTag');">AJAX test</Button>
+<Button class="standard_main_button" onclick="this.blur(); postAddTag('anotherTestTag');">AJAX test</Button>
 
 <select onchange="postCrypto(this)">
     <option value="">--Please choose an option--</option>
@@ -18,13 +18,6 @@
     <option value="date">by date</option>
 </select>
 
-    <h2>
-        post {{ isPost }}
-    </h2>
-
-    <h3>
-        {{ blogpages }}
-    </h3>
 
     {% include "../tags/TrendingCrypto.html" with Title="Crypto Page" itemslist=blogpages itemsmax="10" %}
 

@@ -26,6 +26,17 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('body'),
     ]
 
+    # if 'example' not in locals():
+    #     example = []
+
+    # def set_example(request, *args, **kwargs):
+    #     if 'example_variable' not in equest.session:
+    #         request.session['example_variable'] = 1
+    #         print('the session variable is set to...', request.session['example_variable'])
+    #     else:
+    #         print('the session variable is ALLREADY present...', request.session['example_variable'])
+        
+    
     # for AJAX post requests handling
 
     # def serve(self, request, view=None, args=None, kwargs=None):
@@ -49,6 +60,13 @@ class HomePage(RoutablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+
+        if 'selected_tags' in request.session:
+            print('the session variable "selected_tags" is ALLREADY present...', request.session['selected_tags'])
+        else:
+            request.session['selected_tags'] = []
+            print('the session variable "selected_tags" is set to...', request.session['selected_tags'])
+
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
         aitoolspages = AIToolPage.objects.child_of(self)
         # aitoolspages = AIToolPage.objects
@@ -80,14 +98,18 @@ class HomePage(RoutablePageMixin, Page):
         context['tags'] = tags
         return context
 
-    def serve(self, request, view=None, args=None, kwargs=None):
-        if request.method == 'POST':
-            data = json.loads(request.body)
-            if 'number' in data:
+    # def serve(self, request, view=None, args=None, kwargs=None):
+        
+        # request.session['example'] = []
+        # print('session variable example set to ...', request.session['example'])
 
-                float_number = float(data['number'])
+        # if request.method == 'POST':
+        #     data = json.loads(request.body)
+        #     if 'number' in data:
 
-                return JsonResponse({'float': f'You got: {float_number}'})
+        #         float_number = float(data['number'])
+
+        #         return JsonResponse({'float': f'You got: {float_number}'})
 
             # if 'addTag' in data:
             #     # context = self.get_context(request, *args, **kwargs)
@@ -108,7 +130,7 @@ class HomePage(RoutablePageMixin, Page):
 
             #     return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd}'})
 
-        return super().serve(request, view, args, kwargs)
+        # return super().serve(request, view, args, kwargs)
 
     @route(r'^search/$')
     def post_search(self, request, *args, **kwargs):
@@ -144,46 +166,86 @@ class HomePage(RoutablePageMixin, Page):
 
     @route(r'^crypto/$')
     def crypto(self, request, *args, **kwargs):
+       
         context = self.get_context(request, *args, **kwargs)
+        
         self.title = "Crypto Services"
         context['thispagesuffix'] = "crypto/"
 
         blogpages = CryptoPage.objects.live().order_by('-first_published_at')
 
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            print("there is a tag present... ", tag)
-            print("request full path is... ", request.get_full_path())
-            context['presenttag'] = tag
+        
+        def FilterCardsByTags(cardslist):
+            """
+                фкнция фильтрует набор карточек по набору тэгов этих карточек
+            """
+            if len(request.session['selected_tags']) == 0:
+                print("there are NO TAGS to filter by... ", request.session['selected_tags'])
+                return cardslist
 
-        else:
-            tag = None
-            print("there is NO tag present... ", tag)
-            print("request full path is... ", request.get_full_path())
-            context['presenttag'] = 'trading'
+            print("there are tags to filter by... ", request.session['selected_tags'])
 
-        print("the old context is... ", context)
-        # context['isPost'] = True
+            filterTags = [x.lower() for x in request.session['selected_tags']]
+            
+            print("the cards will be filtered by tag(s)... ", filterTags)
 
-        # def serve(self, request, view=None, args=None, kwargs=None):
+            for filterTag in filterTags:
+                print("filtering Tag is... ", filterTag)
+                cardslist = cardslist.filter(tags__slug__in=[filterTag])    
+                print("the filtered Cardslist for this tag is... ", cardslist)
+
+            print("the new filtered Cards list is is... ", cardslist)
+            
+            return cardslist
+
         if request.method == 'POST':
-            # context = self.get_context(request, *args, **kwargs)
-            print("the new context is... ", context)
-
-            context['blogpages'] = CryptoPage.objects.live().order_by('title')
-            context['isPost'] = True
-
-            if request.GET.get('tag', None):
-                tag = request.GET.get('tag')
-                blogpages = blogpages.filter(tags__slug__in=[tag])
 
             data = json.loads(request.body)
 
-            print('returning POST page')
-            print(context['blogpages'])
-            print(context)
+            if 'sortby' in data:
+
+                sortby = data['sortby']
+
+                blogpages = blogpages.order_by(sortby)
+
+                print("the new request for POST is... ", request)
+
+                context['blogpages'] = FilterCardsByTags(blogpages)
+
+                context['isPost'] = sortby
 
             return render(request, "testblog/crypto.html", context)
+
+            if 'addTag' in data:
+                # context = self.get_context(request, *args, **kwargs)
+
+                tagToAdd = data['addTag']
+                
+                print('selected tags from session', request.session['selected_tags'])
+                print('tag to add...', tagToAdd)
+                selectedTags = request.session['selected_tags']
+
+                # request.session['selected_tags'] = request.session['selected_tags'] + [tagToAdd]
+                # print('the session variable is set BY CRYPTO to...', request.session['selected_tags'])
+
+                print('selectedTags...', selectedTags)
+
+                if tagToAdd not in selectedTags:
+                    selectedTags.append(tagToAdd)
+                    request.session['selected_tags'] = selectedTags
+                    print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
+                    # return JsonResponse({'addedTag': f'You added a tag: {tagToAdd}'})
+                else :
+                    taggToRemove = tagToAdd
+                    selectedTags.remove(taggToRemove)
+                    request.session['selected_tags'] = selectedTags
+                    print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
+                    # return JsonResponse({'addedTag': f'Allready have a tag: {tagToAdd} . Now removing the tag from the list'}) 
+
+                context['blogpages'] = FilterCardsByTags(blogpages)
+
+                return render(request, "testblog/crypto.html", context)           
+
 
             # return JsonResponse({'sorted': f'You got: {sorted}'})
 
@@ -198,12 +260,12 @@ class HomePage(RoutablePageMixin, Page):
         context['blogpages'] = blogpages
         context['isGet'] = False
 
-        if request.GET.get('tag', None):
-            tag = request.GET.get('tag')
-            blogpages = blogpages.filter(
-                tags__slug__in=[tag])
-            print("tag filtered pages are...", blogpages)
-            context['blogpages'] = blogpages
+        # if request.GET.get('tag', None):
+        #     tag = request.GET.get('tag')
+        #     blogpages = blogpages.filter(
+        #         tags__slug__in=[tag])
+        #     print("tag filtered pages are...", blogpages)
+        #     context['blogpages'] = blogpages
 
         print('returning regular page')
         return render(request, "testblog/crypto.html", context)
