@@ -6,6 +6,46 @@ from django import template
 
 register = template.Library()
 
+@register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
+def TagsSection_tag(context):
+
+    return {
+        'request': context['request'],
+        'context': context,
+        # 'tags': context['tags'],
+        'tagsList': context['tags'],
+        'Tags_Selected' : context['selected_tags'],
+        # 'TagsSection' : TagsSection.objects.first()
+    }
+
+
+@register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
+def CryptoCardsSection_tag(context, maxCards):
+
+    return {
+        'maxCards' : maxCards,
+        'request': context['request'],
+        'context': context,
+        'cards': context['blogpages'],
+        'tags': context['tags'],
+        'CryptoCardsSection': CardsSection.objects.all()[0],
+        "Title": CardsSection.objects.all()[0],
+        'home_page': HomePage.objects.first(),
+    }
+
+@register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
+def AIToolsCardsSection_tag(context, maxCards):
+
+    return {
+        'maxCards' : maxCards,
+        'request': context['request'],
+        'context': context,
+        'cards': context['aitoolspages'],
+        'tags': context['tags'],
+        'AIToolsCardsSection': CardsSection.objects.all()[1],
+        "Title": CardsSection.objects.all()[1],
+        'home_page': HomePage.objects.first(),
+    }
 
 @register.inclusion_tag("testblog/tags/OpenForAdWork.html", takes_context=True)
 def open_for_ad_work_tag(context):

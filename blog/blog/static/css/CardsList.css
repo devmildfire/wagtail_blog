@@ -1,0 +1,24 @@
+.Cards_List_Div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  row-gap: 30px;
+  column-gap: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .Cards_List_Div {
+    column-gap: 8px;
+    row-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Cards_List_Div {
+    column-gap: 8px;
+    row-gap: 10px;
+  }
+}

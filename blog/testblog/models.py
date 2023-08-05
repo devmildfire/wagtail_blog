@@ -56,6 +56,17 @@ class FeatureCards(Orderable):
 
 
 @register_snippet
+class CardsSection(ClusterableModel):
+    title = models.CharField(max_length=255)
+
+    panels = [
+        FieldPanel('title'),
+    ]
+
+    def __str__(self):
+        return self.title
+    
+@register_snippet
 class OpenForAdWork(ClusterableModel):
     title = models.CharField(max_length=255)
     text = models.CharField(max_length=255, null=True, blank=True)

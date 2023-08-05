@@ -1,0 +1,36 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/TagsList.css' %}">
+
+
+<section class="tag_selection_section">
+
+        <div class = "
+                
+        {% if not Tags_Selected  %}
+        
+                highlited
+
+        {% endif %}
+        
+        standard_button"  onclick="postRevealAllTags();"> All </div>
+                 
+        {% for tag in tagsList  %}
+            
+                
+                <div class = "
+                
+                {% if tag in Tags_Selected  %}
+                
+                        highlited
+
+                {% endif %}
+                
+                standard_button" onclick="postAddTag( '{{tag}}' );" > {{ tag }}  </div>
+                
+                
+            
+        {% endfor %}
+    
+
+</section>

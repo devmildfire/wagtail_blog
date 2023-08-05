@@ -1,0 +1,36 @@
+{% load static wagtailcore_tags base_tags %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/crypto.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+{% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
+
+
+<section class="trending_Crypto_section">
+
+    <div class="Crypto_Title">
+        {{ Title }}
+    </div>
+
+    maxCards : {{ maxCards }}
+
+    request : {{ request }}
+    
+    {% comment %} context : {{ context }} {% endcomment %}
+
+    pages:   {{ cards }}
+
+    tags:
+
+    {% for tag in tags %}
+
+        {{ tag }}
+
+    {% endfor %}
+
+    {% include "./CardsList.html" with cardsList=cards maxCards=maxCards %}
+
+    <button class="standard_button" onclick="this.blur(); ">
+        View All
+    </button>
+
+</section>

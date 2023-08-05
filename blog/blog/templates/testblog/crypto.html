@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags base_tags %}
+
 
 {% block content %}
 
-{% csrf_token %} 
+    {% csrf_token %} 
 
-<script defer src="{% static 'js/ajax.js' %}"></script>
+    <script defer src="{% static 'js/ajax.js' %}"></script>
 
-{% include "../tags/TagsList.html" with tagsList=tags Tags_Selected=selected_tags %}
-
-
-<select class="select_sorting" onchange="postCrypto(this)">
-    <option value="">--Please choose an option--</option>
-    <option value='-first_published_at'>by default</option>
-    <option value="title">by title</option>
-    <option value="date">by date</option>
-</select>
+    {% TagsSection_tag %}
 
 
-    {% include "../tags/TrendingCrypto.html" with Title="Crypto Page" itemslist=blogpages itemsmax="10" %}
+    <select class="select_sorting" onchange="postCrypto(this)">
+        <option value="">--Please choose an option--</option>
+        <option value='-first_published_at'>by default</option>
+        <option value="title">by title</option>
+        <option value="date">by date</option>
+    </select>
+
+    {% CryptoCardsSection_tag maxCards="10" %}
 
 {% endblock content %}

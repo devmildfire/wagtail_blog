@@ -1,38 +1,30 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags %}
-{% load wagtailcore_tags %}
-{% load wagtailroutablepage_tags base_tags%}
+{% load static wagtailcore_tags wagtailroutablepage_tags base_tags%}
 
 {% block body_class %}template-homepage{% endblock %} 
 
 {% block content %}
 
-<div>
-    {{ self.get_full_url }}
-    </div>
-    
+    <script defer src="{% static 'js/ajax.js' %}"></script>
 
-<script defer src="{% static 'js/ajax.js' %}"></script>
-
-{% comment %} {{ page.body|richtext }} {% endcomment %}
+    {% comment %} {{ page.body|richtext }} {% endcomment %}
 
     {% csrf_token %} 
 
-
     {% Hero_tag %}
 
-    {% if page.posts %}
+    {% comment %} {% if page.posts %}
     
         there are some results in posts
 
         {{ page.posts }}
 
-        {% for post in page.posts %}
+        {% for post in page.posts %} {% endcomment %}
 
         {% comment %} {% with post=post.specific %} {% endcomment %}
 
-            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+            {% comment %} <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
             <p> {{ post.intro }}</p>
             {{ post.body|richtext }}
 
@@ -40,50 +32,22 @@
             
                 <a href='{% pageurl page %}?tag={{tag.slug}}'> <span> <b>{{ tag }}</b> </span> </a>
             
-            {% endfor %}
-{% comment %} 
+            {% endfor %} {% endcomment %}
+        {% comment %} 
         {% endwith %} {% endcomment %}
-        {% endfor %} 
+        {% comment %} {% endfor %} 
 
-    {% endif %}
+    {% endif %} {% endcomment %}
 
-    {% comment %} <h1>{{ page.title }}</h1>
+    {% CryptoCardsSection_tag maxCards="6" %}
 
-    <div class="intro">{{ page.intro|richtext }}</div> {% endcomment %}
-
-    {% comment %} {% for post in blogpages %}
-        {% with post=post.specific %}
-
-        {% include "./tags/Card.html" with cardName=post.title cardImage=post.preview_image.url cardInfo=post.intro cardTags=post.tags.all %}
-
-
-        {% endwith %}
-    {% endfor %} {% endcomment %}
-
-
-    {% include "../tags/TrendingCrypto.html" with Title="Trending Crypto Services" itemslist=blogpages itemsmax="6" %}
-
-    
-    {% include "../tags/TrendingCrypto.html" with Title="Trending AI Tools" itemslist=aitoolspages itemsmax=6 %}
+    {% AIToolsCardsSection_tag maxCards="6" %}
 
     {% about_us_tag %}
 
     {% your_add_here_tag %}
 
     {% open_for_ad_work_tag %}
-
-    {% comment %} <br />
-    Tags:
-
-    {% for tag in tags %}
-    
-        <a href='{% pageurl page %}?tag={{tag}}'> <span> <b>{{ tag }}</b> </span> </a>
-    
-    {% endfor %}
-
-    <br /> {% endcomment %}
-
-
 
     {% comment %} Site settings:
 
