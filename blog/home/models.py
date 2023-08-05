@@ -191,19 +191,9 @@ class HomePage(RoutablePageMixin, Page):
                 selectedTags = []
                 print('selectedTags = ', selectedTags)
                 request.session['selected_tags'] = selectedTags
-                print('the session variable is set BY POST SHOW ALL TAGS to...', request.session['selected_tags'])
+                print('the session variable is set BY POST to...', request.session['selected_tags'])
 
-                # if tagToAdd not in selectedTags:
-                #     selectedTags.append(tagToAdd)
-                #     print('selectedTags = ', selectedTags)
-                #     request.session['selected_tags'] = selectedTags
-                #     print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
-                # else :
-                #     taggToRemove = tagToAdd
-                #     selectedTags.remove(taggToRemove)
-                #     print('selectedTags = ', selectedTags)
-                #     request.session['selected_tags'] = selectedTags
-                #     print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
+               
 
                 context['blogpages'] = FilterCardsByTags(blogpages)
                 context['selected_tags'] = selectedTags

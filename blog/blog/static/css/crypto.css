@@ -11,7 +11,8 @@
   font-family: "Poppins", sans-serif;
 }
 
-.Crypto_Title {
+.Crypto_Title,
+.crypto_title_select {
   color: var(--HeaderDarkTextColor);
   font-size: 48px;
   line-height: 60px;
@@ -37,6 +38,37 @@
 
 .select_sorting {
   width: max-content;
+  height: max-content;
+
+  color: var(--Neutral500Color, #263238);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  font-family: "Inter";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+
+  border-radius: 4px;
+  border: 1px solid var(--Neutral200Color, #d7e0eb);
+
+  padding: 6px 36px 6px 12px;
+
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0);
+  background: url(../icons/chevron.png) 90% / 15% no-repeat
+    rgba(255, 255, 255, 0);
+}
+
+.title_with_selection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4.1vw var(--HPaddings);
+  font-family: "Poppins", sans-serif;
 }
 
 @media screen and (max-width: 1200px) {
@@ -49,7 +81,8 @@
 }
 
 @media screen and (max-width: 768px) {
-  .Crypto_Title {
+  .Crypto_Title,
+  .crypto_title_select {
     font-size: 40px;
     line-height: 50px;
   }
@@ -63,7 +96,8 @@
 }
 
 @media screen and (max-width: 550px) {
-  .Crypto_Title {
+  .Crypto_Title,
+  .crypto_title_select {
     font-size: 32px;
     line-height: 40px;
   }

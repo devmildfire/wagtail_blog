@@ -1,12 +1,5 @@
 console.log("AJAX is working");
 
-function httpGet(theUrl) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", theUrl, false); // false for synchronous request
-  xmlHttp.send(null);
-  return xmlHttp.responseText;
-}
-
 async function makeGetRequest(url, returnType = "json") {
   let headers = {
     "X-Requested-WIth": "XMLHttpRequest",
@@ -70,10 +63,10 @@ async function postCrypto(selectObject) {
   );
 
   const html = document.querySelectorAll("html")[0];
-
-  // console.log('replacing HTML')
-
   html.innerHTML = data;
+
+  const selectAfterRerender = document.querySelectorAll("select")[0];
+  selectAfterRerender.value = dataString;
 }
 
 //  make a post request to crypto page to add a tag to taglist
@@ -89,11 +82,7 @@ async function postAddTag(tag) {
     "html"
   );
 
-  const html = document.querySelectorAll("html")[0];
-
-  html.innerHTML = data;
-
-  window.location.href = "/crypto/";
+  redirectOrRerender("/crypto/", data);
 }
 
 async function postRevealAllTags() {
@@ -107,14 +96,12 @@ async function postRevealAllTags() {
   );
 
   const html = document.querySelectorAll("html")[0];
-
   html.innerHTML = data;
-
-  window.location.href = "/crypto/";
 }
 
 //  функция перенаправляет пользователя на страницу с url, если его текущая страница отличается от этого url
-function moveToPage(url) {
+//  если пользователь уже на нужной странице, просто заменяет html страницы
+function redirectOrRerender(url, data) {
   const path = window.location.pathname;
 
   console.log(`path ${path}`);
@@ -125,6 +112,9 @@ function moveToPage(url) {
     window.location.pathname = url;
     console.log(`moving to ${url} Page`);
   } else {
-    console.log(`allready at Page ${url}`);
+    console.log(`allready at Page ${url}... Rerendering`);
+
+    const html = document.querySelectorAll("html")[0];
+    html.innerHTML = data;
   }
 }

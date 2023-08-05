@@ -7,7 +7,7 @@
 
   gap: 16px;
 
-  padding: 4.1vw var(--HPaddings);
+  padding: 0 var(--HPaddings);
 }
 
 .tag_selection_section .standard_button {

@@ -18,7 +18,9 @@
   --seconsShadowColor: #152f3c0a;
   --textNeutralColor: #75818c;
   --tagColor: #edf2f8;
+  --Neutral500Color: #263238;
   --Neutral300Color: #abb5c5;
+  --Neutral200Color: #d7e0eb;
   --Neutral100Color: #edf2f8;
 
   --Yellow500Color: #ffcd29;
@@ -34,7 +36,8 @@
 body {
   background: url(../images/background_left_long.png) repeat-y,
     url(../images/background_right_long.png) repeat-y, var(--backgroundColor);
-  background-position: top 500px left 0px, top 1400px right 0px;
+  background-position: left 0px, right 0px;
+  /* background-position: top 500px left 0px, top 1400px right 0px; */
 }
 
 .allwrapper {

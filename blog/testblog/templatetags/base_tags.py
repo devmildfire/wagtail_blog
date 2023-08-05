@@ -20,7 +20,7 @@ def TagsSection_tag(context):
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def CryptoCardsSection_tag(context, maxCards):
+def CryptoCardsSection_tag(context, maxCards, showTitle):
 
     return {
         'maxCards' : maxCards,
@@ -30,11 +30,13 @@ def CryptoCardsSection_tag(context, maxCards):
         'tags': context['tags'],
         'CryptoCardsSection': CardsSection.objects.all()[0],
         "Title": CardsSection.objects.all()[0],
+        "showTitle" : showTitle,
         'home_page': HomePage.objects.first(),
     }
 
+
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def AIToolsCardsSection_tag(context, maxCards):
+def AIToolsCardsSection_tag(context, maxCards, showTitle):
 
     return {
         'maxCards' : maxCards,
@@ -44,6 +46,7 @@ def AIToolsCardsSection_tag(context, maxCards):
         'tags': context['tags'],
         'AIToolsCardsSection': CardsSection.objects.all()[1],
         "Title": CardsSection.objects.all()[1],
+        "showTitle" : showTitle,
         'home_page': HomePage.objects.first(),
     }
 

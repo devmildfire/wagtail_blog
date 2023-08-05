@@ -9,16 +9,26 @@
 
     <script defer src="{% static 'js/ajax.js' %}"></script>
 
+    <section class="title_with_selection">    
+
+        <div class="crypto_title_select">
+
+            Crypto Services
+
+        </div>
+        
+        <select class="select_sorting" onchange="postCrypto(this)">
+            {% comment %} <option value="">sort by...</option> {% endcomment %}
+            {% comment %} <option value="popularity">by popularity</option> {% endcomment %}
+            <option value='-first_published_at'>by default</option>
+            <option value="title">by title</option>
+            <option value="date">by date</option>
+        </select>
+
+    </section>
+    
     {% TagsSection_tag %}
 
-
-    <select class="select_sorting" onchange="postCrypto(this)">
-        <option value="">--Please choose an option--</option>
-        <option value='-first_published_at'>by default</option>
-        <option value="title">by title</option>
-        <option value="date">by date</option>
-    </select>
-
-    {% CryptoCardsSection_tag maxCards="10" %}
+    {% CryptoCardsSection_tag maxCards="10" showTitle=False %}
 
 {% endblock content %}
