@@ -18,11 +18,10 @@
         </div>
         
         <select class="select_sorting" onchange="postCrypto(this)">
-            {% comment %} <option value="">sort by...</option> {% endcomment %}
-            {% comment %} <option value="popularity">by popularity</option> {% endcomment %}
-            <option value='-first_published_at'>by default</option>
-            <option value="title">by title</option>
-            <option value="date">by date</option>
+            <option value='-first_published_at'>sort by default</option>
+            <option value="-popularity">sort by popularity</option>
+            <option value="title">sort by title</option>
+            <option value="-date">sort by date</option>
         </select>
 
     </section>

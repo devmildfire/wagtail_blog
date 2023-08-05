@@ -230,6 +230,8 @@ class CryptoPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    popularity = models.IntegerField(default=1)
+
     preview_image = models.ImageField(blank=True, null=True)
 
     open_for_ads = models.BooleanField(blank=True, null=True)
@@ -243,6 +245,7 @@ class CryptoPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('tags'),
+        FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
         FieldPanel('date'),
         FieldPanel('intro'),
@@ -266,6 +269,8 @@ class AIToolPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    popularity = models.IntegerField(default=1)
+
     preview_image = models.ImageField(blank=True, null=True)
 
     open_for_ads = models.BooleanField(blank=True, null=True, default=False)
@@ -279,6 +284,7 @@ class AIToolPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('tags'),
+        FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
         FieldPanel('date'),
         FieldPanel('intro'),
