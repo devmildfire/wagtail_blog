@@ -104,10 +104,7 @@ class HomePage(RoutablePageMixin, Page):
         print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
 
-
-
         def FilterCardsByTags(cardslist):
-            # context = self.get_context(request, *args, **kwargs)
             """
                 фкнция фильтрует набор карточек по набору тэгов этих карточек
             """
@@ -129,6 +126,40 @@ class HomePage(RoutablePageMixin, Page):
             print("the new filtered Cards list is... ",  cardslist )
             
             return cardslist
+        
+        def ApplyPagination(ListToPaginate_String, num_per_page=5):
+                
+            print('starting Paginator')
+
+            allItems = context[ListToPaginate_String]
+            print('QuerySet to Paginate', allItems)
+
+            num_per_page = num_per_page
+
+            paginator = Paginator(allItems, num_per_page) # @todo change to 10 per page
+
+            print('Paginator will show' , num_per_page, ' cards per page')
+
+            page = request.GET.get("page", 1)
+            page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
+            print('Paginator page_range is ' , page_range)
+
+            try: 
+                cardsOnPage = paginator.page(page)
+                print('Paginator worked regularly, cards for page are...', cardsOnPage)
+            except PageNotAnInteger:
+                cardsOnPage = paginator.page(1)
+                print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
+            except EmptyPage:
+                cardsOnPage = paginator.page(paginator.num_pages)
+                print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
+
+            context[ListToPaginate_String] = cardsOnPage
+            context['page_range'] = page_range
+            print('New list of cards for this page is...', context[ListToPaginate_String])
+
+            return None
+        
 
         if request.method == 'POST':
 
@@ -148,42 +179,7 @@ class HomePage(RoutablePageMixin, Page):
 
                 context['blogpages'] = blogpages
 
-
-
-
-                # PAGINATOR CODE
-
-                allBlogpages = context['blogpages']
-
-                print('starting Paginator')
-
-                num_per_page = 2
-
-                paginator = Paginator(allBlogpages, num_per_page) # @todo change to 10 per page
-
-                print('Paginator will show' , num_per_page, ' cards per page')
-
-                page = request.GET.get("page", 1)
-                page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
-                print('Paginator page_range is ' , page_range)
-
-                try: 
-                    cardsOnPage = paginator.page(page)
-                    print('Paginator worked regularly, cards for page are...', cardsOnPage)
-                except PageNotAnInteger:
-                    cardsOnPage = paginator.page(1)
-                    print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
-                except EmptyPage:
-                    cardsOnPage = paginator.page(paginator.num_pages)
-                    print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
-
-                context['blogpages'] = cardsOnPage
-                context['page_range'] = page_range
-                print('New list of cards for this page is...', context['blogpages'])
-
-                # END PAGINATOR CODE
-
-
+                ApplyPagination('blogpages', 2)
 
                 return render(request, "testblog/crypto.html", context)
 
@@ -214,49 +210,13 @@ class HomePage(RoutablePageMixin, Page):
                 context['blogpages'] = FilterCardsByTags(blogpages)
                 context['selected_tags'] = selectedTags
 
-
-                # PAGINATOR CODE
-
-                allBlogpages = context['blogpages']
-
-                print('starting Paginator')
-
-                num_per_page = 2
-
-                paginator = Paginator(allBlogpages, num_per_page) # @todo change to 10 per page
-
-                print('Paginator will show' , num_per_page, ' cards per page')
-
-                page = request.GET.get("page", 1)
-                page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
-                print('Paginator page_range is ' , page_range)
-
-                try: 
-                    cardsOnPage = paginator.page(page)
-                    print('Paginator worked regularly, cards for page are...', cardsOnPage)
-                except PageNotAnInteger:
-                    cardsOnPage = paginator.page(1)
-                    print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
-                except EmptyPage:
-                    cardsOnPage = paginator.page(paginator.num_pages)
-                    print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
-
-                context['blogpages'] = cardsOnPage
-                context['page_range'] = page_range
-                print('New list of cards for this page is...', context['blogpages'])
-
-                # END PAGINATOR CODE
-
-
+                ApplyPagination('blogpages', 2)
 
                 return render(request, "testblog/crypto.html", context)       
 
             if 'showAll' in data:
                 
-                # tagToAdd = data['addTag']
                 print("It is a SHOW ALL tags request. ",) 
-
-        
 
                 selectedTags = request.session['selected_tags']
                 print('selected tags from session', request.session['selected_tags'])
@@ -266,54 +226,14 @@ class HomePage(RoutablePageMixin, Page):
                 selectedTags = []
                 print('selectedTags = ', selectedTags)
                 request.session['selected_tags'] = selectedTags
-                print('the session variable is set BY POST to...', request.session['selected_tags'])
-
-               
+                print('the session variable is set BY POST to...', request.session['selected_tags'])             
 
                 context['blogpages'] = FilterCardsByTags(blogpages)
                 context['selected_tags'] = selectedTags
 
-
-
-                # PAGINATOR CODE
-
-                allBlogpages = context['blogpages']
-
-                print('starting Paginator')
-
-                num_per_page = 2
-
-                paginator = Paginator(allBlogpages, num_per_page) # @todo change to 10 per page
-
-                print('Paginator will show' , num_per_page, ' cards per page')
-
-                page = request.GET.get("page", 1)
-                page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
-                print('Paginator page_range is ' , page_range)
-
-                try: 
-                    cardsOnPage = paginator.page(page)
-                    print('Paginator worked regularly, cards for page are...', cardsOnPage)
-                except PageNotAnInteger:
-                    cardsOnPage = paginator.page(1)
-                    print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
-                except EmptyPage:
-                    cardsOnPage = paginator.page(paginator.num_pages)
-                    print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
-
-                context['blogpages'] = cardsOnPage
-                context['page_range'] = page_range
-                print('New list of cards for this page is...', context['blogpages'])
-
-                # END PAGINATOR CODE
-
-
-
+                ApplyPagination('blogpages', 2)
 
                 return render(request, "testblog/crypto.html", context)    
-
-        
-        # context['blogpages'] = FilterCardsByTags(blogpages)
 
         print('regular GET page context is...', context)
         print('session variable for Selected Tags...', request.session['selected_tags'])
@@ -321,39 +241,7 @@ class HomePage(RoutablePageMixin, Page):
         context['selected_tags'] = request.session['selected_tags']
         context['blogpages'] = FilterCardsByTags(blogpages)
 
-
-
-        # PAGINATOR CODE
-
-        allBlogpages = context['blogpages']
-
-        print('starting Paginator')
-
-        num_per_page = 1
-
-        paginator = Paginator(allBlogpages, num_per_page) # @todo change to 10 per page
-
-        print('Paginator will show' , num_per_page, ' cards per page')
-
-        page = request.GET.get("page", 1)
-        page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
-        print('Paginator page_range is ' , page_range)
-
-        try: 
-            cardsOnPage = paginator.page(page)
-            print('Paginator worked regularly, cards for page are...', cardsOnPage)
-        except PageNotAnInteger:
-            cardsOnPage = paginator.page(1)
-            print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
-        except EmptyPage:
-            cardsOnPage = paginator.page(paginator.num_pages)
-            print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
-
-        context['blogpages'] = cardsOnPage
-        context['page_range'] = page_range
-        print('New list of cards for this page is...', context['blogpages'])
-
-        # END PAGINATOR CODE
+        ApplyPagination('blogpages', 2)
 
         print('regular GET page context AFTER FILTER and AFTER PAGINATION is...', context)
 
