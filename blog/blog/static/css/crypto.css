@@ -19,13 +19,6 @@
 }
 
 .Crypto_Cards_Div {
-  /* display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-
-  column-gap: 30px;
-  row-gap: 20px; */
-
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -76,10 +69,18 @@
   justify-content: center;
   align-items: center;
 
-  gap: 10px;
+  gap: 20px;
 
   padding: 0 var(--HPaddings);
   font-family: "Poppins", sans-serif;
+}
+
+.pageitems_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 4px;
 }
 
 .page-item {
@@ -90,10 +91,38 @@
   text-decoration: none;
 }
 
+.page-item .standard_button {
+  border: 1px solid var(--Neutral100Color, #edf2f8);
+  background: var(--whiteColor, #fff);
+  padding: 12px 16px;
+}
+
+.page-item .standard_button:hover {
+  border: 1px solid var(--blueHoverColor, #03a9f4);
+  background: var(--blueHoverColor, #03a9f4);
+}
+
+.current.standard_button {
+  /* border-radius: 4px; */
+  border: 1px solid var(--blueHoverColor, #03a9f4);
+  background: var(--Blue100Color, #e6f6fe);
+}
+
+.page-item .standard_button.arrow-page {
+  padding: 12px 24px;
+}
+
+.svg_arrow {
+  height: 24px;
+  width: 24px;
+}
+
+.rotate {
+  rotate: 180deg;
+}
+
 @media screen and (max-width: 1200px) {
   .Crypto_Cards_Div {
-    /* grid-template-columns: 1fr 1fr; */
-
     column-gap: 8px;
     row-gap: 10px;
   }
@@ -107,8 +136,6 @@
   }
 
   .Crypto_Cards_Div {
-    /* grid-template-columns: 1fr 1fr; */
-
     column-gap: 8px;
     row-gap: 10px;
   }
