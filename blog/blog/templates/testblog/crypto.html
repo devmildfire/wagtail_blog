@@ -16,12 +16,18 @@
             Crypto Services
 
         </div>
-        
+
         <select class="select_sorting" onchange="postCrypto(this)">
-            <option value='-first_published_at'>sort by default</option>
-            <option value="-popularity">sort by popularity</option>
-            <option value="title">sort by title</option>
-            <option value="-date">sort by date</option>
+            <option value="{{ selected_sortBy }}" onclick="preventDefault(e)"> {{ optionsToTitlesDict|get_item:selected_sortBy }} </option>
+
+            {% for key, value in optionsToTitlesDict.items %}
+
+                {% if key != selected_sortBy  %}
+                    <option value="{{ key }}"> {{ value }} </option>
+                {% endif %}
+
+            {% endfor %}
+
         </select>
 
     </section>
@@ -96,15 +102,6 @@
                     </a>
                 </li>
             {% endif %}
-
-
-            {% comment %} {% for i in page_range|default_if_none:blogpages.paginator.get_elided_page_range %}
-
-                <li class="page-item"><span class="page-link">{{ i }}</span></li>
-            
-            {% endfor %} {% endcomment %}
-
-
 
         </div>
 

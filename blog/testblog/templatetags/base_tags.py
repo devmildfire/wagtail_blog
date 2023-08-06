@@ -6,6 +6,11 @@ from django import template
 
 register = template.Library()
 
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
+
 @register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
 def TagsSection_tag(context):
 

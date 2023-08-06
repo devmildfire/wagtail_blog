@@ -37,7 +37,46 @@ class HomePage(RoutablePageMixin, Page):
         selected_tags = request.session['selected_tags']
         print('selected tags for Crypto page TagsList set to...', selected_tags)
 
-        blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+
+
+
+        if 'selected_sortBy' in request.session:
+            print('the session variable "selected_sortBy" is ALLREADY present...', request.session['selected_sortBy'])
+        else:
+            request.session['selected_sortBy'] = '-popularity'
+            print('the session variable "selected_sortBy" is set to...', request.session['selected_sortBy'])
+
+        selected_sortBy = request.session['selected_sortBy']
+        print('selected sorting field for Crypto page cards is set to...', selected_sortBy)
+
+        
+        
+        if 'sortBy_OptionsList' in request.session:
+            print('the session variable "sortBy_OptionsList" is ALLREADY present...', request.session['sortBy_OptionsList'])
+        else:
+            request.session['sortBy_OptionsList'] = [
+                '-popularity',
+                '-first_published_at',
+                '-date',
+                'title'
+            ]
+            print('the session variable "sortBy_OptionsList" is set to...', request.session['sortBy_OptionsList'])
+
+        sortBy_OptionsList = request.session['sortBy_OptionsList']
+        print('selected sorting order for SELECT is set to...', sortBy_OptionsList)
+
+
+        optionsToTitlesDict = {
+          "-popularity": "sort by popularity",
+          "title": "sort by title",
+          "-date": "sort by date",
+          "-first_published_at": "sort by default"
+        }
+
+
+
+
+        blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         aitoolspages = AIToolPage.objects.child_of(self)
         # aitoolspages = AIToolPage.objects
         # aitoolspages = AIToolPage.objects.live().order_by('-first_published_at')
@@ -54,11 +93,16 @@ class HomePage(RoutablePageMixin, Page):
 
         tags = list(set(tags))
  
-        print('the blogpages are reset')
+        print('the context is reset')
+
         context['blogpages'] = blogpages
         context['aitoolspages'] = aitoolspages
         context['tags'] = tags
         context['selected_tags'] = selected_tags
+        context['selected_sortBy'] = selected_sortBy
+        context['sortBy_OptionsList'] = sortBy_OptionsList
+        context['optionsToTitlesDict'] = optionsToTitlesDict
+
         return context
 
     @route(r'^search/$')
@@ -98,9 +142,12 @@ class HomePage(RoutablePageMixin, Page):
         context = self.get_context(request, *args, **kwargs)
         
         self.title = "Crypto Services"
-        context['thispagesuffix'] = "crypto/"
+        # context['thispagesuffix'] = "crypto/"
 
-        blogpages = CryptoPage.objects.live().order_by('-first_published_at')
+        selected_sortBy = request.session['selected_sortBy']
+        
+
+        blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
 
@@ -170,14 +217,24 @@ class HomePage(RoutablePageMixin, Page):
 
             if 'sortby' in data:
 
-                sortby = data['sortby']
-                print("It is a sorting request. Sort by...", sortby) 
+                selected_sortBy = data['sortby']
+
+               
+                request.session['selected_sortBy'] = selected_sortBy
+
+
+                sortBy_OptionsList = request.session['sortBy_OptionsList']
+                sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
+                request.session['sortBy_OptionsList'] = sortBy_OptionsList
+
+                print("It is a sorting request. Sort by...", selected_sortBy) 
             
-                blogpages = blogpages.order_by(sortby)
+                blogpages = blogpages.order_by(selected_sortBy)
 
                 blogpages = FilterCardsByTags(blogpages)
 
                 context['blogpages'] = blogpages
+                context['selected_sortBy'] = selected_sortBy
 
                 ApplyPagination('blogpages', 2)
 
