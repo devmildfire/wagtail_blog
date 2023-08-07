@@ -5,6 +5,11 @@
 
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/crypto.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/CardsList.css' %}">
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
+
     {% csrf_token %} 
 
     <script defer src="{% static 'js/ajax.js' %}"></script>
@@ -34,79 +39,11 @@
     
     {% TagsSection_tag %}
 
-    {% CryptoCardsSection_tag maxCards="10" showTitle=False %}
 
-    
-    {% if blogpages.paginator.num_pages > 1 %}
-    
-        <div class="pagination_container">
-        
-            {% if blogpages.has_previous %}
-                <li class="page-item">
-                    <a class="standard_button arrow-page" href="?page={{ blogpages.previous_page_number }}" class="page-link">
-                        <svg class="svg_arrow rotate">
-                            <use 
-                              href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
-                            >
-                            </use>
-                        </svg>
-                        <span>Previous page </span>
-                    </a>
-                </li>
-            {% endif %}
+    {% CryptoCardsSection_tag showTitle=False %}
 
-            <div class="pageitems_container">
 
-                {% for page_num in page_range %}
-
-                    {% if blogpages.number == page_num %}
-
-                    <li class="page-item">
-                        <a class="standard_button current" href="?page={{ page_num }}" class="page-link">
-                            {{ page_num }}
-                        </a>
-                    </li>  
-                    
-                    {% else %}
-
-                        {% if page_num == blogpages.paginator.ELLIPSIS %}
-                            <li class="page-item">
-                                <span class="standard_button" class="page-link">{{ page_num }}</span>
-                            </li>
-                        {% else %}
-                            <li class="page-item">
-                                <a class="standard_button" href="?page={{ page_num }}" class="page-link">
-                                    {{ page_num }}
-                                </a>
-                            </li> 
-                        {% endif %}
-
-                    {% endif %}
-                    
-
-                {% endfor %}
- 
-
-            </div>
-
-            {% if blogpages.has_next %}
-                <li class="page-item">
-                    <a class="standard_button arrow-page" href="?page={{ blogpages.next_page_number }}" class="page-link">
-                        <span>Next page </span>
-                        <svg class="svg_arrow">
-                            <use 
-                              href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
-                            >
-                            </use>
-                        </svg>
-                    </a>
-                </li>
-            {% endif %}
-
-        </div>
-
-    {% endif %}
-
+    {% Pagination_tag pagination_query=blogpages %}
 
     {% your_add_here_tag %}
 

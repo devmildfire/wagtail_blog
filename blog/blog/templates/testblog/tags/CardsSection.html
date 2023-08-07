@@ -17,8 +17,13 @@
 
     {% include "./CardsList.html" with cardsList=cards maxCards=maxCards %}
 
-    <button class="standard_button" onclick="this.blur(); ">
-        View All
-    </button>
+    
+    {% if showViewAll %}
+
+        <button class="standard_button" onclick="this.blur(); window.location.pathname = {{link}}; ">
+            View All
+        </button>
+    
+    {% endif %}
 
 </section>

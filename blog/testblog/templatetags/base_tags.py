@@ -1,4 +1,3 @@
-# from testblog.models import Footer, Header, AddMeButton, GoToButton, HeroSection, AboutUs, YourAdHere
 from testblog.models import *
 from home.models import HomePage
 from django import template
@@ -6,9 +5,27 @@ from django import template
 
 register = template.Library()
 
+
+
+
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
+
+
+
+
+@register.inclusion_tag("testblog/tags/Pagination.html", takes_context=True)
+def Pagination_tag(context, pagination_query):
+
+    return {
+        'context': context,
+        'request': context['request'],
+        # 'blogpages': context['blogpages'],
+        'paginationQuery': pagination_query,
+        'page_range': context['page_range'],
+    }
+
 
 
 @register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
@@ -17,18 +34,18 @@ def TagsSection_tag(context):
     return {
         'request': context['request'],
         'context': context,
-        # 'tags': context['tags'],
         'tagsList': context['tags'],
         'Tags_Selected' : context['selected_tags'],
-        # 'TagsSection' : TagsSection.objects.first()
     }
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def CryptoCardsSection_tag(context, maxCards, showTitle):
+def CryptoCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False ):
 
     return {
         'maxCards' : maxCards,
+        'showViewAll' : showViewAll,
+        'link': '/crypto/',
         'request': context['request'],
         'context': context,
         'cards': context['blogpages'],
@@ -41,10 +58,12 @@ def CryptoCardsSection_tag(context, maxCards, showTitle):
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def AIToolsCardsSection_tag(context, maxCards, showTitle):
+def AIToolsCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False ):
 
     return {
         'maxCards' : maxCards,
+        'showViewAll' : showViewAll,
+        'link': '/ai-tools/',
         'request': context['request'],
         'context': context,
         'cards': context['aitoolspages'],

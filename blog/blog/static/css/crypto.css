@@ -16,6 +16,8 @@
   color: var(--HeaderDarkTextColor);
   font-size: 48px;
   line-height: 60px;
+
+  width: 100%;
 }
 
 .Crypto_Cards_Div {
@@ -141,21 +143,19 @@
   }
 }
 
-
 @media screen and (max-width: 750px) {
   .pagination_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  
+
     gap: 12px;
-  
+
     padding: 0 var(--HPaddings);
     font-family: "Poppins", sans-serif;
   }
 }
-
 
 @media screen and (max-width: 550px) {
   .Crypto_Title,
@@ -164,6 +164,3 @@
     line-height: 40px;
   }
 }
-
-
-

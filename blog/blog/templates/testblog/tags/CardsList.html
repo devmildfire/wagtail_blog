@@ -1,10 +1,11 @@
 {% load static wagtailcore_tags base_tags %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/CardsList.css' %}">
-{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
 {% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
 
     <div class="Cards_List_Div">
+
                 
         {% for card in cardsList|slice:maxCards  %}
             {% with card=card.specific %}
