@@ -118,7 +118,7 @@
 }
 
 .rotate {
-  rotate: 180deg;
+  transform: rotate(180deg);
 }
 
 @media screen and (max-width: 1200px) {
@@ -141,6 +141,22 @@
   }
 }
 
+
+@media screen and (max-width: 750px) {
+  .pagination_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    gap: 12px;
+  
+    padding: 0 var(--HPaddings);
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+
 @media screen and (max-width: 550px) {
   .Crypto_Title,
   .crypto_title_select {
@@ -148,3 +164,6 @@
     line-height: 40px;
   }
 }
+
+
+
