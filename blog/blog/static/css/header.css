@@ -119,18 +119,20 @@ header {
   position: absolute;
   top: calc(50px + var(--VPaddings));
   right: 0;
-  translate: 120% 0;
-  transition-property: translate;
+
+  transform: translateX(120%);
+  transition-property: transform;
+
   transition-duration: 0.3s;
 }
 
 .dropdown-links {
-  padding: var(--VPaddings) var(--HPaddings);
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  
+  padding: var(--VPaddings) var(--HPaddings);
 }
 
 .hidden {
@@ -139,7 +141,7 @@ header {
 
 .active {
   display: block;
-  translate: var(--HPaddings) 0;
+  transform: translateX(var(--HPaddings));
 }
 
 @media screen and (max-width: 1100px) {
