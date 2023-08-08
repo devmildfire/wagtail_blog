@@ -17,12 +17,28 @@ function checkOverflow(el)
    return isOverflowing;
 }
 
-const divList = document.querySelectorAll(".card_tag_div");
+function getElementContentWidth(element) {
+   var styles = window.getComputedStyle(element);
+   var padding = parseFloat(styles.paddingLeft) +
+   parseFloat(styles.paddingRight);
+   
+   return element.clientWidth - padding;
+}
 
 
-for (const [index, element] of divList.entries()) {
+const card_div = document.querySelector(".card_div");
+console.log(`Card Div `,{card_div}, ` width == ${getElementContentWidth(card_div)}`);
+
+const tagsAndMaskList = document.querySelectorAll(".card_tags_and_mask_div");
+
+// const divList = document.querySelectorAll(".card_tag_div");
+
+
+for (const [index, element] of tagsAndMaskList.entries()) {
     console.log({index, element});
-    console.log(`${element} overflow: ${checkOverflow(element)}`);
+    
+   //  console.log(`${element} overflow: ${checkOverflow(element)}`);
+    console.log(`${element} width: ${element.offsetWidth}`);
 
     // if (checkOverflow(element)) {
     //     let tagList = element.children;
@@ -47,24 +63,35 @@ for (const [index, element] of divList.entries()) {
         
     // }
 
-    console.log(`BEFORE CYCLE ${element} has oferflow == ${checkOverflow(element)}`);
+   // console.log(`BEFORE CYCLE ${element} has oferflow == ${checkOverflow(element)}`);
+   
+   // console.log(`BEFORE CYCLE ${element} has width == ${getElementContentWidth(card_div)}`);
 
-    while (element.children.length > 2 && checkOverflow(element)  ) {
+   
 
-        console.log(`${element} has children list with length of ${element.children.length}`);
 
-        console.log(`${element} has oferflow == ${checkOverflow(element)}`);
-        
+   while ( element.offsetWidth >  getElementContentWidth(card_div) ) {
 
-        let tagList = element.children;
+
+
+
+      
+      //   console.log(`${element} has overflow == ${checkOverflow(element)}`);
+      console.log(`${element} has width == ${element.offsetWidth}`);
+      
+      let tagsDiv = element.querySelector(".card_tag_div") 
+      console.log(`${tagsDiv} has children list with length of ${tagsDiv.children.length}`);
+
+
+        let tagList = tagsDiv.children;
         let lastTag = tagList[tagList.length - 2]
         let text = lastTag.innerText;
         console.log(`${element} has last tag of: `, {text});
 
         console.log(`removing ${element}'s last tag `);
-        element.removeChild(lastTag);
-        let resultingTagList = element.children;
-        console.log(`now ${element}'s taglist is ... `, {resultingTagList});
+        tagsDiv.removeChild(lastTag);
+        let resultingTagList = tagsDiv.children;
+        console.log(`now ${tagsDiv}'s taglist is ... `, {resultingTagList});
 
         let tagWithTooltip = resultingTagList[resultingTagList.length - 1];
         console.log(`tagWithTooltip is ... `, {tagWithTooltip});
@@ -79,5 +106,6 @@ for (const [index, element] of divList.entries()) {
     }
 
 
-    console.log({element}, ` overflow is presumably: ${checkOverflow(element)} at last`)
+   //  console.log({element}, ` overflow is presumably: ${checkOverflow(element)} at last`)
+    console.log({element}, ` width is presumably: ${element.offsetWidth} at last`)
 }
