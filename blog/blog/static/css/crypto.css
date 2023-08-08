@@ -163,4 +163,10 @@
     font-size: 32px;
     line-height: 40px;
   }
+
+  .title_with_selection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
