@@ -14,7 +14,7 @@ from testblog.models import *
 import json
 from django.http import JsonResponse
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-
+from django.utils.text import slugify
 
 class HomePage(RoutablePageMixin, Page):
     intro = RichTextField(null=True, blank=True)
@@ -161,7 +161,8 @@ class HomePage(RoutablePageMixin, Page):
 
             print("there are tags to filter by... ", request.session['selected_tags'])
 
-            filterTags = [x.lower() for x in request.session['selected_tags']]
+            # filterTags = [x.lower() for x in request.session['selected_tags']]
+            filterTags = [slugify(x) for x in request.session['selected_tags']]
             
             print("the cards will be filtered by tag(s)... ", filterTags)
 
