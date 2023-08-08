@@ -25,7 +25,7 @@
                 {% comment %} <button class="tag" onclick="postAddTag( '{{tag}}' ); " > {{ tag }} </button> {% endcomment %}
                 {% comment %} <a class="tag" href='{% pageurl page %}{{ thispagesuffix }}' onclick="postAddTag('{{tag}}')"> {{ tag }} </a> {% endcomment %}
                 {% comment %} <a class="tag" onclick="postAddTag('{{tag}}');" href="#"> {{ tag }} </a> {% endcomment %}
-                <div class="tag" onclick="postAddTag('{{tag}}' );"> {{ tag }} </div>
+                <div class="tag" onclick="postAddTag('{{tag}}' ); fixOverFlow();"> {{ tag }} </div>
                  
         
             {% endfor %}

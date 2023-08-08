@@ -67,6 +67,8 @@ async function postCrypto(selectObject) {
 
   const selectAfterRerender = document.querySelectorAll("select")[0];
   selectAfterRerender.value = dataString;
+
+  fixOverFlow();
 }
 
 //  make a post request to crypto page to add a tag to taglist
@@ -97,6 +99,8 @@ async function postRevealAllTags() {
 
   const html = document.querySelectorAll("html")[0];
   html.innerHTML = data;
+
+  fixOverFlow();
 }
 
 //  функция перенаправляет пользователя на страницу с url, если его текущая страница отличается от этого url
@@ -116,5 +120,8 @@ function redirectOrRerender(url, data) {
 
     const html = document.querySelectorAll("html")[0];
     html.innerHTML = data;
+
+    // эта функция из другого *.js файла : fixOverflowTags
+    fixOverFlow();
   }
 }

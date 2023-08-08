@@ -11,18 +11,21 @@ function getElementContentWidth(element) {
 }
 
 function fixOverFlow() {
-   const card_div = document.querySelector(".card_div");
+   // const card_div = document.querySelector(".card_div");
+   const card_div = document.querySelector(".card_image");
+
    // console.log(`Card Div `,{card_div}, ` width == ${getElementContentWidth(card_div)}`);
    
    const tagsAndMaskList = document.querySelectorAll(".card_tags_and_mask_div");
    
-   for (const [index, element] of tagsAndMaskList.entries()) {
+   for (const [index, element]  of tagsAndMaskList.entries()) {
       // console.log({index, element});
        
       // console.log(`${element} width: ${element.offsetWidth}`);
    
    
-      if ( element.offsetWidth >  getElementContentWidth(card_div) ) {    
+      if ( element.offsetWidth >  card_div.offsetWidth+1 ) {    
+      // if ( element.offsetWidth >  327 ) {    
    
          var tagWithTooltip = document.createElement("div");
          tagWithTooltip.classList.add("tag_with_tooltip_div")
@@ -46,40 +49,64 @@ function fixOverFlow() {
    
    
       var iteration = 0;
+
+      console.log({element});
+
+      // var tagListInitialCount = tagsDiv.childElementCount;
+
+      var tagsDiv = element.querySelector(".card_tag_div"); 
+
+      // console.log({tagsDiv});
+
+      var forLength = tagsDiv.children;
+      var count = forLength.length
+      var tagListInitialCount = count;
+
+      console.log(` tagListInitialCount = `, tagListInitialCount);
+
    
-      while ( element.offsetWidth >  getElementContentWidth(card_div) ) {
+      while ((iteration < tagListInitialCount) && ( element.offsetWidth >  card_div.offsetWidth+1 )) {
+      // while ((iteration < tagListInitialCount) && ( element.offsetWidth >  327 )) {
    
-         // console.log(`${element} has width == ${element.offsetWidth}`);
-         
-         // console.log(`${tagsDiv} has children list with length of ${tagsDiv.children.length}`);
+      console.log(` card_div_width + 1 = `, card_div.offsetWidth + 1);
+
+      console.log(` element  Width = `, element.offsetWidth);
+      
    
            iteration += 1;
    
            let tagList = tagsDiv.children;
-           let lastTag = tagList[tagList.length - 2]
-         //   let text = lastTag.innerText;
-         //   console.log(`${element} has last tag of: `, {text});
-   
-         //   console.log(`removing ${element}'s last tag `);
-           tagsDiv.removeChild(lastTag);
-         //   let resultingTagList = tagsDiv.children;
-         //   console.log(`now ${tagsDiv}'s taglist is ... `, {resultingTagList});
-   
-         //   console.log(`tagWithTooltip is ... `, {tagWithTooltip});
-           
-         //   console.log(`Tooltip div is ... `, {tooltipDiv});
-   
-           tooltipDiv.appendChild(lastTag);
-         //   console.log(`Added ${text} tag to Tooltip `, {tooltipDiv});
-   
-           tooltipDivAnchor.innerText = `+ ${iteration}`;
+           console.log(`tagList is: `, {tagList});
+
+            if(tagList.length > 2) {
+
+               let lastTag = tagList[tagList.length - 2];
+               console.log(`last tag is: `, {lastTag});
+               tagsDiv.removeChild(lastTag);
+
+               tooltipDiv.appendChild(lastTag);
+               tooltipDivAnchor.innerText = `+ ${iteration}`;
+            }
            
        }
    
       console.log({element}, ` width is presumably: ${element.offsetWidth} at last`)
+
+      console.log(` card_div_width + 1 = `, card_div.offsetWidth + 1);
+
+      
    }
    
 }
 
 
-fixOverFlow();
+document.addEventListener("DOMContentLoaded", function(){
+   fixOverFlow();
+   console.log('Oferflows all fixed ad DOM load');
+});
+
+
+window.onresize = function() {
+   fixOverFlow();
+   console.log('Oferflows all fixed ad WINDOW RESIZE load');
+};
