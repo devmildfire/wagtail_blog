@@ -239,7 +239,8 @@ class HomePage(RoutablePageMixin, Page):
 
                 ApplyPagination('blogpages', 2)
 
-                return render(request, "testblog/crypto.html", context)
+                # return render(request, "testblog/crypto.html", context)
+                return render(request, "testblog/InnderHTML_Crypto.html", context)
 
             if 'addTag' in data:
                 
@@ -270,7 +271,8 @@ class HomePage(RoutablePageMixin, Page):
 
                 ApplyPagination('blogpages', 2)
 
-                return render(request, "testblog/crypto.html", context)       
+                # return render(request, "testblog/crypto.html", context)  
+                return render(request, "testblog/InnderHTML_Crypto.html", context)     
 
             if 'showAll' in data:
                 
@@ -291,7 +293,8 @@ class HomePage(RoutablePageMixin, Page):
 
                 ApplyPagination('blogpages', 2)
 
-                return render(request, "testblog/crypto.html", context)    
+                # return render(request, "testblog/crypto.html", context) 
+                return render(request, "testblog/InnderHTML_Crypto.html", context)   
 
         print('regular GET page context is...', context)
         print('session variable for Selected Tags...', request.session['selected_tags'])
@@ -305,6 +308,7 @@ class HomePage(RoutablePageMixin, Page):
 
         print('returning regular PAGINATED page')
         return render(request, "testblog/crypto.html", context)
+        # return render(request, "testblog/InnderHTML_Crypto.html", context)
 
     @route(r'^ai-tools/$')
     def ai_tools(self, request, *args, **kwargs):

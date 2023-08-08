@@ -36,14 +36,16 @@
         </select>
 
     </section>
+
+    <section class="exchange_section">
     
-    {% TagsSection_tag %}
+        {% TagsSection_tag %}
 
+        {% CryptoCardsSection_tag showTitle=False %}
 
-    {% CryptoCardsSection_tag showTitle=False %}
+        {% Pagination_tag pagination_query=blogpages %}
 
-
-    {% Pagination_tag pagination_query=blogpages %}
+    </section>
 
     {% your_add_here_tag %}
 
