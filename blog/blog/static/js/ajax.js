@@ -47,7 +47,7 @@ async function makeRequest(url, method, body = null, returnType = "json") {
 }
 
 //  make a post request to crypto page to change it's sorting from default to chosen via select on page
-async function postCrypto(selectObject) {
+async function postCrypto(link="/crypto/", selectObject) {
   console.log("POST request to crypto");
 
   var value = selectObject.value;
@@ -56,7 +56,7 @@ async function postCrypto(selectObject) {
   let dataString = value;
 
   const data = await makeRequest(
-    "/crypto/",
+    link,
     "post",
     JSON.stringify({ sortby: dataString }),
     "html"
@@ -73,26 +73,26 @@ async function postCrypto(selectObject) {
 }
 
 //  make a post request to crypto page to add a tag to taglist
-async function postAddTag(tag) {
+async function postAddTag(link, tag) {
   console.log("POST request to root for tag addition");
 
   console.log("toggling tag...", tag);
 
   const data = await makeRequest(
-    "/crypto/",
+    link,
     "post",
     JSON.stringify({ addTag: tag }),
     "html"
   );
 
-  redirectOrRerender("/crypto/", data);
+  redirectOrRerender(link, data);
 }
 
-async function postRevealAllTags() {
+async function postRevealAllTags(link) {
   console.log("POST request to root for showing all tags");
 
   const data = await makeRequest(
-    "/crypto/",
+    link,
     "post",
     JSON.stringify({ showAll: true }),
     "html"

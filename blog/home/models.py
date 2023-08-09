@@ -74,8 +74,6 @@ class HomePage(RoutablePageMixin, Page):
         }
 
 
-
-
         blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         aitoolspages = AIToolPage.objects.child_of(self)
         # aitoolspages = AIToolPage.objects
@@ -92,12 +90,27 @@ class HomePage(RoutablePageMixin, Page):
             tags = tags + tags_list
 
         tags = list(set(tags))
- 
+
+
+
+
+        AItags = []
+
+        for aitoolspage in aitoolspages:
+            AItags_list = listify(aitoolspage.tags)
+            AItags = AItags + AItags_list
+
+        AItags = list(set(tags))
+
+
+
         print('the context is reset')
 
         context['blogpages'] = blogpages
         context['aitoolspages'] = aitoolspages
         context['tags'] = tags
+        context['AItags'] = AItags
+
         context['selected_tags'] = selected_tags
         context['selected_sortBy'] = selected_sortBy
         context['sortBy_OptionsList'] = sortBy_OptionsList

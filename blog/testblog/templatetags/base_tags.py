@@ -67,7 +67,7 @@ def AIToolsCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False
         'request': context['request'],
         'context': context,
         'cards': context['aitoolspages'],
-        'tags': context['tags'],
+        'tags': context['AItags'],
         'AIToolsCardsSection': CardsSection.objects.all()[1],
         "Title": CardsSection.objects.all()[1],
         "showTitle" : showTitle,
