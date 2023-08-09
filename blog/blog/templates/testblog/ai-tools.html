@@ -1,10 +1,53 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags base_tags %}
 
 
 {% block content %}
 
     <h1>AI-TOOLS PAGE</h1>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/crypto.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/CardsList.css' %}">
+
+    {% csrf_token %} 
+
+    <script defer src="{% static 'js/ajax.js' %}"></script>
+
+    <section class="title_with_selection">    
+
+        <div class="crypto_title_select">
+
+            AI Tools
+
+        </div>
+
+        <select class="select_sorting" onchange="postCrypto('/ai-tools/',this)">
+            <option value="{{ selected_sortBy }}" onclick="preventDefault(e)"> {{ optionsToTitlesDict|get_item:selected_sortBy }} </option>
+
+            {% for key, value in optionsToTitlesDict.items %}
+
+                {% if key != selected_sortBy  %}
+                    <option value="{{ key }}"> {{ value }} </option>
+                {% endif %}
+
+            {% endfor %}
+
+        </select>
+
+    </section>
+
+    <section class="exchange_section">
+      
+        {% TagsSection_tag link="/ai-tools/" %}
+   
+        {% AIToolsCardsSection_tag showTitle=False %}
+
+        {% comment %} {% Pagination_tag pagination_query=aitoolspages %} {% endcomment %}
+
+    </section>
+
+    {% your_add_here_tag %}
 
 {% endblock content %}
