@@ -25,6 +25,64 @@ class HomePage(RoutablePageMixin, Page):
         FieldPanel('body'),
     ]
 
+    def FilterCardsByTags(self, request, cardslist):
+            """
+                фкнция фильтрует набор карточек по набору тэгов этих карточек
+            """
+            if len(request.session['selected_tags']) == 0:
+                print("there are NO TAGS to filter by... ", request.session['selected_tags'])
+                return cardslist
+
+            print("there are tags to filter by... ", request.session['selected_tags'])
+
+            # filterTags = [x.lower() for x in request.session['selected_tags']]
+            filterTags = [slugify(x) for x in request.session['selected_tags']]
+            
+            print("the cards will be filtered by tag(s)... ", filterTags)
+
+            for filterTag in filterTags:
+                print("filtering Tag is... ", filterTag)
+                cardslist = cardslist.filter(tags__slug__in=[filterTag])    
+                print("the filtered Cardslist for this tag is... .... ....  ", cardslist)
+
+            print("the new filtered Cards list is... ",  cardslist )
+            
+            return cardslist
+    
+    def ApplyPagination(self, request, context, ListToPaginate_String, num_per_page=5):
+                
+            print('starting Paginator')
+
+            allItems = context[ListToPaginate_String]
+            print('QuerySet to Paginate', allItems)
+
+            num_per_page = num_per_page
+
+            paginator = Paginator(allItems, num_per_page) # @todo change to 10 per page
+
+            print('Paginator will show' , num_per_page, ' cards per page')
+
+            page = request.GET.get("page", 1)
+            page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
+            print('Paginator page_range is ' , page_range)
+
+            try: 
+                cardsOnPage = paginator.page(page)
+                print('Paginator worked regularly, cards for page are...', cardsOnPage)
+            except PageNotAnInteger:
+                cardsOnPage = paginator.page(1)
+                print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
+            except EmptyPage:
+                cardsOnPage = paginator.page(paginator.num_pages)
+                print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
+
+            context[ListToPaginate_String] = cardsOnPage
+            context['page_range'] = page_range
+            print('New list of cards for this page is...', context[ListToPaginate_String])
+
+            return None
+
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
@@ -163,65 +221,6 @@ class HomePage(RoutablePageMixin, Page):
         blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
-
-        def FilterCardsByTags(cardslist):
-            """
-                фкнция фильтрует набор карточек по набору тэгов этих карточек
-            """
-            if len(request.session['selected_tags']) == 0:
-                print("there are NO TAGS to filter by... ", request.session['selected_tags'])
-                return cardslist
-
-            print("there are tags to filter by... ", request.session['selected_tags'])
-
-            # filterTags = [x.lower() for x in request.session['selected_tags']]
-            filterTags = [slugify(x) for x in request.session['selected_tags']]
-            
-            print("the cards will be filtered by tag(s)... ", filterTags)
-
-            for filterTag in filterTags:
-                print("filtering Tag is... ", filterTag)
-                cardslist = cardslist.filter(tags__slug__in=[filterTag])    
-                print("the filtered Cardslist for this tag is... .... ....  ", cardslist)
-
-            print("the new filtered Cards list is... ",  cardslist )
-            
-            return cardslist
-        
-        def ApplyPagination(ListToPaginate_String, num_per_page=5):
-                
-            print('starting Paginator')
-
-            allItems = context[ListToPaginate_String]
-            print('QuerySet to Paginate', allItems)
-
-            num_per_page = num_per_page
-
-            paginator = Paginator(allItems, num_per_page) # @todo change to 10 per page
-
-            print('Paginator will show' , num_per_page, ' cards per page')
-
-            page = request.GET.get("page", 1)
-            page_range = paginator.get_elided_page_range(number=page, on_each_side=1, on_ends=1)
-            print('Paginator page_range is ' , page_range)
-
-            try: 
-                cardsOnPage = paginator.page(page)
-                print('Paginator worked regularly, cards for page are...', cardsOnPage)
-            except PageNotAnInteger:
-                cardsOnPage = paginator.page(1)
-                print('Paginator got NOT AN INTEGER page number, cards for page are...', cardsOnPage)
-            except EmptyPage:
-                cardsOnPage = paginator.page(paginator.num_pages)
-                print('Paginator got NOT AN EMPTY page number, cards for page are...', cardsOnPage)
-
-            context[ListToPaginate_String] = cardsOnPage
-            context['page_range'] = page_range
-            print('New list of cards for this page is...', context[ListToPaginate_String])
-
-            return None
-        
-
         if request.method == 'POST':
 
             print("Detected POST method request")    
@@ -245,12 +244,12 @@ class HomePage(RoutablePageMixin, Page):
             
                 blogpages = blogpages.order_by(selected_sortBy)
 
-                blogpages = FilterCardsByTags(blogpages)
+                blogpages = self.FilterCardsByTags(request, blogpages)
 
                 context['blogpages'] = blogpages
                 context['selected_sortBy'] = selected_sortBy
 
-                ApplyPagination('blogpages', 2)
+                self.ApplyPagination(request, context, 'blogpages', 2)
 
                 # return render(request, "testblog/crypto.html", context)
                 return render(request, "testblog/InnderHTML_Crypto.html", context)
@@ -279,10 +278,10 @@ class HomePage(RoutablePageMixin, Page):
                     request.session['selected_tags'] = selectedTags
                     print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
 
-                context['blogpages'] = FilterCardsByTags(blogpages)
+                context['blogpages'] = self.FilterCardsByTags(request, blogpages)
                 context['selected_tags'] = selectedTags
 
-                ApplyPagination('blogpages', 2)
+                self.ApplyPagination(request, context,'blogpages', 2)
 
                 # return render(request, "testblog/crypto.html", context)  
                 return render(request, "testblog/InnderHTML_Crypto.html", context)     
@@ -301,10 +300,10 @@ class HomePage(RoutablePageMixin, Page):
                 request.session['selected_tags'] = selectedTags
                 print('the session variable is set BY POST to...', request.session['selected_tags'])             
 
-                context['blogpages'] = FilterCardsByTags(blogpages)
+                context['blogpages'] = self.FilterCardsByTags(request, blogpages)
                 context['selected_tags'] = selectedTags
 
-                ApplyPagination('blogpages', 2)
+                self.ApplyPagination(request, context, 'blogpages', 2)
 
                 # return render(request, "testblog/crypto.html", context) 
                 return render(request, "testblog/InnderHTML_Crypto.html", context)   
@@ -313,20 +312,26 @@ class HomePage(RoutablePageMixin, Page):
         print('session variable for Selected Tags...', request.session['selected_tags'])
 
         context['selected_tags'] = request.session['selected_tags']
-        context['blogpages'] = FilterCardsByTags(blogpages)
+        context['blogpages'] = self.FilterCardsByTags(request, blogpages)
 
-        ApplyPagination('blogpages', 2)
+        self.ApplyPagination(request, context, 'blogpages', 2)
 
         print('regular GET page context AFTER FILTER and AFTER PAGINATION is...', context)
 
         print('returning regular PAGINATED page')
         return render(request, "testblog/crypto.html", context)
-        # return render(request, "testblog/InnderHTML_Crypto.html", context)
 
     @route(r'^ai-tools/$')
     def ai_tools(self, request, *args, **kwargs):
         context = self.get_context(request, *args, **kwargs)
         self.title = "AI Tools"
+
+        # aitoolspages = AIToolPage.objects.live()
+        # aiToolsPages = self.FilterCardsByTags(request, self.aitoolspages)
+
+      
+
+
         return render(request, "testblog/ai-tools.html", context)
 
     class Meta:
