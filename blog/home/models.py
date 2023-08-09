@@ -348,6 +348,94 @@ class HomePage(RoutablePageMixin, Page):
 
       
 
+        if request.method == 'POST':
+
+            print("Detected POST method request")    
+            data = json.loads(request.body)
+            print("POST method data is...", data)    
+            print("the new request for POST is... ", request)
+
+            if 'sortby' in data:
+
+                selected_sortBy = data['sortby']
+
+               
+                request.session['selected_sortBy'] = selected_sortBy
+
+
+                sortBy_OptionsList = request.session['sortBy_OptionsList']
+                sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
+                request.session['sortBy_OptionsList'] = sortBy_OptionsList
+
+                print("It is a sorting request. Sort by...", selected_sortBy) 
+            
+                aitoolspages = aitoolspages.order_by(selected_sortBy)
+
+                aitoolspages = self.FilterCardsByTags(request, aitoolspages)
+
+                context['aitoolspages'] = aitoolspages
+                context['selected_sortBy'] = selected_sortBy
+
+                self.ApplyPagination(request, context, 'aitoolspages', 2)
+
+                # return render(request, "testblog/crypto.html", context)
+                return render(request, "testblog/InnerHTML_AItools.html", context)
+
+            if 'addTag' in data:
+                
+                tagToAdd = data['addTag']
+                print("It is a AI tag adding/removing request. ",) 
+
+                print('AI tag to add...', tagToAdd)
+
+                selectedTags = request.session['selected_ai_tags']
+                print('selected AI tags from session', request.session['selected_ai_tags'])
+
+                print('selected AI Tags...', selectedTags)
+
+                if tagToAdd not in selectedTags:
+                    selectedTags.append(tagToAdd)
+                    print('selectedTags = ', selectedTags)
+                    request.session['selected_ai_tags'] = selectedTags
+                    print('the session variable is set BY POST ADD TAG to...', request.session['selected_ai_tags'])
+                else :
+                    taggToRemove = tagToAdd
+                    selectedTags.remove(taggToRemove)
+                    print('selected AI Tags = ', selectedTags)
+                    request.session['selected_AI_tags'] = selectedTags
+                    print('the session variable is set BY POST REMOVE AI TAG to...', request.session['selected_ai_tags'])
+
+                context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
+                context['selected_ai_tags'] = selectedTags
+
+                self.ApplyPagination(request, context,'aitoolspages', 2)
+
+                # return render(request, "testblog/crypto.html", context)  
+                return render(request, "testblog/InnerHTML_AItools.html", context)     
+
+            if 'showAll' in data:
+                
+                print("It is a SHOW ALL AI tags request. ",) 
+
+                selectedTags = request.session['selected_ai_tags']
+                print('selected AI tags from session', request.session['selected_ai_tags'])
+
+                print('selected AI Tags...', selectedTags)
+
+                selectedTags = []
+                print('selected AI Tags = ', selectedTags)
+                request.session['selected_ai_tags'] = selectedTags
+                print('the session variable is set BY POST to...', request.session['selected_ai_tags'])             
+
+                context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
+                context['selected_ai_tags'] = selectedTags
+
+                self.ApplyPagination(request, context, 'aitoolspages', 2)
+
+                # return render(request, "testblog/crypto.html", context) 
+                return render(request, "testblog/InnerHTML_AItools.html", context)  
+
+
 
 
 
