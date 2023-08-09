@@ -62,8 +62,11 @@ async function postCrypto(selectObject) {
     "html"
   );
 
-  const html = document.querySelectorAll("html")[0];
-  html.innerHTML = data;
+  // const html = document.querySelectorAll("html")[0];
+  // html.innerHTML = data;
+
+  const section = document.querySelector(".exchange_section");
+  section.innerHTML = data;
 
   const selectAfterRerender = document.querySelectorAll("select")[0];
   selectAfterRerender.value = dataString;
@@ -97,9 +100,13 @@ async function postRevealAllTags() {
     "html"
   );
 
-  const html = document.querySelectorAll("html")[0];
-  html.innerHTML = data;
+  // const html = document.querySelectorAll("html")[0];
+  // html.innerHTML = data;
 
+  
+  const section = document.querySelector(".exchange_section");
+  section.innerHTML = data;
+  
   fixOverFlow();
 }
 
@@ -118,8 +125,11 @@ function redirectOrRerender(url, data) {
   } else {
     console.log(`allready at Page ${url}... Rerendering`);
 
-    const html = document.querySelectorAll("html")[0];
-    html.innerHTML = data;
+    // const html = document.querySelectorAll("html")[0];
+    // html.innerHTML = data;
+
+    const section = document.querySelector(".exchange_section");
+    section.innerHTML = data;
 
     // эта функция из другого *.js файла : fixOverflowTags
     fixOverFlow();

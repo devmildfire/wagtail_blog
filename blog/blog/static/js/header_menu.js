@@ -8,4 +8,6 @@ function hamburgerClick() {
   dropdown.classList.toggle("active");
   hamburger.classList.toggle("hidden");
   cross.classList.toggle("hidden");
+
+  console.log(`hamburger clicked`);
 }
