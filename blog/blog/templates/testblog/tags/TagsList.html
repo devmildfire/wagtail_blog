@@ -13,7 +13,7 @@
 
         {% endif %}
         
-        standard_button"  onclick="postRevealAllTags();"> All </div>
+        standard_button"  onclick="postRevealAllTags('{{link}}');"> All </div>
                  
         {% for tag in tagsList  %}
             
@@ -26,7 +26,7 @@
 
                 {% endif %}
                 
-                standard_button" onclick="postAddTag( '{{tag}}' );" > {{ tag }}  </div>
+                standard_button" onclick="postAddTag( '{{link}}', '{{tag}}' );" > {{ tag }}  </div>
                 
                 
             

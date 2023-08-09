@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/crypto.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/CardsList.css' %}">
-{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}"> {% endcomment %}
 
     {% csrf_token %} 
 
@@ -22,7 +21,7 @@
 
         </div>
 
-        <select class="select_sorting" onchange="postCrypto(this)">
+        <select class="select_sorting" onchange="postCrypto('/crypto/',this)">
             <option value="{{ selected_sortBy }}" onclick="preventDefault(e)"> {{ optionsToTitlesDict|get_item:selected_sortBy }} </option>
 
             {% for key, value in optionsToTitlesDict.items %}
@@ -38,9 +37,9 @@
     </section>
 
     <section class="exchange_section">
-    
-        {% TagsSection_tag %}
-
+      
+        {% TagsSection_tag link="/crypto/" %}
+   
         {% CryptoCardsSection_tag showTitle=False %}
 
         {% Pagination_tag pagination_query=blogpages %}

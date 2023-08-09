@@ -29,13 +29,14 @@ def Pagination_tag(context, pagination_query):
 
 
 @register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
-def TagsSection_tag(context):
+def TagsSection_tag(context, link):
 
     return {
         'request': context['request'],
         'context': context,
         'tagsList': context['tags'],
         'Tags_Selected' : context['selected_tags'],
+        'link': link,
     }
 
 
