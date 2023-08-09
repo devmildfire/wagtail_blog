@@ -29,14 +29,23 @@ class HomePage(RoutablePageMixin, Page):
             """
                 фкнция фильтрует набор карточек по набору тэгов этих карточек
             """
-            if len(request.session['selected_tags']) == 0:
-                print("there are NO TAGS to filter by... ", request.session['selected_tags'])
+            print('request ...', request.path_info)
+
+            if request.path_info == "/ai-tools/":
+                tagsString = 'selected_ai_tags'
+                print('filtering by AI tags ...')
+            if request.path_info == "/crypto/":
+                tagsString = 'selected_tags'
+                print('filtering by CRYPTO tags ...')
+
+
+            if len(request.session[tagsString]) == 0:
+                print("there are NO TAGS to filter by... ", request.session[tagsString])
                 return cardslist
+            
+            print("there are tags to filter by... ", request.session[tagsString])
 
-            print("there are tags to filter by... ", request.session['selected_tags'])
-
-            # filterTags = [x.lower() for x in request.session['selected_tags']]
-            filterTags = [slugify(x) for x in request.session['selected_tags']]
+            filterTags = [slugify(x) for x in request.session[tagsString]]
             
             print("the cards will be filtered by tag(s)... ", filterTags)
 
