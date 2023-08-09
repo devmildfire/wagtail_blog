@@ -98,6 +98,18 @@ class HomePage(RoutablePageMixin, Page):
 
 
 
+        if 'selected_ai_tags' in request.session:
+            print('the session variable "selected_ai_tags" is ALLREADY present...', request.session['selected_ai_tags'])
+        else:
+            request.session['selected_ai_tags'] = []
+            print('the session variable "selected_ai_tags" is set to...', request.session['selected_ai_tags'])
+
+        selected_ai_tags = request.session['selected_ai_tags']
+        print('selected tags for AI Tools page TagsList set to...', selected_ai_tags)
+
+
+
+
         if 'selected_sortBy' in request.session:
             print('the session variable "selected_sortBy" is ALLREADY present...', request.session['selected_sortBy'])
         else:
@@ -133,10 +145,8 @@ class HomePage(RoutablePageMixin, Page):
 
 
         blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
-        aitoolspages = AIToolPage.objects.child_of(self)
-        # aitoolspages = AIToolPage.objects
-        # aitoolspages = AIToolPage.objects.live().order_by('-first_published_at')
-        Post_pages = CryptoPage.objects.child_of(self)
+        aitoolspages = AIToolPage.objects.live().order_by(selected_sortBy)
+
 
         def listify(value):
             return [tag.name for tag in value.all()]
@@ -158,7 +168,7 @@ class HomePage(RoutablePageMixin, Page):
             AItags_list = listify(aitoolspage.tags)
             AItags = AItags + AItags_list
 
-        AItags = list(set(tags))
+        AItags = list(set(AItags))
 
 
 
@@ -170,6 +180,8 @@ class HomePage(RoutablePageMixin, Page):
         context['AItags'] = AItags
 
         context['selected_tags'] = selected_tags
+        context['selected_ai_tags'] = selected_ai_tags
+
         context['selected_sortBy'] = selected_sortBy
         context['sortBy_OptionsList'] = sortBy_OptionsList
         context['optionsToTitlesDict'] = optionsToTitlesDict
@@ -213,11 +225,9 @@ class HomePage(RoutablePageMixin, Page):
         context = self.get_context(request, *args, **kwargs)
         
         self.title = "Crypto Services"
-        # context['thispagesuffix'] = "crypto/"
 
         selected_sortBy = request.session['selected_sortBy']
         
-
         blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
@@ -326,11 +336,33 @@ class HomePage(RoutablePageMixin, Page):
         context = self.get_context(request, *args, **kwargs)
         self.title = "AI Tools"
 
-        # aitoolspages = AIToolPage.objects.live()
-        # aiToolsPages = self.FilterCardsByTags(request, self.aitoolspages)
+        context = self.get_context(request, *args, **kwargs)
+        
+        self.title = "Crypto Services"
+
+        selected_sortBy = request.session['selected_sortBy']
+
+        # aitoolspages = CryptoPage.objects.live().order_by(selected_sortBy)
+        aitoolspages = AIToolPage.objects.live().order_by(selected_sortBy)
+        print("aitoolspages are RESET by AI TOOLS... !!!", aitoolspages)
 
       
 
+
+
+
+
+        print('regular GET AI TOOLS page context is...', context)
+        print('session variable for Selected AI Tags...', request.session['selected_ai_tags'])
+
+        context['selected_ai_tags'] = request.session['selected_ai_tags']
+        context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
+
+        self.ApplyPagination(request, context, 'aitoolspages', 2)
+
+        print('regular GET page context AFTER FILTER and AFTER PAGINATION is...', context)
+
+        print('returning regular PAGINATED page')
 
         return render(request, "testblog/ai-tools.html", context)
 

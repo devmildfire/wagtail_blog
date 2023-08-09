@@ -29,15 +29,28 @@ def Pagination_tag(context, pagination_query):
 
 
 @register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
-def TagsSection_tag(context, link):
+def TagsSection_tag(context, link, tagsType):
 
-    return {
-        'request': context['request'],
-        'context': context,
-        'tagsList': context['tags'],
-        'Tags_Selected' : context['selected_tags'],
-        'link': link,
-    }
+
+    if tagsType == "CryptoTags":
+        resultDict = {
+            'request': context['request'],
+            'context': context,
+            'tagsList': context['tags'],
+            'Tags_Selected' : context['selected_tags'],
+            'link': link,
+        }
+
+    if tagsType == "AITags":
+        resultDict = {
+            'request': context['request'],
+            'context': context,
+            'tagsList': context['AItags'],
+            'Tags_Selected' : context['selected_ai_tags'],
+            'link': link,
+        }
+
+    return resultDict
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
