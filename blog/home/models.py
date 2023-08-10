@@ -58,7 +58,7 @@ class HomePage(RoutablePageMixin, Page):
             
             return cardslist
     
-    def ApplyPagination(self, request, context, ListToPaginate_String, num_per_page=5):
+    def ApplyPagination(self, request, context, ListToPaginate_String, num_per_page=6):
                 
             print('starting Paginator')
 
@@ -91,40 +91,95 @@ class HomePage(RoutablePageMixin, Page):
 
             return None
 
+    def checkPost(self, request, context, itemslist, tagsType, itemListString, returnHTMLString):
 
-    def checkPost(self, request, context, data, itemslist, itemListString, returnHTMLString):
+        print("Detected POST method request")    
+        data = json.loads(request.body)
+        print("POST method data is...", data)    
+        print("the new request for POST is... ", request)
 
-        # print("Detected POST method request")    
-        # data = json.loads(request.body)
-        # print("POST method data is...", data)    
-        # print("the new request for POST is... ", request)
+        print("FOR THIS PAGE the new Tags TYPE is... ", tagsType)
+        if tagsType == 'cryptoTags':
+            tagsString = 'selected_tags'
+        if tagsType == 'AITags':
+            tagsString = 'selected_ai_tags'
 
-        # if 'sortby' in data:
+        if 'sortby' in data:
 
-        selected_sortBy = data['sortby']
+            selected_sortBy = data['sortby']         
+            request.session['selected_sortBy'] = selected_sortBy
 
+            sortBy_OptionsList = request.session['sortBy_OptionsList']
+            sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
+            request.session['sortBy_OptionsList'] = sortBy_OptionsList
+
+            print("It is a sorting request. Sort by...", selected_sortBy) 
         
-        request.session['selected_sortBy'] = selected_sortBy
+            itemslist = itemslist.order_by(selected_sortBy)
 
+            itemslist = self.FilterCardsByTags(request, itemslist)
 
-        sortBy_OptionsList = request.session['sortBy_OptionsList']
-        sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
-        request.session['sortBy_OptionsList'] = sortBy_OptionsList
+            context[itemListString] = itemslist
+            context['selected_sortBy'] = selected_sortBy
 
-        print("It is a sorting request. Sort by...", selected_sortBy) 
-    
-        itemslist = itemslist.order_by(selected_sortBy)
+            self.ApplyPagination(request, context, itemListString, 10)
 
-        itemslist = self.FilterCardsByTags(request, itemslist)
+            # return render(request, "testblog/InnderHTML_Crypto.html", context)
+            return render(request, returnHTMLString, context)
+        
+        
+        if 'addTag' in data:
+                
+            tagToAdd = data['addTag']
+            print("It is a tag adding/removing request. ",) 
 
-        context[itemListString] = itemslist
-        context['selected_sortBy'] = selected_sortBy
+            print('tag to add...', tagToAdd)
 
-        self.ApplyPagination(request, context, itemListString, 2)
+            selectedTags = request.session[tagsString]
+            print('selected tags from session', request.session[tagsString])
 
-        # return render(request, "testblog/InnderHTML_Crypto.html", context)
-        return render(request, returnHTMLString, context)
+            print('selectedTags...', selectedTags)
 
+            if tagToAdd not in selectedTags:
+                selectedTags.append(tagToAdd)
+                print('selectedTags = ', selectedTags)
+                request.session[tagsString] = selectedTags
+                print('the session variable is set BY POST ADD TAG to...', request.session[tagsString])
+            else :
+                taggToRemove = tagToAdd
+                selectedTags.remove(taggToRemove)
+                print('selectedTags = ', selectedTags)
+                request.session[tagsString] = selectedTags
+                print('the session variable is set BY POST REMOVE TAG to...', request.session[tagsString])
+
+            context[itemListString] = self.FilterCardsByTags(request, itemslist)
+            context[tagsString] = selectedTags
+
+            self.ApplyPagination(request, context, itemListString, 10)
+
+            return render(request, returnHTMLString, context)   
+
+        if 'showAll' in data:
+                
+            print("It is a SHOW ALL tags request. ",) 
+
+            selectedTags = request.session['selected_tags']
+            print('selected tags from session', request.session[tagsString])
+
+            print('selectedTags...', selectedTags)
+
+            selectedTags = []
+            print('selectedTags = ', selectedTags)
+            request.session[tagsString] = selectedTags
+            print('the session variable is set BY POST to...', request.session[tagsString])             
+
+            context[itemListString] = self.FilterCardsByTags(request, itemslist)
+            context[tagsString] = selectedTags
+
+            self.ApplyPagination(request, context, itemListString, 10)
+
+            # return render(request, "testblog/crypto.html", context) 
+            return render(request, returnHTMLString, context)     
 
 
     def get_context(self, request, *args, **kwargs):
@@ -271,106 +326,14 @@ class HomePage(RoutablePageMixin, Page):
         self.title = "Crypto Services"
 
         selected_sortBy = request.session['selected_sortBy']
+
         
         blogpages = CryptoPage.objects.live().order_by(selected_sortBy)
         print("blogpages are RESET by CRYPTO... !!!", blogpages)
 
         if request.method == 'POST':
 
-            print("Detected POST method request 2")    
-            data = json.loads(request.body)
-            print("POST method data 2 is...", data)    
-            print("the new request for POST 2 is... ", request)
-
-            if 'sortby' in data:
-
-                return self.checkPost(request, context, data, blogpages, 'blogpages', 'testblog/InnderHTML_Crypto.html')
-
-            # print("Detected POST method request")    
-            # data = json.loads(request.body)
-            # print("POST method data is...", data)    
-            # print("the new request for POST is... ", request)
-
-            # if 'sortby' in data:
-
-            #     selected_sortBy = data['sortby']
-
-               
-            #     request.session['selected_sortBy'] = selected_sortBy
-
-
-            #     sortBy_OptionsList = request.session['sortBy_OptionsList']
-            #     sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
-            #     request.session['sortBy_OptionsList'] = sortBy_OptionsList
-
-            #     print("It is a sorting request. Sort by...", selected_sortBy) 
-            
-            #     blogpages = blogpages.order_by(selected_sortBy)
-
-            #     blogpages = self.FilterCardsByTags(request, blogpages)
-
-            #     context['blogpages'] = blogpages
-            #     context['selected_sortBy'] = selected_sortBy
-
-            #     self.ApplyPagination(request, context, 'blogpages', 2)
-
-            #     return render(request, "testblog/InnderHTML_Crypto.html", context)
-
-            
-
-            if 'addTag' in data:
-                
-                tagToAdd = data['addTag']
-                print("It is a tag adding/removing request. ",) 
-
-                print('tag to add...', tagToAdd)
-
-                selectedTags = request.session['selected_tags']
-                print('selected tags from session', request.session['selected_tags'])
-
-                print('selectedTags...', selectedTags)
-
-                if tagToAdd not in selectedTags:
-                    selectedTags.append(tagToAdd)
-                    print('selectedTags = ', selectedTags)
-                    request.session['selected_tags'] = selectedTags
-                    print('the session variable is set BY POST ADD TAG to...', request.session['selected_tags'])
-                else :
-                    taggToRemove = tagToAdd
-                    selectedTags.remove(taggToRemove)
-                    print('selectedTags = ', selectedTags)
-                    request.session['selected_tags'] = selectedTags
-                    print('the session variable is set BY POST REMOVE TAG to...', request.session['selected_tags'])
-
-                context['blogpages'] = self.FilterCardsByTags(request, blogpages)
-                context['selected_tags'] = selectedTags
-
-                self.ApplyPagination(request, context,'blogpages', 2)
-
-                # return render(request, "testblog/crypto.html", context)  
-                return render(request, "testblog/InnderHTML_Crypto.html", context)     
-
-            if 'showAll' in data:
-                
-                print("It is a SHOW ALL tags request. ",) 
-
-                selectedTags = request.session['selected_tags']
-                print('selected tags from session', request.session['selected_tags'])
-
-                print('selectedTags...', selectedTags)
-
-                selectedTags = []
-                print('selectedTags = ', selectedTags)
-                request.session['selected_tags'] = selectedTags
-                print('the session variable is set BY POST to...', request.session['selected_tags'])             
-
-                context['blogpages'] = self.FilterCardsByTags(request, blogpages)
-                context['selected_tags'] = selectedTags
-
-                self.ApplyPagination(request, context, 'blogpages', 2)
-
-                # return render(request, "testblog/crypto.html", context) 
-                return render(request, "testblog/InnderHTML_Crypto.html", context)   
+            return self.checkPost(request, context, blogpages, 'cryptoTags', 'blogpages', 'testblog/InnderHTML_Crypto.html')
 
         print('regular GET page context is...', context)
         print('session variable for Selected Tags...', request.session['selected_tags'])
@@ -378,7 +341,7 @@ class HomePage(RoutablePageMixin, Page):
         context['selected_tags'] = request.session['selected_tags']
         context['blogpages'] = self.FilterCardsByTags(request, blogpages)
 
-        self.ApplyPagination(request, context, 'blogpages', 2)
+        self.ApplyPagination(request, context, 'blogpages', 10)
 
         print('regular GET page context AFTER FILTER and AFTER PAGINATION is...', context)
 
@@ -396,102 +359,13 @@ class HomePage(RoutablePageMixin, Page):
 
         selected_sortBy = request.session['selected_sortBy']
 
-        # aitoolspages = CryptoPage.objects.live().order_by(selected_sortBy)
         aitoolspages = AIToolPage.objects.live().order_by(selected_sortBy)
         print("aitoolspages are RESET by AI TOOLS... !!!", aitoolspages)
-
-      
+   
 
         if request.method == 'POST':
 
-            print("Detected POST method request")    
-            data = json.loads(request.body)
-            print("POST method data is...", data)    
-            print("the new request for POST is... ", request)
-
-            if 'sortby' in data:
-
-                selected_sortBy = data['sortby']
-
-               
-                request.session['selected_sortBy'] = selected_sortBy
-
-
-                sortBy_OptionsList = request.session['sortBy_OptionsList']
-                sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
-                request.session['sortBy_OptionsList'] = sortBy_OptionsList
-
-                print("It is a sorting request. Sort by...", selected_sortBy) 
-            
-                aitoolspages = aitoolspages.order_by(selected_sortBy)
-
-                aitoolspages = self.FilterCardsByTags(request, aitoolspages)
-
-                context['aitoolspages'] = aitoolspages
-                context['selected_sortBy'] = selected_sortBy
-
-                self.ApplyPagination(request, context, 'aitoolspages', 2)
-
-                # return render(request, "testblog/crypto.html", context)
-                return render(request, "testblog/InnerHTML_AItools.html", context)
-
-            if 'addTag' in data:
-                
-                tagToAdd = data['addTag']
-                print("It is a AI tag adding/removing request. ",) 
-
-                print('AI tag to add...', tagToAdd)
-
-                selectedTags = request.session['selected_ai_tags']
-                print('selected AI tags from session', request.session['selected_ai_tags'])
-
-                print('selected AI Tags...', selectedTags)
-
-                if tagToAdd not in selectedTags:
-                    selectedTags.append(tagToAdd)
-                    print('selectedTags = ', selectedTags)
-                    request.session['selected_ai_tags'] = selectedTags
-                    print('the session variable is set BY POST ADD TAG to...', request.session['selected_ai_tags'])
-                else :
-                    taggToRemove = tagToAdd
-                    selectedTags.remove(taggToRemove)
-                    print('selected AI Tags = ', selectedTags)
-                    request.session['selected_AI_tags'] = selectedTags
-                    print('the session variable is set BY POST REMOVE AI TAG to...', request.session['selected_ai_tags'])
-
-                context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
-                context['selected_ai_tags'] = selectedTags
-
-                self.ApplyPagination(request, context,'aitoolspages', 2)
-
-                # return render(request, "testblog/crypto.html", context)  
-                return render(request, "testblog/InnerHTML_AItools.html", context)     
-
-            if 'showAll' in data:
-                
-                print("It is a SHOW ALL AI tags request. ",) 
-
-                selectedTags = request.session['selected_ai_tags']
-                print('selected AI tags from session', request.session['selected_ai_tags'])
-
-                print('selected AI Tags...', selectedTags)
-
-                selectedTags = []
-                print('selected AI Tags = ', selectedTags)
-                request.session['selected_ai_tags'] = selectedTags
-                print('the session variable is set BY POST to...', request.session['selected_ai_tags'])             
-
-                context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
-                context['selected_ai_tags'] = selectedTags
-
-                self.ApplyPagination(request, context, 'aitoolspages', 2)
-
-                # return render(request, "testblog/crypto.html", context) 
-                return render(request, "testblog/InnerHTML_AItools.html", context)  
-
-
-
-
+            return self.checkPost(request, context, aitoolspages, 'AITags', 'aitoolspages', 'testblog/InnerHTML_AItools.html')
 
 
         print('regular GET AI TOOLS page context is...', context)
@@ -500,7 +374,7 @@ class HomePage(RoutablePageMixin, Page):
         context['selected_ai_tags'] = request.session['selected_ai_tags']
         context['aitoolspages'] = self.FilterCardsByTags(request, aitoolspages)
 
-        self.ApplyPagination(request, context, 'aitoolspages', 2)
+        self.ApplyPagination(request, context, 'aitoolspages', 10)
 
         print('regular GET page context AFTER FILTER and AFTER PAGINATION is...', context)
 
