@@ -92,6 +92,41 @@ class HomePage(RoutablePageMixin, Page):
             return None
 
 
+    def checkPost(self, request, context, data, itemslist, itemListString, returnHTMLString):
+
+        # print("Detected POST method request")    
+        # data = json.loads(request.body)
+        # print("POST method data is...", data)    
+        # print("the new request for POST is... ", request)
+
+        # if 'sortby' in data:
+
+        selected_sortBy = data['sortby']
+
+        
+        request.session['selected_sortBy'] = selected_sortBy
+
+
+        sortBy_OptionsList = request.session['sortBy_OptionsList']
+        sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
+        request.session['sortBy_OptionsList'] = sortBy_OptionsList
+
+        print("It is a sorting request. Sort by...", selected_sortBy) 
+    
+        itemslist = itemslist.order_by(selected_sortBy)
+
+        itemslist = self.FilterCardsByTags(request, itemslist)
+
+        context[itemListString] = itemslist
+        context['selected_sortBy'] = selected_sortBy
+
+        self.ApplyPagination(request, context, itemListString, 2)
+
+        # return render(request, "testblog/InnderHTML_Crypto.html", context)
+        return render(request, returnHTMLString, context)
+
+
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
@@ -242,36 +277,46 @@ class HomePage(RoutablePageMixin, Page):
 
         if request.method == 'POST':
 
-            print("Detected POST method request")    
+            print("Detected POST method request 2")    
             data = json.loads(request.body)
-            print("POST method data is...", data)    
-            print("the new request for POST is... ", request)
+            print("POST method data 2 is...", data)    
+            print("the new request for POST 2 is... ", request)
 
             if 'sortby' in data:
 
-                selected_sortBy = data['sortby']
+                return self.checkPost(request, context, data, blogpages, 'blogpages', 'testblog/InnderHTML_Crypto.html')
+
+            # print("Detected POST method request")    
+            # data = json.loads(request.body)
+            # print("POST method data is...", data)    
+            # print("the new request for POST is... ", request)
+
+            # if 'sortby' in data:
+
+            #     selected_sortBy = data['sortby']
 
                
-                request.session['selected_sortBy'] = selected_sortBy
+            #     request.session['selected_sortBy'] = selected_sortBy
 
 
-                sortBy_OptionsList = request.session['sortBy_OptionsList']
-                sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
-                request.session['sortBy_OptionsList'] = sortBy_OptionsList
+            #     sortBy_OptionsList = request.session['sortBy_OptionsList']
+            #     sortBy_OptionsList.insert(0, sortBy_OptionsList.pop(sortBy_OptionsList.index(selected_sortBy)))
+            #     request.session['sortBy_OptionsList'] = sortBy_OptionsList
 
-                print("It is a sorting request. Sort by...", selected_sortBy) 
+            #     print("It is a sorting request. Sort by...", selected_sortBy) 
             
-                blogpages = blogpages.order_by(selected_sortBy)
+            #     blogpages = blogpages.order_by(selected_sortBy)
 
-                blogpages = self.FilterCardsByTags(request, blogpages)
+            #     blogpages = self.FilterCardsByTags(request, blogpages)
 
-                context['blogpages'] = blogpages
-                context['selected_sortBy'] = selected_sortBy
+            #     context['blogpages'] = blogpages
+            #     context['selected_sortBy'] = selected_sortBy
 
-                self.ApplyPagination(request, context, 'blogpages', 2)
+            #     self.ApplyPagination(request, context, 'blogpages', 2)
 
-                # return render(request, "testblog/crypto.html", context)
-                return render(request, "testblog/InnderHTML_Crypto.html", context)
+            #     return render(request, "testblog/InnderHTML_Crypto.html", context)
+
+            
 
             if 'addTag' in data:
                 
