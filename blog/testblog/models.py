@@ -16,6 +16,9 @@ from wagtail.search import index
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from wagtail.snippets.models import register_snippet
+from wagtail.fields import StreamField
+# from testblog import blocks
+from wagtail import blocks
 
 
 class NavLinks(Orderable):
@@ -65,7 +68,8 @@ class CardsSection(ClusterableModel):
 
     def __str__(self):
         return self.title
-    
+
+
 @register_snippet
 class OpenForAdWork(ClusterableModel):
     title = models.CharField(max_length=255)
@@ -230,6 +234,24 @@ class CryptoPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    # content = StreamField(
+    #     [
+    #         # ("title_and_text", blocks.TitleAndTextBlock()),
+    #         ("text", blocks.TextBlock())
+
+    #     ],
+    #     default=[
+    #         ("text", "hello world!")
+    #     ],
+    #     # default=[
+    #     #     ("title_and_text", {"title": "Ting", "text": "Tang"}),
+    #     #     ("title_and_text", {"title": "Ting 2", "text": "Tang 2"})
+    #     # ],
+    #     use_json_field=True,
+    #     # null=True,
+    #     # blank=True
+    # )
+
     popularity = models.IntegerField(default=1)
 
     preview_image = models.ImageField(blank=True, null=True)
@@ -250,6 +272,7 @@ class CryptoPage(Page):
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
+        # FieldPanel('content'),
         FieldPanel('preview_image'),
     ]
 

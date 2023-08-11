@@ -10,7 +10,7 @@
         {% for card in cardsList|slice:maxCards  %}
             {% with card=card.specific %}
 
-                {% include "./Card.html" with link=link cardName=card.title cardImage=card.preview_image.url cardInfo=card.intro cardTags=card.tags.all openForAds=card.open_for_ads %}
+                {% include "./Card.html" with link=link cardUrl=card.url cardName=card.title cardImage=card.preview_image.url cardInfo=card.intro cardTags=card.tags.all openForAds=card.open_for_ads %}
             
             {% endwith %}
         {% endfor %}

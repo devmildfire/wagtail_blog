@@ -56,6 +56,8 @@
 .card_name {
   font-size: 20px;
   line-height: 28px;
+  text-decoration: none;
+  color: var(--HeaderDarkTextColor);
 }
 
 .card_tag_div {
@@ -109,6 +111,8 @@
   line-height: 20px;
 
   text-decoration: none;
+
+  cursor: pointer;
 }
 
 .tag:hover {

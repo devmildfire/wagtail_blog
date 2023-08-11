@@ -3,9 +3,20 @@
 {% comment %} <div class="card_div" style="cursor: pointer;" onclick="window.location='{% pageurl post %}';"></div> {% endcomment %}
 <div class="card_div">
 
-    <img class="card_image" src="{{cardImage}}" /> 
+    <a href="{{ cardUrl}}">
+
+        <img class="card_image" src="{{cardImage}}"  /> 
+
+    </a>
     
-    <p class="card_name"> {{ cardName}} </p>
+    
+    <a class="card_name" href="{{ cardUrl}}">
+
+        <p> {{ cardName}} </p>
+
+    </a>
+
+    {% comment %} <p class="card_name"> {{ cardUrl}} </p> {% endcomment %}
     
     <p class="card_info"> {{cardInfo}} </p>
 
