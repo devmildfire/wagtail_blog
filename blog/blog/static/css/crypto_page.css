@@ -1,0 +1,41 @@
+.page_content {
+  padding: 4.1vw var(--HPaddings);
+  font-family: "Poppins", sans-serif;
+}
+
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 8px;
+
+  width: 100%;
+}
+
+.main-gallery-image {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.thumbnails_div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 8px;
+
+  width: 100%;
+}
+
+.thumbnail-gallery-image {
+  border-radius: 4px;
+  width: 100px;
+  height: auto;
+}
+
+.thumbnail-gallery-image.selected-thumbnail {
+  border: 3px solid var(--blueHoverColor, #03a9f4);
+}

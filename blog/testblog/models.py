@@ -17,8 +17,28 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from wagtail.snippets.models import register_snippet
 from wagtail.fields import StreamField
-# from testblog import blocks
-from wagtail import blocks
+from testblog import blocks
+
+from wagtail.images.models import Image
+# from wagtail import blocks
+
+
+class DefaultImages(Orderable):
+
+    defaultImagesPicker = ParentalKey(
+        "DefaultImagesPicker", related_name="default_images", null=True, blank=True)
+
+    default_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    panels = [
+        FieldPanel('default_image'),
+    ]
 
 
 class NavLinks(Orderable):
@@ -56,6 +76,18 @@ class FeatureCards(Orderable):
         FieldPanel('card_link'),
         FieldPanel('card_image'),
     ]
+
+
+@register_snippet
+class DefaultImagesPicker(ClusterableModel):
+    title = 'Default Images Picker'
+
+    panels = [
+        InlinePanel('default_images'),
+    ]
+
+    def __str__(self):
+        return self.title
 
 
 @register_snippet
@@ -234,23 +266,40 @@ class CryptoPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
-    # content = StreamField(
-    #     [
-    #         # ("title_and_text", blocks.TitleAndTextBlock()),
-    #         ("text", blocks.TextBlock())
+    defaultImages = Image.objects.all().filter(title="The Default Image")
 
-    #     ],
-    #     default=[
-    #         ("text", "hello world!")
-    #     ],
-    #     # default=[
-    #     #     ("title_and_text", {"title": "Ting", "text": "Tang"}),
-    #     #     ("title_and_text", {"title": "Ting 2", "text": "Tang 2"})
-    #     # ],
-    #     use_json_field=True,
-    #     # null=True,
-    #     # blank=True
-    # )
+    imageIDs = []
+
+    for image in defaultImages:
+        imageIDs.append(image.id)
+
+    content = StreamField(
+        [
+            ("TitleText", blocks.TitleAndTextBlock(
+                required=True, help_text='add you char block')),
+            ("GalleryBlock", blocks.GalleryBlock(
+                required=True, help_text='add you Gallery block'
+            ))
+        ],
+        default=[
+            ("GalleryBlock", {"mainImage": imageIDs[0], "thumbNails": [
+                imageIDs[1], imageIDs[2], imageIDs[3], imageIDs[4]
+            ]}),
+            ("TitleText", {"title": "Here is the default Title ",
+             "text": "Here is the default text", "image": imageIDs[0]}),
+            ("TitleText", {"title": "Here is the default Title",
+             "text": "Here is the default text", "image": imageIDs[1]}),
+            ("TitleText", {"title": "Here is the default Title",
+             "text": "Here is the default text", "image": imageIDs[2]}),
+            ("TitleText", {"title": "Here is the default Title",
+             "text": "Here is the default text", "image": imageIDs[3]}),
+            ("TitleText", {"title": "Here is the default Title",
+             "text": "Here is the default text", "image": imageIDs[4]}),
+        ],
+        use_json_field=True,
+        null=True,
+        blank=True,
+    )
 
     popularity = models.IntegerField(default=1)
 
@@ -272,8 +321,9 @@ class CryptoPage(Page):
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
-        # FieldPanel('content'),
+        FieldPanel('content'),
         FieldPanel('preview_image'),
+        # FieldPanel('default_image'),
     ]
 
     search_fields = Page.search_fields + [

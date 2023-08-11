@@ -1,22 +1,42 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
-{% block body_class %}template-blogpage{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/crypto_page.css' %}">
+{% endblock %}
+
+
+{% block body_class %}template-crypto-product-page{% endblock %}
 
 {% block content %}
+
+<script defer src="{% static 'js/gallery_select.js' %}"></script>
+
 
     <h1>{{ page.title }}</h1>
 
 
 
-    {% comment %} <section>{% include_block page.content %}</section> {% endcomment %}
+    <section class="page_content">{% include_block page.content %}</section>
 
     <p class="meta">{{ page.date }}</p>
 
     <div class="intro">{{ page.intro }}</div>
 
     {{ page.body|richtext }}
+
+    {{ page.defaultImages }}
+
+    {% for dImage in page.defaultImages %}
+
+        {% image dImage max-320x200 as tmp_dImage %}
+
+        <img src="{{ tmp_dImage.url }}" width="{{ tmp_dImage.width }}"
+                    height="{{ tmp_dImage.height }}" alt="{{ tmp_dImage.alt }}" class="my-custom-class" />
+
+    {% endfor %}
 
 
 

@@ -28,9 +28,9 @@
         {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}"> {% endcomment %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/blogstyles.css' %}">
 
-        {% comment %} {% block extra_css %} {% endcomment %}
+        {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
-        {% comment %} {% endblock %} {% endcomment %}
+        {% endblock %}
         <script src="https://kit.fontawesome.com/3b12cb35a0.js" crossorigin="anonymous"></script>
     </head>
 
