@@ -19,7 +19,50 @@
 
 
 
-    <section class="page_content">{% include_block page.content %}</section>
+    {% comment %} <section class="page_content">{% include_block page.content %}</section> {% endcomment %}
+
+    <section class="page_content">
+        {% for block in page.content %}
+            {% if block.block_type == 'ImageAndVideo' %}
+
+                <div class="image-gallery">
+
+                    <div class="big-iamge-div">
+
+                        {% for firstSlide in block.value|slice:":1" %}
+
+                            {% if firstSlide.block_type == 'image' %}
+                                <div class="image main-gallery-image">{% image firstSlide.value original %}</div>
+                            {% else %}
+                                <div class="video main-gallery-image">{% include_block firstSlide %}</div>
+                            {% endif %}      
+
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="thumbnails_div">
+                        {% for slide in block.value %}
+                            {% if slide.block_type == 'image' %}
+                                <div onclick="toggleSelect(this)" class="image thumbnail-gallery-image">{% image slide.value original %}</div>
+                            {% else %}
+                                <div onclick="toggleSelect(this)" class="video thumbnail-gallery-image">{% include_block slide %}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+
+
+            {% else %}
+                {% include_block block %}
+            {% endif %}
+        {% endfor %}
+    </section>
+
+
+
 
     <p class="meta">{{ page.date }}</p>
 
@@ -27,16 +70,16 @@
 
     {{ page.body|richtext }}
 
-    {{ page.defaultImages }}
+    {% comment %} {{ page.defaultImages }} {% endcomment %}
 
-    {% for dImage in page.defaultImages %}
+    {% comment %} {% for dImage in page.defaultImages %}
 
         {% image dImage max-320x200 as tmp_dImage %}
 
         <img src="{{ tmp_dImage.url }}" width="{{ tmp_dImage.width }}"
                     height="{{ tmp_dImage.height }}" alt="{{ tmp_dImage.alt }}" class="my-custom-class" />
 
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 
 
 

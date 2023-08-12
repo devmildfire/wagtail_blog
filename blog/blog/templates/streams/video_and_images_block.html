@@ -1,0 +1,49 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+
+<div class="image-and-video">
+
+    {{ value.blocks }}
+
+    
+    
+
+    {% comment %} {% image self.mainImage original as og_Image %}
+
+    <img src="{{ og_Image.url }}" 
+
+        alt="{{ tmp_dImage.alt }}" 
+        class="main-gallery-image" />
+
+    <div class="thumbnails_div"> {% endcomment %}
+
+        {% for slide in self.value %}
+
+
+            {% if slide.block_type == 'image' %}
+                <div class="image-slide">{% image slide.value width-100 %}</div>
+            {% else %}
+                <div class="video-slide">{% include_block slide %}</div>
+            {% endif %}
+
+            {% comment %} {% image th_Image original as small_Image %}
+
+            <img src="{{ small_Image.url }}" 
+                width="{{ small_Image.width }}"
+                height="{{ small_Image.height }}" 
+                alt="{{ small_Image.alt }}" 
+                class="thumbnail-gallery-image 
+                
+                    {% if forloop.counter == 1 %}
+                        selected-thumbnail
+                    {% endif %}
+                
+                " 
+                onCLick="toggleSelect(this)" /> {% endcomment %}
+                
+        {% endfor %}
+            
+
+
+</div>

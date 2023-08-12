@@ -6,11 +6,15 @@
 
     {% image self.mainImage original as og_Image %}
 
-    <img src="{{ og_Image.url }}" 
-        {% comment %} width="{{ tmp_dImage.width }}" {% endcomment %}
-        {% comment %} height="{{ tmp_dImage.height }}"  {% endcomment %}
-        alt="{{ tmp_dImage.alt }}" 
-        class="main-gallery-image" />
+    <div class="big_Image_div">
+
+        <img src="{{ og_Image.url }}" 
+            {% comment %} width="{{ tmp_dImage.width }}" {% endcomment %}
+            {% comment %} height="{{ tmp_dImage.height }}"  {% endcomment %}
+            alt="{{ tmp_dImage.alt }}" 
+            class="main-gallery-image" />
+
+    </div>
 
     <div class="thumbnails_div">
 

@@ -20,25 +20,6 @@ from wagtail.fields import StreamField
 from testblog import blocks
 
 from wagtail.images.models import Image
-# from wagtail import blocks
-
-
-class DefaultImages(Orderable):
-
-    defaultImagesPicker = ParentalKey(
-        "DefaultImagesPicker", related_name="default_images", null=True, blank=True)
-
-    default_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+'
-    )
-
-    panels = [
-        FieldPanel('default_image'),
-    ]
 
 
 class NavLinks(Orderable):
@@ -76,18 +57,6 @@ class FeatureCards(Orderable):
         FieldPanel('card_link'),
         FieldPanel('card_image'),
     ]
-
-
-@register_snippet
-class DefaultImagesPicker(ClusterableModel):
-    title = 'Default Images Picker'
-
-    panels = [
-        InlinePanel('default_images'),
-    ]
-
-    def __str__(self):
-        return self.title
 
 
 @register_snippet
@@ -279,7 +248,9 @@ class CryptoPage(Page):
                 required=True, help_text='add you char block')),
             ("GalleryBlock", blocks.GalleryBlock(
                 required=True, help_text='add you Gallery block'
-            ))
+            )),
+            ("ImageAndVideo", blocks.ImageAndVideoBlock(
+                equired=False, help_text='add you images and videos to a block'))
         ],
         default=[
             ("GalleryBlock", {"mainImage": imageIDs[0], "thumbNails": [

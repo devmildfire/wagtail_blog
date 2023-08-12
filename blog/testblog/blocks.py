@@ -4,10 +4,11 @@ from wagtail import blocks
 # from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images import blocks as image_blocks
 from wagtail.images.models import Image
+from wagtail.embeds.blocks import EmbedBlock
 
 
 class TitleAndTextBlock(blocks.StructBlock):
-    """Title and Text and nothing else"""
+    """Title and Text and an image """
 
     default_block_image = Image.objects.all()[0]
 
@@ -45,3 +46,15 @@ class GalleryBlock(blocks.StructBlock):
         template = "streams/gallery_block.html"
         icon = "image"
         label = "Gallery of Images"
+
+
+class ImageAndVideoBlock(blocks.StreamBlock):
+    """Select an Image or a Video """
+    image = image_blocks.ImageChooserBlock(
+        required=False, help_text='Add your Image')
+    video = EmbedBlock(required=False, help_text='Add your Video')
+
+    class Meta:
+        template = "streams/video_and_images_block.html"
+        icon = 'media'
+        label = "Images and Videos block"

@@ -11,6 +11,13 @@ function toggleSelect(n) {
 
   n.classList.add("selected-thumbnail");
 
-  const bigImage = document.querySelector(".main-gallery-image");
-  bigImage.src = n.src;
+  let bigImageDiv = document.querySelector(".big-iamge-div");
+  bigImageDiv.innerHTML = n.outerHTML;
+
+  bigImage = document.querySelector(".big-iamge-div").firstElementChild;
+
+  bigImage.classList.remove("selected-thumbnail");
+  bigImage.classList.remove("thumbnail-gallery-image");
+  bigImage.classList.add("main-gallery-image");
+  bigImage.removeAttribute("onclick");
 }
