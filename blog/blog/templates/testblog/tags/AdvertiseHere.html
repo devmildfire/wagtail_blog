@@ -1,0 +1,41 @@
+{% load static wagtailcore_tags base_tags %}
+
+{% comment %} <script defer src="{% static 'js/header_menu.js' %}"></script> {% endcomment %}
+
+
+<section class="advertise-here-section">
+
+    <div class="main-cta">
+
+        <h3> {{ AdvertiseHere.title }} </h3>
+
+        <span> {{ AdvertiseHere.main_text }} </span>
+        
+    </div>
+
+    <div class="items-cta-block">
+    {% for ad in AdvertiseHere.ads_items.all %}
+            
+                
+    <a class="cta-item" href="{{ ad.item_link}}" target="_blank">
+        <div class="cta-item_div">
+
+            <img src="{{ ad.item_image.url }}" />
+
+            <p class="hero_link_text">{{ad.item_name}} </p>
+            
+            <svg class="svg_arrow">
+                <use 
+                  href="{% static "icons/arrow_right.svg" %}#idsvg_arrow"
+                >
+                </use>
+            </svg>
+            
+        </div>
+    </a>
+    
+    {% endfor %}
+    </div>
+
+
+</section>

@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
-{% load static wagtailcore_tags %}
+{% load static wagtailcore_tags base_tags%}
 {% load wagtailimages_tags %}
 
 {% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/advertisehere.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/crypto_page.css' %}">
 {% endblock %}
 
@@ -15,53 +16,126 @@
 <script defer src="{% static 'js/gallery_select.js' %}"></script>
 
 
-    <h1>{{ page.title }}</h1>
+    {% comment %} <h1>{{ page.title }}</h1> {% endcomment %}
 
-
+<div class="page-contents-wrapper">
 
     {% comment %} <section class="page_content">{% include_block page.content %}</section> {% endcomment %}
 
-    <section class="page_content">
-        {% for block in page.content %}
-            {% if block.block_type == 'ImageAndVideo' %}
+    <div class="contents-and-advertisement">
 
-                <div class="image-gallery">
+       
 
-                    <div class="big-iamge-div">
+        <section class="page_content">
 
-                        {% for firstSlide in block.value|slice:":1" %}
 
-                            {% if firstSlide.block_type == 'image' %}
-                                <div class="image main-gallery-image">{% image firstSlide.value original %}</div>
-                            {% else %}
-                                <div class="video main-gallery-image">{% include_block firstSlide %}</div>
-                            {% endif %}      
 
-                        {% endfor %}
 
-                    </div>
+            <div class="title-with-tags-div">
 
-                    <div class="thumbnails_div">
-                        {% for slide in block.value %}
-                            {% if slide.block_type == 'image' %}
-                                <div onclick="toggleSelect(this)" class="image thumbnail-gallery-image">{% image slide.value original %}</div>
-                            {% else %}
-                                <div onclick="toggleSelect(this)" class="video thumbnail-gallery-image">{% include_block slide %}</div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-
+                <div class="product-title-div">
+                    {{ page.title }}
                 </div>
 
+                <div class="product-tags-div">
+
+                    {% for tag in page.tags.all  %}
+                        <a href='#' class="tag" > {{ tag }} </a>
+                    {% endfor %}
+                
+                </div>
+            </div>
 
 
-            {% else %}
-                {% include_block block %}
-            {% endif %}
-        {% endfor %}
+
+
+
+
+            {% for block in page.content %}
+                {% if block.block_type == 'ImageAndVideo' %}
+
+                    <div class="image-gallery">
+
+                        <div class="big-iamge-div">
+
+                            {% for firstSlide in block.value|slice:":1" %}
+
+                                {% if firstSlide.block_type == 'image' %}
+                                    <div class="image main-gallery-image">{% image firstSlide.value original %}</div>
+                                {% else %}
+                                    <div class="video main-gallery-image">{% include_block firstSlide %}</div>
+                                {% endif %}      
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% comment %} <div class="thumbnail_container_div"> {% endcomment %}
+
+                            <div class="thumbnails_div">
+                                {% for slide in block.value %}
+                                    {% if slide.block_type == 'image' %}
+                                        <div onclick="toggleSelect(this)" class="image thumbnail-gallery-image">{% image slide.value original %}</div>
+                                    {% else %}
+                                        <div onclick="toggleSelect(this)" class="video thumbnail-gallery-image">{% include_block slide %}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+    
+                        {% comment %} </div> {% endcomment %}
+
+
+
+                    </div>
+
+
+
+
+
+                {% else %}
+                    {% include_block block %}
+                {% endif %}
+            {% endfor %}
+
+
+
+
+            <div class="product-buttons-div">
+
+                <button class="standard_main_button" onclick="this.blur(); window.open('{{ page.product_link }}')  ">
+                    <span>View Tool </span>
+                    <svg class="svg_arrow">
+                        <use 
+                        {% comment %} href="{% static "icons/arrow_right_up.svg" %}#idsvg_arrow_up" {% endcomment %}
+                        href="{% static "icons/arrow_right_up.svg" %}#idsvg_arrow"
+                        >
+                        </use>
+                    </svg>
+                </button>
+
+                <button class="standard_button" onclick="this.blur(); window.open('https://a-ads.com')">
+                    <span>Advertise Here </span>
+                </button>
+
+            </div>
+
+
+
+
+
+        </section>
+
+        {% AdvertiseHere_tag %}
+
+
+    </div>
+
+    <section class="related-products">
     </section>
 
 
+
+</div>
 
 
     <p class="meta">{{ page.date }}</p>
@@ -70,26 +144,6 @@
 
     {{ page.body|richtext }}
 
-    {% comment %} {{ page.defaultImages }} {% endcomment %}
-
-    {% comment %} {% for dImage in page.defaultImages %}
-
-        {% image dImage max-320x200 as tmp_dImage %}
-
-        <img src="{{ tmp_dImage.url }}" width="{{ tmp_dImage.width }}"
-                    height="{{ tmp_dImage.height }}" alt="{{ tmp_dImage.alt }}" class="my-custom-class" />
-
-    {% endfor %} {% endcomment %}
-
-
-
-
-    {% for tag in page.tags.all  %}
-    
-        {% comment %} <a href='/blog/?tag={{tag.slug}}'> {{ tag }} </a><br /> {% endcomment %}
-        <a href='{{ page.get_parent.url }}?tag={{tag.slug}}'> {{ tag }} </a><br />
-
-    {% endfor %}
 
     <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
 

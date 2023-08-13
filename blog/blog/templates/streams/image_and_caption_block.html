@@ -1,0 +1,15 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+
+<div class="image-with-caption">
+
+    {% image self.image original as Image %}
+
+    <img src="{{ Image.url }}" alt="{{ Image.alt }}" class="captioned-image"
+    
+    style=" width: {{ self.image_width }} "/>
+
+    <span> {{ self.caption }} </span>
+
+</div>

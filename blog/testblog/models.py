@@ -21,6 +21,8 @@ from testblog import blocks
 
 from wagtail.images.models import Image
 
+from wagtail.blocks import RichTextBlock
+
 
 class NavLinks(Orderable):
     footer = ParentalKey(
@@ -197,6 +199,37 @@ class GoToButton(ClusterableModel):
         return self.text
 
 
+class AdsItems(Orderable):
+    AdvertiseHere = ParentalKey(
+        "AdvertiseHere", related_name="ads_items", null=True, blank=True)
+
+    # footer_link = models.URLField(null=True, blank=True)
+    item_name = models.CharField(max_length=255)
+    item_link = models.CharField(max_length=255, null=True, blank=True)
+    item_image = models.ImageField(null=True, blank=True)
+
+    panels = [
+        FieldPanel('item_name'),
+        FieldPanel('item_link'),
+        FieldPanel('item_image'),
+    ]
+
+
+@register_snippet
+class AdvertiseHere(ClusterableModel):
+    title = models.CharField(max_length=1024)
+    main_text = models.CharField(max_length=1024)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('main_text'),
+        InlinePanel('ads_items'),
+    ]
+
+    def __str__(self):
+        return self.title
+
+
 @register_snippet
 class HeroSection(ClusterableModel):
     blackText = models.CharField(max_length=1024)
@@ -235,6 +268,8 @@ class CryptoPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    product_link = models.URLField(default='https://a-ads.com')
+
     defaultImages = Image.objects.all().filter(title="The Default Image")
 
     imageIDs = []
@@ -244,28 +279,21 @@ class CryptoPage(Page):
 
     content = StreamField(
         [
-            ("TitleText", blocks.TitleAndTextBlock(
-                required=True, help_text='add you char block')),
-            ("GalleryBlock", blocks.GalleryBlock(
-                required=True, help_text='add you Gallery block'
-            )),
+            ("ImageWithCaption", blocks.ImageWithCaptionBlock(
+                required=False, help_text='add you char block')),
+
             ("ImageAndVideo", blocks.ImageAndVideoBlock(
-                equired=False, help_text='add you images and videos to a block'))
+                required=False, help_text='add you images and videos to a block')),
+
+            ("RichText", RichTextBlock(required=False,
+             help_text='add you Rich Text block'))
+
+
         ],
         default=[
-            ("GalleryBlock", {"mainImage": imageIDs[0], "thumbNails": [
-                imageIDs[1], imageIDs[2], imageIDs[3], imageIDs[4]
-            ]}),
-            ("TitleText", {"title": "Here is the default Title ",
-             "text": "Here is the default text", "image": imageIDs[0]}),
-            ("TitleText", {"title": "Here is the default Title",
-             "text": "Here is the default text", "image": imageIDs[1]}),
-            ("TitleText", {"title": "Here is the default Title",
-             "text": "Here is the default text", "image": imageIDs[2]}),
-            ("TitleText", {"title": "Here is the default Title",
-             "text": "Here is the default text", "image": imageIDs[3]}),
-            ("TitleText", {"title": "Here is the default Title",
-             "text": "Here is the default text", "image": imageIDs[4]}),
+            # ("RichText", {"dfjasfsafsafsakfnsakfnlnf"})
+            # ("ImageAndVideo",
+            #  {"image": imageIDs[0]})
         ],
         use_json_field=True,
         null=True,
@@ -286,6 +314,7 @@ class CryptoPage(Page):
     ]
 
     content_panels = Page.content_panels + [
+        FieldPanel('product_link'),
         FieldPanel('tags'),
         FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
@@ -294,7 +323,6 @@ class CryptoPage(Page):
         FieldPanel('body'),
         FieldPanel('content'),
         FieldPanel('preview_image'),
-        # FieldPanel('default_image'),
     ]
 
     search_fields = Page.search_fields + [

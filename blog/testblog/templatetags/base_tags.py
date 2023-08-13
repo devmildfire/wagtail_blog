@@ -6,13 +6,9 @@ from django import template
 register = template.Library()
 
 
-
-
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
-
-
 
 
 @register.inclusion_tag("testblog/tags/Pagination.html", takes_context=True)
@@ -27,17 +23,15 @@ def Pagination_tag(context, pagination_query):
     }
 
 
-
 @register.inclusion_tag("testblog/tags/TagsList.html", takes_context=True)
 def TagsSection_tag(context, link, tagsType):
-
 
     if tagsType == "CryptoTags":
         resultDict = {
             'request': context['request'],
             'context': context,
             'tagsList': context['tags'],
-            'Tags_Selected' : context['selected_tags'],
+            'Tags_Selected': context['selected_tags'],
             'link': link,
         }
 
@@ -46,7 +40,7 @@ def TagsSection_tag(context, link, tagsType):
             'request': context['request'],
             'context': context,
             'tagsList': context['AItags'],
-            'Tags_Selected' : context['selected_ai_tags'],
+            'Tags_Selected': context['selected_ai_tags'],
             'link': link,
         }
 
@@ -54,11 +48,11 @@ def TagsSection_tag(context, link, tagsType):
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def CryptoCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False ):
+def CryptoCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False):
 
     return {
-        'maxCards' : maxCards,
-        'showViewAll' : showViewAll,
+        'maxCards': maxCards,
+        'showViewAll': showViewAll,
         'link': '/crypto/',
         'request': context['request'],
         'context': context,
@@ -66,17 +60,17 @@ def CryptoCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False 
         'tags': context['tags'],
         'CryptoCardsSection': CardsSection.objects.all()[0],
         "Title": CardsSection.objects.all()[0],
-        "showTitle" : showTitle,
+        "showTitle": showTitle,
         'home_page': HomePage.objects.first(),
     }
 
 
 @register.inclusion_tag("testblog/tags/CardsSection.html", takes_context=True)
-def AIToolsCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False ):
+def AIToolsCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False):
 
     return {
-        'maxCards' : maxCards,
-        'showViewAll' : showViewAll,
+        'maxCards': maxCards,
+        'showViewAll': showViewAll,
         'link': '/ai-tools/',
         'request': context['request'],
         'context': context,
@@ -84,9 +78,10 @@ def AIToolsCardsSection_tag(context, showTitle, maxCards=None, showViewAll=False
         'tags': context['AItags'],
         'AIToolsCardsSection': CardsSection.objects.all()[1],
         "Title": CardsSection.objects.all()[1],
-        "showTitle" : showTitle,
+        "showTitle": showTitle,
         'home_page': HomePage.objects.first(),
     }
+
 
 @register.inclusion_tag("testblog/tags/OpenForAdWork.html", takes_context=True)
 def open_for_ad_work_tag(context):
@@ -151,6 +146,15 @@ def GoTo_tag(context):
     return {
         'request': context['request'],
         'GoTo': GoToButton.objects.first(),
+    }
+
+
+@register.inclusion_tag("testblog/tags/AdvertiseHere.html", takes_context=True)
+def AdvertiseHere_tag(context):
+
+    return {
+        'request': context['request'],
+        'AdvertiseHere': AdvertiseHere.objects.first(),
     }
 
 
