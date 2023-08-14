@@ -62,9 +62,6 @@ class FeatureCards(Orderable):
     ]
 
 
-
-
-
 @register_snippet
 class CardsSection(ClusterableModel):
     title = models.CharField(max_length=255)
@@ -272,6 +269,9 @@ class CryptoPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    path_string = "/crypto/"
+    template = 'testblog/product_page.html'
+
     product_link = models.URLField(default='https://a-ads.com')
 
     defaultImages = Image.objects.all().filter(title="The Default Image")
@@ -280,8 +280,6 @@ class CryptoPage(Page):
 
     for image in defaultImages:
         imageIDs.append(image.id)
-
-    
 
     content = StreamField(
         [
@@ -338,13 +336,6 @@ class CryptoPage(Page):
         related_name='+',
     )
 
-    related_list = [related_page_1, related_page_2, related_page_3]
-
-    # related_queryset = Page.objects.page(related_page_1.specific)
-
-    # related_queryset = Page.objects.page(related_page_1.id)
-    # related_queryset = Page.objects.page(related_page_1) | Page.objects.page(related_page_2)
-
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
@@ -381,6 +372,41 @@ class AIToolPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
 
+    path_string = "/ai-tools/"
+    template = 'testblog/product_page.html'
+
+    product_link = models.URLField(default='https://a-ads.com')
+
+    defaultImages = Image.objects.all().filter(title="The Default Image")
+
+    imageIDs = []
+
+    for image in defaultImages:
+        imageIDs.append(image.id)
+
+    content = StreamField(
+        [
+            ("ImageWithCaption", blocks.ImageWithCaptionBlock(
+                required=False, help_text='add you char block')),
+
+            ("ImageAndVideo", blocks.ImageAndVideoBlock(
+                required=False, help_text='add you images and videos to a block')),
+
+            ("RichText", RichTextBlock(required=False,
+             help_text='add you Rich Text block'))
+
+
+        ],
+        default=[
+            # ("RichText", {"dfjasfsafsafsakfnsakfnlnf"})
+            # ("ImageAndVideo",
+            #  {"image": imageIDs[0]})
+        ],
+        use_json_field=True,
+        null=True,
+        blank=True,
+    )
+
     popularity = models.IntegerField(default=1)
 
     preview_image = models.ImageField(blank=True, null=True)
@@ -389,18 +415,47 @@ class AIToolPage(Page):
 
     tags = ClusterTaggableManager(through=AIToolPageTag, blank=True)
 
+    related_page_1 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_2 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_3 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
     ]
 
     content_panels = Page.content_panels + [
+        FieldPanel('product_link'),
         FieldPanel('tags'),
+        PageChooserPanel('related_page_1', 'testblog.CryptoPage'),
+        PageChooserPanel('related_page_2', 'testblog.CryptoPage'),
+        PageChooserPanel('related_page_3', 'testblog.CryptoPage'),
         FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
         FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
+        FieldPanel('content'),
         FieldPanel('preview_image'),
     ]
 

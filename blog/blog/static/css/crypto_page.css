@@ -1,9 +1,9 @@
 .page-contents-wrapper {
-  padding: 0 var(--HPaddings);
+  padding: 32px var(--HPaddings);
 
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 20px;
 }
 
 .contents-and-advertisement {
@@ -12,10 +12,41 @@
   gap: 30px;
 }
 
+.page-path-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow: hidden;
+  color: var(--neutral-500, #263238);
+  text-overflow: ellipsis;
+
+  /* Body/M */
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.page-path-div a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.page-path-div > span {
+  color: var(--neutral-300, #abb5c5);
+}
+
 .page_content {
   border-radius: 12px;
   border: 1px solid var(--neutral-100, #edf2f8);
   background: var(--white-white, #fff);
+
+  flex-grow: 1;
+  flex-shrink: 1;
 
   display: flex;
   flex-direction: column;
@@ -123,8 +154,6 @@
   aspect-ratio: 16/9;
 }
 
-
-
 .thumbnail_container_div {
   position: relative;
   height: 100px;
@@ -135,7 +164,6 @@
 .thumbnails_div {
   position: absolute;
 
-
   top: 0;
   left: 0;
 
@@ -145,13 +173,12 @@
   gap: 8px;
   flex-direction: row;
   flex-wrap: nowrap;
-
 }
 
 .thumbnail-gallery-image {
   border-radius: 4px;
   /* height: 60px; */
-  height: 100%;
+  height: calc(100% - 10px);
   cursor: pointer;
 }
 
@@ -199,7 +226,8 @@
   gap: 20px;
 }
 
-.svg_chevron, .svg_arrow {
+.svg_chevron,
+.svg_arrow {
   height: 24px;
   width: 24px;
 }
@@ -209,7 +237,9 @@
 }
 
 .advertise-here-section {
-  flex-grow: 1;
+  width: 100%;
+  flex-grow: 2;
+  flex-shrink: 0.75;
 
   display: flex;
   flex-direction: column;
@@ -292,53 +322,44 @@
 
 .cta_link_text {
   white-space: nowrap;
-
 }
 
 .cta-item_div svg {
   margin-left: auto;
 }
 
-
-
 .related-products {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
 
+  padding-top: 60px;
+}
 
 .related-title-div {
   color: var(--neutral-500, #263238);
 
-  /* Links/XL */
+  /* Heading/L */
   font-family: "Poppins", sans-serif;
-  font-size: 20px;
+  font-size: 40px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 28px; /* 140% */
+  font-weight: 700;
+  line-height: 50px; /* 125% */
 
   white-space: nowrap;
 }
 
-
 .related-cards-div {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-
-
-
-
-
-
 @media screen and (max-width: 800px) {
   .contents-and-advertisement {
-    
     flex-direction: column;
     align-items: center;
-    
   }
 }
