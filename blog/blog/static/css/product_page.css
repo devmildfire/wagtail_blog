@@ -20,7 +20,7 @@
   align-items: center;
 
   overflow: hidden;
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
   text-overflow: ellipsis;
 
   /* Body/M */
@@ -37,13 +37,13 @@
 }
 
 .page-path-div > span {
-  color: var(--neutral-300, #abb5c5);
+  color: var(--Neutral300Color, #abb5c5);
 }
 
 .page_content {
   border-radius: 12px;
-  border: 1px solid var(--neutral-100, #edf2f8);
-  background: var(--white-white, #fff);
+  border: 1px solid var(---Neutral100Color, #edf2f8);
+  background: var(--whiteColor, #fff);
 
   flex-grow: 1;
   flex-shrink: 1;
@@ -57,7 +57,7 @@
 
   font-family: "Inter", sans-serif;
 
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
 
   /* Body/M */
 
@@ -78,7 +78,7 @@
 }
 
 .product-title-div {
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
 
   /* Heading/XL */
   font-family: "Poppins", sans-serif;
@@ -248,7 +248,7 @@
   max-width: 350px;
 
   border-radius: 12px;
-  border: 1px solid var(--neutral-100, #edf2f8);
+  border: 1px solid var(---Neutral100Color, #edf2f8);
   background: #fff;
 
   margin-bottom: auto;
@@ -266,7 +266,7 @@
 }
 
 .main-cta h3 {
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
 
   /* Links/XL */
   font-family: "Poppins", sans-serif;
@@ -279,7 +279,7 @@
 }
 
 .main-cta span {
-  color: var(--neutral-400, #75818c);
+  color: var(--Neutral400Color, #75818c);
 
   /* Body/S */
   font-family: "Inter", sans-serif;
@@ -298,9 +298,9 @@
 .cta-item {
   padding: 24px 16px;
 
-  border-top: 1px solid var(--neutral-100, #edf2f8);
+  border-top: 1px solid var(---Neutral100Color, #edf2f8);
 
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
 
   /* Links/L */
   font-family: "Poppins", sans-serif;
@@ -337,7 +337,7 @@
 }
 
 .related-title-div {
-  color: var(--neutral-500, #263238);
+  color: var(--Neutral500Color, #263238);
 
   /* Heading/L */
   font-family: "Poppins", sans-serif;
@@ -351,7 +351,7 @@
 
 .related-cards-div {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;

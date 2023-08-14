@@ -447,9 +447,9 @@ class AIToolPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('product_link'),
         FieldPanel('tags'),
-        PageChooserPanel('related_page_1', 'testblog.CryptoPage'),
-        PageChooserPanel('related_page_2', 'testblog.CryptoPage'),
-        PageChooserPanel('related_page_3', 'testblog.CryptoPage'),
+        PageChooserPanel('related_page_1', 'testblog.AIToolPage'),
+        PageChooserPanel('related_page_2', 'testblog.AIToolPage'),
+        PageChooserPanel('related_page_3', 'testblog.AIToolPage'),
         FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
         FieldPanel('date'),
