@@ -301,6 +301,37 @@
 
 
 
+.related-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.related-title-div {
+  color: var(--neutral-500, #263238);
+
+  /* Links/XL */
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px; /* 140% */
+
+  white-space: nowrap;
+}
+
+
+.related-cards-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+
+
+
+
 
 
 @media screen and (max-width: 800px) {

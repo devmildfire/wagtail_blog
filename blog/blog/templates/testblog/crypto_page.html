@@ -6,6 +6,7 @@
 {% block extra_css %}
 {% comment %}<link rel="stylesheet" type="text/css" href="{% static 'css/advertisehere.css' %}">{% endcomment %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/crypto_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
 {% endblock %}
 
 
@@ -14,6 +15,10 @@
 {% block content %}
 
 <script defer src="{% static 'js/gallery_select.js' %}"></script>
+
+{% csrf_token %} 
+
+<script defer src="{% static 'js/ajax.js' %}"></script>
 
 
     {% comment %} <h1>{{ page.title }}</h1> {% endcomment %}
@@ -131,6 +136,19 @@
     </div>
 
     <section class="related-products">
+
+        <div class="related-title-div">
+            Related:
+        </div>
+
+        <div class="related-cards-div">
+
+            {% include "testblog/tags/Card.html" with link="/crypto/" cardUrl=page.related_page_1.specific.url cardName=page.related_page_1.specific.title cardImage=page.related_page_1.specific.preview_image.url cardInfo=page.related_page_1.specific.intro cardTags=page.related_page_1.specific.tags.all openForAds=page.related_page_1.specific.open_for_ads %}
+            {% include "testblog/tags/Card.html" with link="/crypto/" cardUrl=page.related_page_2.specific.url cardName=page.related_page_2.specific.title cardImage=page.related_page_2.specific.preview_image.url cardInfo=page.related_page_1.specific.intro cardTags=page.related_page_2.specific.tags.all openForAds=page.related_page_2.specific.open_for_ads %}
+            {% include "testblog/tags/Card.html" with link="/crypto/" cardUrl=page.related_page_3.specific.url cardName=page.related_page_3.specific.title cardImage=page.related_page_3.specific.preview_image.url cardInfo=page.related_page_1.specific.intro cardTags=page.related_page_3.specific.tags.all openForAds=page.related_page_3.specific.open_for_ads %}
+
+        </div>
+
     </section>
 
 
@@ -138,13 +156,6 @@
 </div>
 
 
-    <p class="meta">{{ page.date }}</p>
-
-    <div class="intro">{{ page.intro }}</div>
-
-    {{ page.body|richtext }}
-
-
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+{% comment%} <p><a href="{{ page.get_parent.url }}">Return to blog</a></p> {% endcomment%}
 
 {% endblock content %}

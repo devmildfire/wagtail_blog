@@ -22,6 +22,7 @@ from testblog import blocks
 from wagtail.images.models import Image
 
 from wagtail.blocks import RichTextBlock
+from wagtail.admin.panels import PageChooserPanel
 
 
 class NavLinks(Orderable):
@@ -59,6 +60,9 @@ class FeatureCards(Orderable):
         FieldPanel('card_link'),
         FieldPanel('card_image'),
     ]
+
+
+
 
 
 @register_snippet
@@ -277,6 +281,8 @@ class CryptoPage(Page):
     for image in defaultImages:
         imageIDs.append(image.id)
 
+    
+
     content = StreamField(
         [
             ("ImageWithCaption", blocks.ImageWithCaptionBlock(
@@ -308,6 +314,37 @@ class CryptoPage(Page):
 
     tags = ClusterTaggableManager(through=CryptoPageTag, blank=True)
 
+    related_page_1 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_2 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_page_3 = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    related_list = [related_page_1, related_page_2, related_page_3]
+
+    # related_queryset = Page.objects.page(related_page_1.specific)
+
+    # related_queryset = Page.objects.page(related_page_1.id)
+    # related_queryset = Page.objects.page(related_page_1) | Page.objects.page(related_page_2)
+
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
@@ -316,6 +353,9 @@ class CryptoPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('product_link'),
         FieldPanel('tags'),
+        PageChooserPanel('related_page_1', 'testblog.CryptoPage'),
+        PageChooserPanel('related_page_2', 'testblog.CryptoPage'),
+        PageChooserPanel('related_page_3', 'testblog.CryptoPage'),
         FieldPanel('popularity'),
         FieldPanel('open_for_ads'),
         FieldPanel('date'),
