@@ -47,4 +47,5 @@ media/*
 
 # Envs
 .venv/
+venv/
 env
