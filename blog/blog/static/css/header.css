@@ -3,7 +3,9 @@
   display: flex;
   justify-content: space-between;
   align-content: center;
-  max-width: 1164px;
+  max-width: var(--maxWidth);
+
+  width: 100%;
 }
 
 .svg_GoToAdsMask {
