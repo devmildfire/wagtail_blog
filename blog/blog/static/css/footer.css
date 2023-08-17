@@ -11,6 +11,13 @@ footer {
   flex-direction: column;
 }
 
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1164px;
+  align-self: center;
+}
+
 .upper_footer {
   display: flex;
   justify-content: space-between;

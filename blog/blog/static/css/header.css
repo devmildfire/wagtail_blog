@@ -1,3 +1,11 @@
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  max-width: 1164px;
+}
+
 .svg_GoToAdsMask {
   height: 24px;
   width: 24px;
@@ -57,7 +65,7 @@
 header {
   padding: var(--VPaddings) var(--HPaddings);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   background: var(--whiteColor);
@@ -79,6 +87,7 @@ header {
 .header_sections_container {
   display: flex;
   justify-content: left;
+  align-items: center;
   flex-grow: 1;
   padding: 0 2.08vw;
 }
@@ -126,6 +135,7 @@ header {
   transition-duration: 0.3s;
 }
 
+
 .dropdown-links {
   display: flex;
   flex-direction: column;
@@ -145,6 +155,12 @@ header {
 }
 
 @media screen and (max-width: 1100px) {
+
+  .header{
+    justify-content: space-between;
+  }
+
+  
   .header_links_container,
   .header_sections_container {
     display: none;

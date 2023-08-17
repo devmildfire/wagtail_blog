@@ -4,7 +4,13 @@
 <script defer src="{% static 'js/header_menu.js' %}"></script>
 
 <header class="header">
-    <img src="{% static 'images/TopCatalog.png' alt="A-ADS Logo" %}">
+
+  <div class="header-container">
+  
+    <a  href="{% pageurl home_page %}" >
+      <img src="{% static 'images/TopCatalog.png' alt="A-ADS Logo" %}">
+    </a>
+    
     <div class="header_sections_container">
         
             {% for link in header.header_links.all %}
@@ -23,7 +29,11 @@
         {% AddMe_tag %}
         {% GoTo_tag %}
     </div>
-    <div class="header_mobile_menu_container">
+
+
+  </div>
+
+      <div class="header_mobile_menu_container">
 
         <button class="standard_button" onClick="hamburgerClick(); this.blur();">
              <svg class="svg_hamburger">

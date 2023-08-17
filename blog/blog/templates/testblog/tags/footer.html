@@ -3,31 +3,36 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
 <footer class = 'footer'>
-    <div class = 'upper_footer'>
-        <img src="{% static 'images/LogoCatalog.png' alt="A-ADS Logo" %}">
-        <div class="sections_container">
 
+  <div class="footer-container">
+  
+      <div class = 'upper_footer'>
+          <img src="{% static 'images/LogoCatalog.png' alt="A-ADS Logo" %}">
+          <div class="sections_container">
+  
+  
+              {% for link in footer.footer_links.all %}
+                  <a href="{% pageurl home_page %}{{ link.link_text}}" target="_blank">
+                      {{link.link_name}}
+                  </a>
+              {% endfor %}
+  
+  
+          </div>
+          <a href="https://a-ads.com" target="_blank">
+              A-ADS.COM
+          </a>
+      </div>
+      
+      <div class = 'lower_footer'>
+          <p> @ {% now "Y" %} A-ADS </p>
+          <div class = 'footer_legaleeze'>
+  
+              <a href="{% pageurl home_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
+              <a href="{% pageurl home_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
+          </div>      
+      </div>
 
-            {% for link in footer.footer_links.all %}
-                <a href="{% pageurl home_page %}{{ link.link_text}}" target="_blank">
-                    {{link.link_name}}
-                </a>
-            {% endfor %}
-
-
-        </div>
-        <a href="https://a-ads.com" target="_blank">
-            A-ADS.COM
-        </a>
     </div>
-    
-    <div class = 'lower_footer'>
-        <p> @ {% now "Y" %} A-ADS </p>
-        <div class = 'footer_legaleeze'>
-            {% comment %} <a href="{% pageurl blog_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
-            <a href="{% pageurl blog_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>   {% endcomment %}
-            <a href="{% pageurl home_page %}{{ footer.ToS_link }}"> <p> Terms of Service </p> </a>  
-            <a href="{% pageurl home_page %}{{ footer.PP_link }}"> <p> Privacy Policy </p> </a>  
-        </div>      
-    </div>
+  
 </footer>
