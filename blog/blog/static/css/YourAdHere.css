@@ -4,14 +4,20 @@
   justify-content: center;
   align-items: center;
 
+  
   padding: 11px 0;
-  margin: 5.5vw 16.3vw;
+  margin: 5.5vw var(--HPaddings);
 
   border-radius: 4px;
   background: var(--blueHoverColor);
 
   font-family: "Poppins", sans-serif;
   text-align: center;
+
+  
+  max-width: calc(var(--maxWidth) );
+
+  
 }
 
 .YourAdHereTitle {

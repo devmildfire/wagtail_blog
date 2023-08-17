@@ -1,5 +1,5 @@
 .trending_Crypto_section {
-  box-sizing: content-box;
+  /* box-sizing: content-box; */
   
   display: flex;
 
@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
 
-  max-width: 1164px;
+  max-width: calc(var(--maxWidth) + 2 * var(--HPaddings) );
   align-self: center;
 
   gap: 28px;

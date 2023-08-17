@@ -30,6 +30,8 @@
 
   --Blue300Color: #b1e4fc;
   --Blue100Color: #e6f6fe;
+
+  --maxWidth: 1164px;
 }
 
 * {
