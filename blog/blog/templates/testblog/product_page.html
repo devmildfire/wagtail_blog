@@ -81,7 +81,7 @@
                 <div class="product-tags-div">
 
                     {% for tag in page.tags.all  %}
-                        <a href='#' class="tag" > {{ tag }} </a>
+                        <a href='#' class="tag" onclick="postAddTag( '{{page.path_string}}', '{{tag}}', newTab=true );"> {{ tag }} </a>
                     {% endfor %}
                 
                 </div>

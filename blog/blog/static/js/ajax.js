@@ -73,7 +73,7 @@ async function postCrypto(link="/crypto/", selectObject) {
 }
 
 //  make a post request to crypto page to add a tag to taglist
-async function postAddTag(link, tag) {
+async function postAddTag(link, tag, newTab=false) {
   console.log("POST request to root for tag addition");
 
   console.log("toggling tag...", tag);
@@ -85,7 +85,7 @@ async function postAddTag(link, tag) {
     "html"
   );
 
-  redirectOrRerender(link, data);
+  redirectOrRerender(link, data, newTab=newTab);
 }
 
 async function postRevealAllTags(link) {
@@ -107,23 +107,40 @@ async function postRevealAllTags(link) {
 
 //  функция перенаправляет пользователя на страницу с url, если его текущая страница отличается от этого url
 //  если пользователь уже на нужной странице, просто заменяет html страницы
-function redirectOrRerender(url, data) {
+function redirectOrRerender(url, data, newTab=false) {
   const path = window.location.pathname;
 
   console.log(`path ${path}`);
 
   console.log(`url ${url}`);
 
-  if (path !== url) {
-    window.location.pathname = url;
-    console.log(`moving to ${url} Page`);
-  } else {
+  // if (path !== url) {
+  //   window.location.pathname = url;
+  //   console.log(`moving to ${url} Page`);
+  // } else {
+  //   console.log(`allready at Page ${url}... Rerendering`);
+
+  if (path == url) {
     console.log(`allready at Page ${url}... Rerendering`);
-
-    // const html = document.querySelectorAll("html")[0];
-    // html.innerHTML = data;
-
+    
     const section = document.querySelector(".exchange_section");
     section.innerHTML = data;
   }
+
+  if (path !== url && newTab == false) {
+    window.location.pathname = url;
+    console.log(`moving to ${url} Page`);
+  };
+
+  if (path !== url && newTab == true) {
+    window.open(url, '_blank');
+    console.log(`adding new tab for ${url} Page`);
+  };
+  
+    
+    // const html = document.querySelectorAll("html")[0];
+    // html.innerHTML = data;
+
+
+  
 }
