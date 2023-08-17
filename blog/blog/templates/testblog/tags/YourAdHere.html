@@ -4,16 +4,20 @@
 
 <section class="YourAdHere_section">
 
-    <p class="YourAdHereTitle">
-        {{ your_ad_here.title }}
-    </p>
+    <div class="yourAdHere_container">
 
-    <p class="YourAdHereText">
-        {{ your_ad_here.text }}
-    </p>
+      <p class="YourAdHereTitle">
+          {{ your_ad_here.title }}
+      </p>
+  
+      <p class="YourAdHereText">
+          {{ your_ad_here.text }}
+      </p>
+  
+      <a class="YourAdHereLink" href="{{ your_add_here.link }}" >
+          {{ your_ad_here.link_text }}
+      </a>
 
-    <a class="YourAdHereLink" href="{{ your_add_here.link }}" >
-        {{ your_ad_here.link_text }}
-    </a>
-
+    </div>
+  
 </section>

@@ -1,5 +1,5 @@
 .hero_section {
-  padding: 4.1vw var(--HPaddings);
+  padding: min(4.1vw, 60px) var(--HPaddings);
 
   display: flex;
   flex-direction: column;

@@ -14,8 +14,10 @@ footer {
 .footer-container {
   display: flex;
   flex-direction: column;
-  max-width: 1164px;
+  max-width: var(--maxWidth);
   align-self: center;
+
+  width: 100%;
 }
 
 .upper_footer {
@@ -33,7 +35,7 @@ footer {
 }
 
 .sections_container > a {
-  padding: 0 2vw;
+  padding: 0 40px;
 }
 
 .lower_footer {
@@ -83,6 +85,13 @@ footer a {
 
     row-gap: 4vw;
     column-gap: 10vw;
+  }
+}
+
+
+@media screen and (max-width: 2250px) {
+  .sections_container > a {
+    padding: 0 2vw;
   }
 }
 

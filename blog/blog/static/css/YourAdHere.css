@@ -4,20 +4,29 @@
   justify-content: center;
   align-items: center;
 
-  
-  padding: 11px 0;
-  margin: 5.5vw var(--HPaddings);
+  padding: min(5.5vw, 80px) var(--HPaddings);  
 
-  border-radius: 4px;
-  background: var(--blueHoverColor);
 
   font-family: "Poppins", sans-serif;
   text-align: center;
 
-  
-  max-width: calc(var(--maxWidth) );
+  max-width: calc(var(--maxWidth) + 2 * var(--HPaddings));
 
-  
+  align-self: center;
+  width: 100%;
+
+}
+
+.yourAdHere_container {
+  border-radius: 4px;
+  background: var(--blueHoverColor);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 11px 0;
+  width: 100%;
 }
 
 .YourAdHereTitle {
@@ -60,14 +69,12 @@
 
 @media screen and (max-width: 768px) {
   .YourAdHere_section {
-    padding: 11px 8px;
-    margin: 7.8vw 3.9vw;
+    padding: 11px var(--HPaddings);  
   }
 }
 
 @media screen and (max-width: 500px) {
   .YourAdHere_section {
-    padding: 16px 8px 12px;
-    margin: 16vw 5.5vw;
+    padding: 16px var(--HPaddings) 12px;
   }
 }

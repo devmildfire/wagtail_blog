@@ -12,7 +12,7 @@
 
   gap: 28px;
 
-  padding: 4.1vw var(--HPaddings);
+  padding: min(4.1vw, 60px) var(--HPaddings);
   font-family: "Poppins", sans-serif;
 }
 
