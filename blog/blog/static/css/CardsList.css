@@ -1,6 +1,10 @@
 .Cards_List_Div {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
   flex-wrap: wrap;
 
   width: 100%;
@@ -16,9 +20,17 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .Cards_List_Div {
+    grid-template-columns: 1fr 1fr;
     column-gap: 8px;
     row-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .Cards_List_Div {
+    grid-template-columns: 1fr;
+ 
   }
 }

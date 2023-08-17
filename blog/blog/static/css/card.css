@@ -1,4 +1,8 @@
 .card_div {
+
+  place-self: center;
+  align-self: stretch;
+  
   background: var(--whiteColor);
 
   max-width: 350px;
