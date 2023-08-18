@@ -49,3 +49,4 @@ media/*
 .venv/
 venv/
 env
+venv
