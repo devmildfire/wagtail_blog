@@ -46,7 +46,7 @@
 .items-cta-block {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 0px;
 }
 
 .cta-item {
