@@ -1,2 +1,2 @@
 # wagtail_blog
-a simple eagtail blog example
+a simple wagtail blog example
