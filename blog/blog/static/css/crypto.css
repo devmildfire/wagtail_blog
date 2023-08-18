@@ -121,7 +121,7 @@
 }
 
 .current.standard_button {
-  /* border-radius: 4px; */
+  
   border: 1px solid var(--blueHoverColor, #03a9f4);
   background: var(--Blue100Color, #e6f6fe);
 }
