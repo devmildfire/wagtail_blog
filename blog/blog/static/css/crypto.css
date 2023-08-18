@@ -1,5 +1,4 @@
 .trending_Crypto_section {
-  /* box-sizing: content-box; */
   
   display: flex;
 
@@ -8,12 +7,19 @@
   align-items: center;
 
   max-width: calc(var(--maxWidth) + 2 * var(--HPaddings) );
+  width: 100%;
   align-self: center;
 
   gap: 28px;
 
   padding: min(4.1vw, 60px) var(--HPaddings);
   font-family: "Poppins", sans-serif;
+}
+
+.exchange_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Crypto_Title,
@@ -66,8 +72,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-self: center;
 
+  width: 100%;
+  max-width: calc(var(--maxWidth) + var(--HPaddings) * 2);
+  
   padding: 4.1vw var(--HPaddings);
+
   font-family: "Poppins", sans-serif;
 }
 
