@@ -31,7 +31,7 @@ footer {
   display: flex;
   justify-content: left;
   flex-grow: 1;
-  padding: 0 8vw;
+  padding: 0 min(115px, 8vw);
 }
 
 .sections_container > a {
