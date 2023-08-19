@@ -94,7 +94,7 @@ header {
 }
 
 .header_sections_container > a {
-  padding: 0 min(2vw, 40px);
+  padding: 0 min(2vw, 30px);
 }
 
 .header_links_container {
