@@ -74,6 +74,8 @@ body {
   border: 1px solid var(--blueHoverColor);
 
   max-width: max-content;
+
+  cursor: pointer;
 }
 
 .standard_button:hover {
