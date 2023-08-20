@@ -1,0 +1,20 @@
+{% load static wagtailcore_tags base_tags%}
+{% load wagtailimages_tags %}
+
+<div class="product-buttons-div">
+
+      <button class="standard_main_button" onclick="this.blur(); window.open('{{ link }}')  ">
+          <span>View Tool </span>
+          <svg class="svg_arrow">
+              <use 
+              href="{% static "icons/arrow_right_up.svg" %}#idsvg_arrow"
+              >
+              </use>
+          </svg>
+      </button>
+
+      <button class="standard_button" onclick="this.blur(); window.open('https://a-ads.com')">
+          <span>Advertise Here </span>
+      </button>
+
+</div>

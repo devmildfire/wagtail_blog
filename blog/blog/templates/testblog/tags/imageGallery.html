@@ -1,0 +1,31 @@
+{% load static wagtailcore_tags base_tags%}
+{% load wagtailimages_tags %}
+
+
+<div class="image-gallery">
+
+      <div class="big-iamge-div">
+        
+              {% if firstImage.block_type == 'image' %}
+                  <div class="image main-gallery-image">{% image firstImage.value original %}</div>
+              {% else %}
+                  <div class="video main-gallery-image">{% include_block firstImage %}</div>
+              {% endif %}      
+
+      </div>
+
+      <div class="thumbnail_container_div">
+
+          <div class="thumbnails_div">
+              {% for slide in slides %}
+                  {% if slide.block_type == 'image' %}
+                      <div onclick="toggleSelect(this)" class="image thumbnail-gallery-image">{% image slide.value original %}</div>
+                  {% else %}
+                      <div onclick="toggleSelect(this)" class="video thumbnail-gallery-image">{% include_block slide %}</div>
+                  {% endif %}
+              {% endfor %}
+          </div>
+
+      </div>
+
+</div>

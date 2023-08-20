@@ -1,0 +1,18 @@
+{% load static wagtailcore_tags base_tags%}
+{% load wagtailimages_tags %}
+
+<div class="title-with-tags-div">
+
+    <div class="product-title-div">
+        {{ productTitle }}
+    </div>
+
+    <div class="product-tags-div">
+
+        {% for tag in tags %}
+            <a href='#' class="tag" onclick="postAddTag( '{{siteSection}}', '{{tag}}', newTab=true );"> {{ tag }} </a>
+        {% endfor %}
+    
+    </div>
+  
+</div>

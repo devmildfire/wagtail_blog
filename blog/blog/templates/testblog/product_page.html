@@ -24,152 +24,42 @@
 <div class="page-contents-wrapper">
 
 
+    {% include "testblog/tags/pagePath.html" with productTitle=page.title homePageUrl=page.get_parent.url  siteSection=page.path_string %}
 
-    <div class="page-path-div">
-
-        <a href="{{ page.get_parent.url }}"> <span> Homepage </span>  </a>
-        
-        <svg class="svg_chevron rotate-90">
-            <use 
-              href="{% static "icons/chevron.svg" %}#idsvg_chevron"
-            >
-            </use>
-        </svg>
-
-        <a href="{{ page.path_string }}"> <span> 
-            
-            {% if page.path_string == "/crypto/" %} 
-                
-                Crypto Services
-
-            {% endif %}
-
-            {% if page.path_string == "/ai-tools/" %} 
-                
-                AI Tools
-
-            {% endif %}
-    
-        </span>  </a>
-
-        <svg class="svg_chevron rotate-90">
-            <use 
-              href="{% static "icons/chevron.svg" %}#idsvg_chevron"
-            >
-            </use>
-        </svg>
-
-        <span> {{ page.title }} </span>
-
-    </div>
 
     <div class="contents-and-advertisement">
 
-       
-
         <section class="page_content">
 
+          {% include "testblog/tags/titleAndTags.html" with productTitle=page.title siteSection=page.path_string tags=page.tags.all %}      
 
+          
+          {% for block in page.content %}
+          
+            {% if block.block_type == 'ImageAndVideo' %}
 
+              {% include "testblog/tags/imageGallery.html" with firstImage=block.value|slice:":1"|first slides=block.value %}
 
-            <div class="title-with-tags-div">
+            {% else %}
+          
+              {% include_block block %}
+          
+            {% endif %}
+          
+          {% endfor %}
 
-                <div class="product-title-div">
-                    {{ page.title }}
-                </div>
-
-                <div class="product-tags-div">
-
-                    {% for tag in page.tags.all  %}
-                        <a href='#' class="tag" onclick="postAddTag( '{{page.path_string}}', '{{tag}}', newTab=true );"> {{ tag }} </a>
-                    {% endfor %}
-                
-                </div>
-            </div>
-
-
-
-
-
-
-            {% for block in page.content %}
-                {% if block.block_type == 'ImageAndVideo' %}
-
-                    <div class="image-gallery">
-
-                        <div class="big-iamge-div">
-
-                            {% for firstSlide in block.value|slice:":1" %}
-
-                                {% if firstSlide.block_type == 'image' %}
-                                    <div class="image main-gallery-image">{% image firstSlide.value original %}</div>
-                                {% else %}
-                                    <div class="video main-gallery-image">{% include_block firstSlide %}</div>
-                                {% endif %}      
-
-                            {% endfor %}
-
-                        </div>
-
-                        <div class="thumbnail_container_div">
-
-                            <div class="thumbnails_div">
-                                {% for slide in block.value %}
-                                    {% if slide.block_type == 'image' %}
-                                        <div onclick="toggleSelect(this)" class="image thumbnail-gallery-image">{% image slide.value original %}</div>
-                                    {% else %}
-                                        <div onclick="toggleSelect(this)" class="video thumbnail-gallery-image">{% include_block slide %}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-    
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-
-                {% else %}
-                    {% include_block block %}
-                {% endif %}
-            {% endfor %}
-
-
-
-
-            <div class="product-buttons-div">
-
-                <button class="standard_main_button" onclick="this.blur(); window.open('{{ page.product_link }}')  ">
-                    <span>View Tool </span>
-                    <svg class="svg_arrow">
-                        <use 
-                        {% comment %} href="{% static "icons/arrow_right_up.svg" %}#idsvg_arrow_up" {% endcomment %}
-                        href="{% static "icons/arrow_right_up.svg" %}#idsvg_arrow"
-                        >
-                        </use>
-                    </svg>
-                </button>
-
-                <button class="standard_button" onclick="this.blur(); window.open('https://a-ads.com')">
-                    <span>Advertise Here </span>
-                </button>
-
-            </div>
-
-
-
-
+          
+          {% include "testblog/tags/productButtons.html" with link=page.product_link  %}          
 
         </section>
 
+        
         {% AdvertiseHere_tag %}
 
 
     </div>
+
+  
 
     <section class="related-products">
 

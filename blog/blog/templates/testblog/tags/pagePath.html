@@ -1,0 +1,45 @@
+{% load static wagtailcore_tags base_tags%}
+{% load wagtailimages_tags %}
+
+
+
+
+
+<div class="page-path-div">
+
+  <!-- <a href="{{ page.get_parent.url }}"> <span> Homepage </span>  </a>       -->
+  <a href="{{ homePageUrl }}"> <span> Homepage </span>  </a>
+        
+        <svg class="svg_chevron rotate-90">
+            <use 
+              href="{% static "icons/chevron.svg" %}#idsvg_chevron"
+            >
+            </use>
+        </svg>
+
+        <a href="{{ siteSection }}"> <span> 
+            
+            {% if siteSection == "/crypto/" %} 
+                
+                Crypto Services
+
+            {% endif %}
+
+            {% if siteSection == "/ai-tools/" %} 
+                
+                AI Tools
+
+            {% endif %}
+    
+        </span>  </a>
+
+        <svg class="svg_chevron rotate-90">
+            <use 
+              href="{% static "icons/chevron.svg" %}#idsvg_chevron"
+            >
+            </use>
+        </svg>
+
+        <span> {{ productTitle }} </span>
+
+    </div>
